@@ -1,5 +1,5 @@
 import type React from "react"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next" // <-- Added Viewport type
 import { Inter, Poppins } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/contexts/theme-context"
@@ -40,9 +40,17 @@ export const metadata: Metadata = {
     title: "Corpo Scienza - Medicina Personalizada",
     description: "Cuidado médico personalizado e científico",
   },
-  viewport: "width=device-width, initial-scale=1",
-  themeColor: "#2563eb",
-    generator: 'v0.app'
+  generator: 'v0.app'
+  // viewport and themeColor were removed from here
+}
+
+// New function to handle viewport settings
+export function generateViewport(): Viewport {
+  return {
+    width: 'device-width',
+    initialScale: 1,
+    themeColor: '#2563eb',
+  }
 }
 
 export default function RootLayout({
