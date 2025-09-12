@@ -1,17 +1,17 @@
-"use client"
+'use client';
 
-import { motion, AnimatePresence } from "framer-motion"
-import { AlertTriangle, X } from "lucide-react"
+import { motion, AnimatePresence } from 'framer-motion';
+import { AlertTriangle, X } from 'lucide-react';
 
 interface DeleteConfirmationModalProps {
-  isOpen: boolean
-  onClose: () => void
-  onConfirm: () => void
-  isDeleting: boolean
-  title: string
-  description: string
-  itemName: string
-  warningMessage: string
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+  isDeleting: boolean;
+  title: string;
+  description: string;
+  itemName: string;
+  warningMessage: string;
 }
 
 export default function DeleteConfirmationModal({
@@ -24,7 +24,7 @@ export default function DeleteConfirmationModal({
   itemName,
   warningMessage,
 }: DeleteConfirmationModalProps) {
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
   return (
     <AnimatePresence>
@@ -63,7 +63,9 @@ export default function DeleteConfirmationModal({
                 <AlertTriangle className="h-6 w-6 text-red-600" />
               </div>
               <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                <h3 className="text-base font-semibold leading-6 text-gray-900">{title}</h3>
+                <h3 className="text-base font-semibold leading-6 text-gray-900">
+                  {title}
+                </h3>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500">{description}</p>
                   <div className="mt-4 p-4 bg-red-50 rounded-lg border border-red-200">
@@ -89,7 +91,7 @@ export default function DeleteConfirmationModal({
                     Excluindo...
                   </div>
                 ) : (
-                  "Confirmar Exclusão"
+                  'Confirmar Exclusão'
                 )}
               </motion.button>
               <motion.button
@@ -107,5 +109,5 @@ export default function DeleteConfirmationModal({
         </div>
       </div>
     </AnimatePresence>
-  )
+  );
 }

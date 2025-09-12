@@ -1,21 +1,20 @@
-"use client"
+'use client';
 
-import type React from "react"
+import type React from 'react';
+import { useState } from 'react';
+import AdminSidebar from '@/components/admin/admin-sidebar';
 
-import { useState } from "react"
-import AdminSidebar from "@/components/admin/admin-sidebar"
-
-export default function AdminLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  const [isCollapsed, setIsCollapsed] = useState(false)
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-gray-50 dark:bg-gray-900 overflow-hidden">
       <AdminSidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
-      <div className="flex-1 flex flex-col overflow-hidden">{children}</div>
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+        <main className="flex-1 overflow-y-auto p-6">
+          <div className="max-w-full">{children}</div>
+        </main>
+      </div>
     </div>
-  )
+  );
 }

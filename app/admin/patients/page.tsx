@@ -1,135 +1,150 @@
-"use client"
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable camelcase */
+/* eslint-disable no-console */
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import Link from "next/link"
-import { Users, UserPlus, Download, Eye, Edit, Trash2, MoreVertical, Calendar, Phone, Mail } from "lucide-react"
-import DeleteConfirmationModal from "@/components/admin/delete-confirmation-modal"
-import SearchFilters from "@/components/admin/patients/search-filters"
-import { usePatientSearch } from "@/hooks/use-patient-search"
+'use client';
+
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import {
+  Users,
+  UserPlus,
+  Download,
+  Eye,
+  Edit,
+  Trash2,
+  MoreVertical,
+  Calendar,
+  Phone,
+  Mail,
+} from 'lucide-react';
+import DeleteConfirmationModal from '@/components/admin/delete-confirmation-modal';
+import SearchFilters from '@/components/admin/patients/search-filters';
+import { usePatientSearch } from '@/hooks/use-patient-search';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.6 },
-}
+};
 
 export default function PatientsPage() {
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const [patientToDelete, setPatientToDelete] = useState<any>(null)
-  const [isDeleting, setIsDeleting] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [patientToDelete, setPatientToDelete] = useState<any>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // Mock data with additional fields for filtering
   const allPatients = [
     {
       id: 1,
-      nome: "Maria Silva Santos",
-      cpf: "123.456.789-00",
-      email: "maria.silva@email.com",
-      telefone: "(11) 99999-9999",
-      data_nascimento: "1985-03-15",
-      sexo_biologico: "F" as const,
-      status: "Ativo",
-      plano: "Premium",
-      ultima_consulta: "2024-01-15",
+      nome: 'Maria Silva Santos',
+      cpf: '123.456.789-00',
+      email: 'maria.silva@email.com',
+      telefone: '(11) 99999-9999',
+      data_nascimento: '1985-03-15',
+      sexo_biologico: 'F' as const,
+      status: 'Ativo',
+      plano: 'Premium',
+      ultima_consulta: '2024-01-15',
       endereco: {
-        cidade: "São Paulo",
-        estado: "SP",
+        cidade: 'São Paulo',
+        estado: 'SP',
       },
       possui_convenio_medico: true,
-      data_cadastro: "2023-12-01",
+      data_cadastro: '2023-12-01',
     },
     {
       id: 2,
-      nome: "João Carlos Oliveira",
-      cpf: "987.654.321-00",
-      email: "joao.carlos@email.com",
-      telefone: "(11) 88888-8888",
-      data_nascimento: "1978-07-22",
-      sexo_biologico: "M" as const,
-      status: "Ativo",
-      plano: "Essencial",
-      ultima_consulta: "2024-01-14",
+      nome: 'João Carlos Oliveira',
+      cpf: '987.654.321-00',
+      email: 'joao.carlos@email.com',
+      telefone: '(11) 88888-8888',
+      data_nascimento: '1978-07-22',
+      sexo_biologico: 'M' as const,
+      status: 'Ativo',
+      plano: 'Essencial',
+      ultima_consulta: '2024-01-14',
       endereco: {
-        cidade: "Rio de Janeiro",
-        estado: "RJ",
+        cidade: 'Rio de Janeiro',
+        estado: 'RJ',
       },
       possui_convenio_medico: false,
-      data_cadastro: "2023-11-15",
+      data_cadastro: '2023-11-15',
     },
     {
       id: 3,
-      nome: "Ana Paula Costa",
-      cpf: "456.789.123-00",
-      email: "ana.paula@email.com",
-      telefone: "(11) 77777-7777",
-      data_nascimento: "1992-11-08",
-      sexo_biologico: "F" as const,
-      status: "Inativo",
-      plano: "Executivo",
-      ultima_consulta: "2024-01-13",
+      nome: 'Ana Paula Costa',
+      cpf: '456.789.123-00',
+      email: 'ana.paula@email.com',
+      telefone: '(11) 77777-7777',
+      data_nascimento: '1992-11-08',
+      sexo_biologico: 'F' as const,
+      status: 'Inativo',
+      plano: 'Executivo',
+      ultima_consulta: '2024-01-13',
       endereco: {
-        cidade: "Belo Horizonte",
-        estado: "MG",
+        cidade: 'Belo Horizonte',
+        estado: 'MG',
       },
       possui_convenio_medico: true,
-      data_cadastro: "2024-01-01",
+      data_cadastro: '2024-01-01',
     },
     {
       id: 4,
-      nome: "Carlos Eduardo Lima",
-      cpf: "789.123.456-00",
-      email: "carlos.eduardo@email.com",
-      telefone: "(11) 66666-6666",
-      data_nascimento: "1980-05-30",
-      sexo_biologico: "M" as const,
-      status: "Ativo",
-      plano: "Premium",
-      ultima_consulta: "2024-01-12",
+      nome: 'Carlos Eduardo Lima',
+      cpf: '789.123.456-00',
+      email: 'carlos.eduardo@email.com',
+      telefone: '(11) 66666-6666',
+      data_nascimento: '1980-05-30',
+      sexo_biologico: 'M' as const,
+      status: 'Ativo',
+      plano: 'Premium',
+      ultima_consulta: '2024-01-12',
       endereco: {
-        cidade: "São Paulo",
-        estado: "SP",
+        cidade: 'São Paulo',
+        estado: 'SP',
       },
       possui_convenio_medico: true,
-      data_cadastro: "2023-10-20",
+      data_cadastro: '2023-10-20',
     },
     {
       id: 5,
-      nome: "Fernanda Rodrigues",
-      cpf: "321.654.987-00",
-      email: "fernanda.rodrigues@email.com",
-      telefone: "(11) 55555-5555",
-      data_nascimento: "1995-09-12",
-      sexo_biologico: "F" as const,
-      status: "Ativo",
-      plano: "Essencial",
-      ultima_consulta: "2024-01-11",
+      nome: 'Fernanda Rodrigues',
+      cpf: '321.654.987-00',
+      email: 'fernanda.rodrigues@email.com',
+      telefone: '(11) 55555-5555',
+      data_nascimento: '1995-09-12',
+      sexo_biologico: 'F' as const,
+      status: 'Ativo',
+      plano: 'Essencial',
+      ultima_consulta: '2024-01-11',
       endereco: {
-        cidade: "Curitiba",
-        estado: "PR",
+        cidade: 'Curitiba',
+        estado: 'PR',
       },
       possui_convenio_medico: false,
-      data_cadastro: "2024-01-10",
+      data_cadastro: '2024-01-10',
     },
     {
       id: 6,
-      nome: "Roberto Santos Silva",
-      cpf: "654.321.789-00",
-      email: "roberto.santos@email.com",
-      telefone: "(11) 44444-4444",
-      data_nascimento: "1970-12-25",
-      sexo_biologico: "M" as const,
-      status: "Suspenso",
-      plano: "Premium",
-      ultima_consulta: "2024-01-10",
+      nome: 'Roberto Santos Silva',
+      cpf: '654.321.789-00',
+      email: 'roberto.santos@email.com',
+      telefone: '(11) 44444-4444',
+      data_nascimento: '1970-12-25',
+      sexo_biologico: 'M' as const,
+      status: 'Suspenso',
+      plano: 'Premium',
+      ultima_consulta: '2024-01-10',
       endereco: {
-        cidade: "Salvador",
-        estado: "BA",
+        cidade: 'Salvador',
+        estado: 'BA',
       },
       possui_convenio_medico: true,
-      data_cadastro: "2023-09-05",
+      data_cadastro: '2023-09-05',
     },
-  ]
+  ];
 
   const {
     searchTerm,
@@ -140,55 +155,58 @@ export default function PatientsPage() {
     handleSearchChange,
     handleFiltersChange,
     handleClearFilters,
-  } = usePatientSearch(allPatients)
+  } = usePatientSearch(allPatients);
 
   const calculateAge = (birthDate: string) => {
-    const today = new Date()
-    const birth = new Date(birthDate)
-    let age = today.getFullYear() - birth.getFullYear()
-    const monthDiff = today.getMonth() - birth.getMonth()
+    const today = new Date();
+    const birth = new Date(birthDate);
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
-      age--
+      age--;
     }
-    return age
-  }
+    return age;
+  };
 
   const handleDeleteClick = (patient: any) => {
-    setPatientToDelete(patient)
-    setShowDeleteModal(true)
-  }
+    setPatientToDelete(patient);
+    setShowDeleteModal(true);
+  };
 
   const handleDeleteConfirm = async () => {
-    if (!patientToDelete) return
+    if (!patientToDelete) return;
 
-    setIsDeleting(true)
+    setIsDeleting(true);
     try {
       // Simulate API call - replace with actual API integration
-      await new Promise((resolve) => setTimeout(resolve, 2000))
+      await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      alert("Paciente excluído com sucesso!")
+      alert('Paciente excluído com sucesso!');
       // Here you would refresh the patients list
     } catch (error) {
-      console.error("Error deleting patient:", error)
-      alert("Erro ao excluir paciente. Tente novamente.")
+      console.error('Error deleting patient:', error);
+      alert('Erro ao excluir paciente. Tente novamente.');
     } finally {
-      setIsDeleting(false)
-      setShowDeleteModal(false)
-      setPatientToDelete(null)
+      setIsDeleting(false);
+      setShowDeleteModal(false);
+      setPatientToDelete(null);
     }
-  }
+  };
 
   // Calculate stats based on filtered results
   const stats = {
     total: allPatients.length,
-    active: allPatients.filter((p) => p.status === "Ativo").length,
+    active: allPatients.filter((p) => p.status === 'Ativo').length,
     newThisMonth: allPatients.filter((p) => {
-      const cadastro = new Date(p.data_cadastro)
-      const now = new Date()
-      return cadastro.getMonth() === now.getMonth() && cadastro.getFullYear() === now.getFullYear()
+      const cadastro = new Date(p.data_cadastro);
+      const now = new Date();
+      return (
+        cadastro.getMonth() === now.getMonth() &&
+        cadastro.getFullYear() === now.getFullYear()
+      );
     }).length,
     appointments: 234, // Mock data
-  }
+  };
 
   return (
     <div className="flex-1 p-8 bg-gray-50 min-h-screen">
@@ -201,7 +219,9 @@ export default function PatientsPage() {
             </div>
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Pacientes</h1>
-              <p className="text-gray-600 mt-1">Gerencie todos os pacientes cadastrados no sistema</p>
+              <p className="text-gray-600 mt-1">
+                Gerencie todos os pacientes cadastrados no sistema
+              </p>
             </div>
           </div>
           <Link href="/admin/patients/new">
@@ -220,10 +240,30 @@ export default function PatientsPage() {
       {/* Stats Cards */}
       <motion.div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8" {...fadeInUp}>
         {[
-          { title: "Total de Pacientes", value: stats.total.toString(), color: "blue", icon: Users },
-          { title: "Pacientes Ativos", value: stats.active.toString(), color: "emerald", icon: Users },
-          { title: "Novos este Mês", value: stats.newThisMonth.toString(), color: "purple", icon: UserPlus },
-          { title: "Consultas Agendadas", value: stats.appointments.toString(), color: "orange", icon: Calendar },
+          {
+            title: 'Total de Pacientes',
+            value: stats.total.toString(),
+            color: 'blue',
+            icon: Users,
+          },
+          {
+            title: 'Pacientes Ativos',
+            value: stats.active.toString(),
+            color: 'emerald',
+            icon: Users,
+          },
+          {
+            title: 'Novos este Mês',
+            value: stats.newThisMonth.toString(),
+            color: 'purple',
+            icon: UserPlus,
+          },
+          {
+            title: 'Consultas Agendadas',
+            value: stats.appointments.toString(),
+            color: 'orange',
+            icon: Calendar,
+          },
         ].map((stat, index) => (
           <motion.div
             key={stat.title}
@@ -257,7 +297,10 @@ export default function PatientsPage() {
       </motion.div>
 
       {/* Patients Table */}
-      <motion.div className="bg-white rounded-xl shadow-sm border border-gray-200" {...fadeInUp}>
+      <motion.div
+        className="bg-white rounded-xl shadow-sm border border-gray-200"
+        {...fadeInUp}
+      >
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold text-gray-900">Lista de Pacientes</h2>
@@ -280,7 +323,9 @@ export default function PatientsPage() {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Paciente
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">CPF</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  CPF
+                </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Contato
                 </th>
@@ -310,9 +355,11 @@ export default function PatientsPage() {
                       <p className="text-lg font-medium">Nenhum paciente encontrado</p>
                       <p className="text-sm">
                         {searchTerm ||
-                        Object.values(filters).some((f) => (Array.isArray(f) ? f.length > 0 : f !== "" && f !== null))
-                          ? "Tente ajustar os filtros de busca"
-                          : "Cadastre o primeiro paciente para começar"}
+                        Object.values(filters).some((f) =>
+                          Array.isArray(f) ? f.length > 0 : f !== '' && f !== null,
+                        )
+                          ? 'Tente ajustar os filtros de busca'
+                          : 'Cadastre o primeiro paciente para começar'}
                       </p>
                     </div>
                   </td>
@@ -322,7 +369,7 @@ export default function PatientsPage() {
                   <motion.tr
                     key={patient.id}
                     className="hover:bg-gray-50 transition-colors"
-                    whileHover={{ backgroundColor: "#f9fafb" }}
+                    whileHover={{ backgroundColor: '#f9fafb' }}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.2 }}
@@ -332,21 +379,25 @@ export default function PatientsPage() {
                         <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
                           <span className="text-blue-700 font-semibold text-sm">
                             {patient.nome
-                              .split(" ")
+                              .split(' ')
                               .map((n) => n[0])
-                              .join("")
+                              .join('')
                               .slice(0, 2)}
                           </span>
                         </div>
                         <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900">{patient.nome}</div>
+                          <div className="text-sm font-medium text-gray-900">
+                            {patient.nome}
+                          </div>
                           <div className="text-sm text-gray-500">
-                            {patient.sexo_biologico === "M" ? "Masculino" : "Feminino"}
+                            {patient.sexo_biologico === 'M' ? 'Masculino' : 'Feminino'}
                           </div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{patient.cpf}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {patient.cpf}
+                    </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-900 flex items-center gap-1">
                         <Phone className="h-3 w-3" />
@@ -363,11 +414,11 @@ export default function PatientsPage() {
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span
                         className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                          patient.status === "Ativo"
-                            ? "bg-emerald-100 text-emerald-800"
-                            : patient.status === "Inativo"
-                              ? "bg-red-100 text-red-800"
-                              : "bg-yellow-100 text-yellow-800"
+                          patient.status === 'Ativo'
+                            ? 'bg-emerald-100 text-emerald-800'
+                            : patient.status === 'Inativo'
+                              ? 'bg-red-100 text-red-800'
+                              : 'bg-yellow-100 text-yellow-800'
                         }`}
                       >
                         {patient.status}
@@ -376,18 +427,18 @@ export default function PatientsPage() {
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span
                         className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                          patient.plano === "Premium"
-                            ? "bg-purple-100 text-purple-800"
-                            : patient.plano === "Executivo"
-                              ? "bg-orange-100 text-orange-800"
-                              : "bg-blue-100 text-blue-800"
+                          patient.plano === 'Premium'
+                            ? 'bg-purple-100 text-purple-800'
+                            : patient.plano === 'Executivo'
+                              ? 'bg-orange-100 text-orange-800'
+                              : 'bg-blue-100 text-blue-800'
                         }`}
                       >
                         {patient.plano}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {new Date(patient.ultima_consulta).toLocaleDateString("pt-BR")}
+                      {new Date(patient.ultima_consulta).toLocaleDateString('pt-BR')}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div className="flex items-center gap-2">
@@ -465,16 +516,16 @@ export default function PatientsPage() {
       <DeleteConfirmationModal
         isOpen={showDeleteModal}
         onClose={() => {
-          setShowDeleteModal(false)
-          setPatientToDelete(null)
+          setShowDeleteModal(false);
+          setPatientToDelete(null);
         }}
         onConfirm={handleDeleteConfirm}
         isDeleting={isDeleting}
         title="Confirmar Exclusão"
         description="Esta ação não pode ser desfeita"
-        itemName={patientToDelete?.nome || ""}
+        itemName={patientToDelete?.nome || ''}
         warningMessage={`Você está prestes a excluir permanentemente o paciente ${patientToDelete?.nome}. Todos os dados associados serão perdidos.`}
       />
     </div>
-  )
+  );
 }

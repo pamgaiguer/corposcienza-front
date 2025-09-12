@@ -1,454 +1,393 @@
-"use client"
+'use client';
 
-import { motion } from "framer-motion"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Users,
   Calendar,
-  FileText,
-  Activity,
   TrendingUp,
+  Activity,
+  AlertCircle,
+  CheckCircle,
   UserPlus,
-  CalendarPlus,
-  Bell,
-  Search,
-  Filter,
-  Download,
-  MoreVertical,
-  Eye,
-  Edit,
-  Trash2,
-} from "lucide-react"
-
-const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6 },
-}
-
-const staggerContainer = {
-  animate: {
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-}
+  FileText,
+  Heart,
+  Brain,
+  Stethoscope,
+} from 'lucide-react';
+import Link from 'next/link';
 
 export default function AdminDashboard() {
   const stats = [
     {
-      title: "Total de Pacientes",
-      value: "1,247",
-      change: "+12%",
-      changeType: "positive",
+      title: 'Total Patients',
+      value: '2,847',
+      change: '+12%',
+      trend: 'up',
       icon: Users,
-      color: "blue",
+      color: 'blue',
     },
     {
-      title: "Consultas Hoje",
-      value: "23",
-      change: "+5%",
-      changeType: "positive",
+      title: 'Appointments Today',
+      value: '24',
+      change: '+3',
+      trend: 'up',
       icon: Calendar,
-      color: "emerald",
+      color: 'green',
     },
     {
-      title: "Receita Mensal",
-      value: "R$ 89.4K",
-      change: "+18%",
-      changeType: "positive",
+      title: 'Revenue This Month',
+      value: '$45,231',
+      change: '+8%',
+      trend: 'up',
       icon: TrendingUp,
-      color: "purple",
+      color: 'emerald',
     },
     {
-      title: "Taxa de Satisfação",
-      value: "98.2%",
-      change: "+2.1%",
-      changeType: "positive",
+      title: 'Active Cases',
+      value: '156',
+      change: '-2%',
+      trend: 'down',
       icon: Activity,
-      color: "orange",
+      color: 'orange',
     },
-  ]
+  ];
 
-  const recentPatients = [
+  const recentAppointments = [
     {
       id: 1,
-      name: "Maria Silva Santos",
-      email: "maria.silva@email.com",
-      phone: "(11) 99999-9999",
-      lastVisit: "2024-01-15",
-      status: "Ativo",
-      plan: "Premium",
+      patient: 'Sarah Johnson',
+      time: '09:00 AM',
+      type: 'Consultation',
+      status: 'confirmed',
+      avatar: '/placeholder.svg?height=32&width=32',
     },
     {
       id: 2,
-      name: "João Carlos Oliveira",
-      email: "joao.carlos@email.com",
-      phone: "(11) 88888-8888",
-      lastVisit: "2024-01-14",
-      status: "Ativo",
-      plan: "Essencial",
+      patient: 'Michael Chen',
+      time: '10:30 AM',
+      type: 'Follow-up',
+      status: 'in-progress',
+      avatar: '/placeholder.svg?height=32&width=32',
     },
     {
       id: 3,
-      name: "Ana Paula Costa",
-      email: "ana.paula@email.com",
-      phone: "(11) 77777-7777",
-      lastVisit: "2024-01-13",
-      status: "Inativo",
-      plan: "Executivo",
+      patient: 'Emily Davis',
+      time: '02:00 PM',
+      type: 'Check-up',
+      status: 'pending',
+      avatar: '/placeholder.svg?height=32&width=32',
     },
     {
       id: 4,
-      name: "Carlos Eduardo Lima",
-      email: "carlos.eduardo@email.com",
-      phone: "(11) 66666-6666",
-      lastVisit: "2024-01-12",
-      status: "Ativo",
-      plan: "Premium",
+      patient: 'Robert Wilson',
+      time: '03:30 PM',
+      type: 'Consultation',
+      status: 'confirmed',
+      avatar: '/placeholder.svg?height=32&width=32',
     },
-  ]
+  ];
 
-  const upcomingAppointments = [
+  const quickActions = [
     {
-      id: 1,
-      patient: "Maria Silva Santos",
-      doctor: "Dr. Henrique",
-      time: "09:00",
-      type: "Consulta",
-      status: "Confirmado",
+      title: 'Add New Patient',
+      description: 'Register a new patient in the system',
+      icon: UserPlus,
+      href: '/admin/patients/new',
+      color: 'blue',
     },
     {
-      id: 2,
-      patient: "João Carlos Oliveira",
-      doctor: "Dra. Ana",
-      time: "10:30",
-      type: "Retorno",
-      status: "Pendente",
+      title: 'Schedule Appointment',
+      description: 'Book a new appointment',
+      icon: Calendar,
+      href: '/admin/appointments/new',
+      color: 'green',
     },
     {
-      id: 3,
-      patient: "Ana Paula Costa",
-      doctor: "Dr. Roberto",
-      time: "14:00",
-      type: "Exame",
-      status: "Confirmado",
+      title: 'View Reports',
+      description: 'Access medical reports and analytics',
+      icon: FileText,
+      href: '/admin/reports',
+      color: 'purple',
     },
     {
-      id: 4,
-      patient: "Carlos Eduardo Lima",
-      doctor: "Dr. Henrique",
-      time: "15:30",
-      type: "Consulta",
-      status: "Confirmado",
+      title: 'Emergency Alerts',
+      description: 'Check urgent notifications',
+      icon: AlertCircle,
+      href: '/admin/alerts',
+      color: 'red',
     },
-  ]
+  ];
+
+  const departmentStats = [
+    { name: 'Cardiology', patients: 145, progress: 78, icon: Heart, color: 'red' },
+    { name: 'Neurology', patients: 98, progress: 65, icon: Brain, color: 'purple' },
+    {
+      name: 'General Medicine',
+      patients: 234,
+      progress: 89,
+      icon: Stethoscope,
+      color: 'blue',
+    },
+    { name: 'Pediatrics', patients: 87, progress: 56, icon: Users, color: 'green' },
+  ];
 
   return (
-    <div className="flex-1 p-8 bg-gray-50 min-h-screen">
+    <div className="space-y-8 p-8 bg-gray-50 dark:bg-gray-900 min-h-screen">
       {/* Header */}
-      <motion.div className="mb-8" {...fadeInUp}>
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Dashboard Administrativo</h1>
-            <p className="text-gray-600 mt-1">Bem-vindo de volta! Aqui está o resumo de hoje.</p>
-          </div>
-          <div className="flex items-center gap-4">
-            <motion.button
-              className="relative p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Bell className="h-6 w-6" />
-              <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
-            </motion.button>
-            <motion.button
-              className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <UserPlus className="mr-2 h-4 w-4" />
-              Novo Paciente
-            </motion.button>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Stats Cards */}
-      <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
-        variants={staggerContainer}
-        initial="initial"
-        animate="animate"
-      >
-        {stats.map((stat, index) => (
-          <motion.div
-            key={stat.title}
-            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow"
-            variants={fadeInUp}
-            whileHover={{ y: -2 }}
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">{stat.title}</p>
-                <p className="text-2xl font-bold text-gray-900 mt-1">{stat.value}</p>
-                <div className="flex items-center mt-2">
-                  <span
-                    className={`text-sm font-medium ${
-                      stat.changeType === "positive" ? "text-emerald-600" : "text-red-600"
-                    }`}
-                  >
-                    {stat.change}
-                  </span>
-                  <span className="text-sm text-gray-500 ml-1">vs mês anterior</span>
-                </div>
-              </div>
-              <div className={`p-3 bg-${stat.color}-100 rounded-lg`}>
-                <stat.icon className={`h-6 w-6 text-${stat.color}-600`} />
-              </div>
-            </div>
-          </motion.div>
-        ))}
-      </motion.div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Recent Patients */}
-        <motion.div className="lg:col-span-2" {...fadeInUp}>
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-            <div className="p-6 border-b border-gray-200">
-              <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-gray-900">Pacientes Recentes</h2>
-                <div className="flex items-center gap-2">
-                  <motion.button
-                    className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    <Search className="h-4 w-4" />
-                  </motion.button>
-                  <motion.button
-                    className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    <Filter className="h-4 w-4" />
-                  </motion.button>
-                  <motion.button
-                    className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    <Download className="h-4 w-4" />
-                  </motion.button>
-                </div>
-              </div>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Paciente
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Contato
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Última Visita
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Status
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Plano
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Ações
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {recentPatients.map((patient) => (
-                    <motion.tr
-                      key={patient.id}
-                      className="hover:bg-gray-50 transition-colors"
-                      whileHover={{ backgroundColor: "#f9fafb" }}
-                    >
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                            <span className="text-blue-700 font-semibold text-sm">
-                              {patient.name
-                                .split(" ")
-                                .map((n) => n[0])
-                                .join("")
-                                .slice(0, 2)}
-                            </span>
-                          </div>
-                          <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900">{patient.name}</div>
-                            <div className="text-sm text-gray-500">ID: #{patient.id.toString().padStart(4, "0")}</div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">{patient.email}</div>
-                        <div className="text-sm text-gray-500">{patient.phone}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {new Date(patient.lastVisit).toLocaleDateString("pt-BR")}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span
-                          className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                            patient.status === "Ativo" ? "bg-emerald-100 text-emerald-800" : "bg-red-100 text-red-800"
-                          }`}
-                        >
-                          {patient.status}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span
-                          className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                            patient.plan === "Premium"
-                              ? "bg-purple-100 text-purple-800"
-                              : patient.plan === "Executivo"
-                                ? "bg-orange-100 text-orange-800"
-                                : "bg-blue-100 text-blue-800"
-                          }`}
-                        >
-                          {patient.plan}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <div className="flex items-center gap-2">
-                          <motion.button
-                            className="text-blue-600 hover:text-blue-900 p-1 hover:bg-blue-50 rounded transition-colors"
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}
-                          >
-                            <Eye className="h-4 w-4" />
-                          </motion.button>
-                          <motion.button
-                            className="text-emerald-600 hover:text-emerald-900 p-1 hover:bg-emerald-50 rounded transition-colors"
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}
-                          >
-                            <Edit className="h-4 w-4" />
-                          </motion.button>
-                          <motion.button
-                            className="text-red-600 hover:text-red-900 p-1 hover:bg-red-50 rounded transition-colors"
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </motion.button>
-                        </div>
-                      </td>
-                    </motion.tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <div className="px-6 py-4 border-t border-gray-200">
-              <div className="flex items-center justify-between">
-                <p className="text-sm text-gray-700">Mostrando 4 de 1,247 pacientes</p>
-                <motion.button
-                  className="text-blue-600 hover:text-blue-800 text-sm font-medium"
-                  whileHover={{ scale: 1.02 }}
-                >
-                  Ver todos os pacientes →
-                </motion.button>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Upcoming Appointments */}
-        <motion.div {...fadeInUp}>
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-            <div className="p-6 border-b border-gray-200">
-              <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-gray-900">Próximas Consultas</h2>
-                <motion.button
-                  className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <CalendarPlus className="h-4 w-4" />
-                </motion.button>
-              </div>
-            </div>
-            <div className="p-6 space-y-4">
-              {upcomingAppointments.map((appointment) => (
-                <motion.div
-                  key={appointment.id}
-                  className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-                  whileHover={{ scale: 1.01 }}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                    <div>
-                      <p className="text-sm font-medium text-gray-900">{appointment.patient}</p>
-                      <p className="text-xs text-gray-500">
-                        {appointment.time} - {appointment.doctor}
-                      </p>
-                      <p className="text-xs text-gray-500">{appointment.type}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                        appointment.status === "Confirmado"
-                          ? "bg-emerald-100 text-emerald-800"
-                          : "bg-yellow-100 text-yellow-800"
-                      }`}
-                    >
-                      {appointment.status}
-                    </span>
-                    <motion.button
-                      className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
-                      whileHover={{ scale: 1.1 }}
-                    >
-                      <MoreVertical className="h-4 w-4" />
-                    </motion.button>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-            <div className="px-6 py-4 border-t border-gray-200">
-              <motion.button
-                className="w-full text-blue-600 hover:text-blue-800 text-sm font-medium text-center"
-                whileHover={{ scale: 1.02 }}
-              >
-                Ver todas as consultas
-              </motion.button>
-            </div>
-          </div>
-        </motion.div>
+      <div className="flex flex-col space-y-2">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
+        <p className="text-gray-600 dark:text-gray-400">
+          Welcome back! Here's what's happening at your medical center today.
+        </p>
       </div>
 
-      {/* Quick Actions */}
-      <motion.div className="mt-8" {...fadeInUp}>
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Ações Rápidas</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[
-            { title: "Novo Paciente", icon: UserPlus, color: "blue" },
-            { title: "Agendar Consulta", icon: CalendarPlus, color: "emerald" },
-            { title: "Relatórios", icon: FileText, color: "purple" },
-            { title: "Configurações", icon: Activity, color: "orange" },
-          ].map((action, index) => (
-            <motion.button
-              key={action.title}
-              className={`p-6 bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-all text-center group`}
-              whileHover={{ y: -2, scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <div
-                className={`w-12 h-12 bg-${action.color}-100 rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:bg-${action.color}-200 transition-colors`}
-              >
-                <action.icon className={`h-6 w-6 text-${action.color}-600`} />
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {stats.map((stat, index) => (
+          <Card
+            key={index}
+            className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+          >
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                {stat.title}
+              </CardTitle>
+              <stat.icon
+                className={`h-4 w-4 text-${stat.color}-600 dark:text-${stat.color}-400`}
+              />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                {stat.value}
               </div>
-              <p className="text-sm font-medium text-gray-900">{action.title}</p>
-            </motion.button>
-          ))}
-        </div>
-      </motion.div>
+              <p
+                className={`text-xs ${
+                  stat.trend === 'up'
+                    ? 'text-green-600 dark:text-green-400'
+                    : 'text-red-600 dark:text-red-400'
+                }`}
+              >
+                {stat.change} from last month
+              </p>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Recent Appointments */}
+        <Card className="lg:col-span-2 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <CardHeader>
+            <CardTitle className="text-gray-900 dark:text-white">
+              Today's Appointments
+            </CardTitle>
+            <CardDescription className="text-gray-600 dark:text-gray-400">
+              Upcoming appointments for today
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {recentAppointments.map((appointment) => (
+                <div
+                  key={appointment.id}
+                  className="flex items-center space-x-4 p-3 rounded-lg bg-gray-50 dark:bg-gray-700"
+                >
+                  <Avatar>
+                    <AvatarImage src={appointment.avatar || '/placeholder.svg'} />
+                    <AvatarFallback className="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400">
+                      {appointment.patient
+                        .split(' ')
+                        .map((n) => n[0])
+                        .join('')}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1 space-y-1">
+                    <p className="text-sm font-medium text-gray-900 dark:text-white">
+                      {appointment.patient}
+                    </p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      {appointment.time} • {appointment.type}
+                    </p>
+                  </div>
+                  <Badge
+                    variant={
+                      appointment.status === 'confirmed'
+                        ? 'default'
+                        : appointment.status === 'in-progress'
+                          ? 'secondary'
+                          : 'outline'
+                    }
+                    className={
+                      appointment.status === 'confirmed'
+                        ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
+                        : appointment.status === 'in-progress'
+                          ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200'
+                          : 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200'
+                    }
+                  >
+                    {appointment.status}
+                  </Badge>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4">
+              <Button
+                asChild
+                variant="outline"
+                className="w-full border-gray-300 dark:border-gray-600 bg-transparent"
+              >
+                <Link href="/admin/appointments">View All Appointments</Link>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Quick Actions */}
+        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <CardHeader>
+            <CardTitle className="text-gray-900 dark:text-white">Quick Actions</CardTitle>
+            <CardDescription className="text-gray-600 dark:text-gray-400">
+              Frequently used actions
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {quickActions.map((action, index) => (
+                <Button
+                  key={index}
+                  asChild
+                  variant="ghost"
+                  className="w-full justify-start h-auto p-3 hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  <Link href={action.href}>
+                    <action.icon
+                      className={`mr-3 h-4 w-4 text-${action.color}-600 dark:text-${action.color}-400`}
+                    />
+                    <div className="text-left">
+                      <div className="font-medium text-gray-900 dark:text-white">
+                        {action.title}
+                      </div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400">
+                        {action.description}
+                      </div>
+                    </div>
+                  </Link>
+                </Button>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Department Statistics */}
+      <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+        <CardHeader>
+          <CardTitle className="text-gray-900 dark:text-white">
+            Department Overview
+          </CardTitle>
+          <CardDescription className="text-gray-600 dark:text-gray-400">
+            Patient distribution across departments
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {departmentStats.map((dept, index) => (
+              <div key={index} className="space-y-3">
+                <div className="flex items-center space-x-2">
+                  <dept.icon
+                    className={`h-5 w-5 text-${dept.color}-600 dark:text-${dept.color}-400`}
+                  />
+                  <span className="font-medium text-gray-900 dark:text-white">
+                    {dept.name}
+                  </span>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600 dark:text-gray-400">Patients</span>
+                    <span className="font-medium text-gray-900 dark:text-white">
+                      {dept.patients}
+                    </span>
+                  </div>
+                  <Progress value={dept.progress} className="h-2" />
+                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                    {dept.progress}% capacity
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Recent Activity */}
+      <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+        <CardHeader>
+          <CardTitle className="text-gray-900 dark:text-white">Recent Activity</CardTitle>
+          <CardDescription className="text-gray-600 dark:text-gray-400">
+            Latest updates and notifications
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {[
+              {
+                icon: CheckCircle,
+                message: 'Patient Sarah Johnson completed her check-up',
+                time: '2 minutes ago',
+                type: 'success',
+              },
+              {
+                icon: UserPlus,
+                message: 'New patient Michael Chen registered',
+                time: '15 minutes ago',
+                type: 'info',
+              },
+              {
+                icon: AlertCircle,
+                message: 'Lab results ready for Emily Davis',
+                time: '1 hour ago',
+                type: 'warning',
+              },
+              {
+                icon: Calendar,
+                message: 'Appointment scheduled for Robert Wilson',
+                time: '2 hours ago',
+                type: 'info',
+              },
+            ].map((activity, index) => (
+              <div key={index} className="flex items-start space-x-3">
+                <activity.icon
+                  className={`h-5 w-5 mt-0.5 ${
+                    activity.type === 'success'
+                      ? 'text-green-600 dark:text-green-400'
+                      : activity.type === 'warning'
+                        ? 'text-yellow-600 dark:text-yellow-400'
+                        : 'text-blue-600 dark:text-blue-400'
+                  }`}
+                />
+                <div className="flex-1 space-y-1">
+                  <p className="text-sm text-gray-900 dark:text-white">
+                    {activity.message}
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    {activity.time}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
     </div>
-  )
+  );
 }

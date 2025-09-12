@@ -1,9 +1,17 @@
-"use client"
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { motion } from "framer-motion"
-import { Users, TrendingUp, Activity, UserPlus, BarChart3 } from "lucide-react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+'use client';
+
+import { motion } from 'framer-motion';
+import { Users, TrendingUp, Activity, UserPlus, BarChart3 } from 'lucide-react';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import {
   BarChart,
   Bar,
@@ -17,13 +25,13 @@ import {
   Line,
   AreaChart,
   Area,
-} from "recharts"
+} from 'recharts';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.6 },
-}
+};
 
 const staggerContainer = {
   animate: {
@@ -31,107 +39,107 @@ const staggerContainer = {
       staggerChildren: 0.1,
     },
   },
-}
+};
 
 export default function AnalyticsPage() {
   // Mock data for analytics
   const stats = [
     {
-      title: "Total de Pacientes",
-      value: "1,247",
-      change: "+12%",
-      changeType: "positive",
+      title: 'Total de Pacientes',
+      value: '1,247',
+      change: '+12%',
+      changeType: 'positive',
       icon: Users,
-      color: "blue",
-      description: "vs mês anterior",
+      color: 'blue',
+      description: 'vs mês anterior',
     },
     {
-      title: "Novos Pacientes (30d)",
-      value: "89",
-      change: "+23%",
-      changeType: "positive",
+      title: 'Novos Pacientes (30d)',
+      value: '89',
+      change: '+23%',
+      changeType: 'positive',
       icon: UserPlus,
-      color: "emerald",
-      description: "vs período anterior",
+      color: 'emerald',
+      description: 'vs período anterior',
     },
     {
-      title: "Taxa de Retenção",
-      value: "94.2%",
-      change: "+2.1%",
-      changeType: "positive",
+      title: 'Taxa de Retenção',
+      value: '94.2%',
+      change: '+2.1%',
+      changeType: 'positive',
       icon: Activity,
-      color: "purple",
-      description: "últimos 6 meses",
+      color: 'purple',
+      description: 'últimos 6 meses',
     },
     {
-      title: "Receita Média/Paciente",
-      value: "R$ 342",
-      change: "+8%",
-      changeType: "positive",
+      title: 'Receita Média/Paciente',
+      value: 'R$ 342',
+      change: '+8%',
+      changeType: 'positive',
       icon: TrendingUp,
-      color: "orange",
-      description: "vs mês anterior",
+      color: 'orange',
+      description: 'vs mês anterior',
     },
-  ]
+  ];
 
   // Patient registration trend data
   const registrationTrend = [
-    { month: "Jan", patients: 65, revenue: 22000 },
-    { month: "Fev", patients: 78, revenue: 26500 },
-    { month: "Mar", patients: 92, revenue: 31200 },
-    { month: "Abr", patients: 85, revenue: 28900 },
-    { month: "Mai", patients: 103, revenue: 35100 },
-    { month: "Jun", patients: 89, revenue: 30400 },
-    { month: "Jul", patients: 95, revenue: 32300 },
-    { month: "Ago", patients: 112, revenue: 38200 },
-    { month: "Set", patients: 98, revenue: 33400 },
-    { month: "Out", patients: 107, revenue: 36500 },
-    { month: "Nov", patients: 89, revenue: 30300 },
-    { month: "Dez", patients: 94, revenue: 32000 },
-  ]
+    { month: 'Jan', patients: 65, revenue: 22000 },
+    { month: 'Fev', patients: 78, revenue: 26500 },
+    { month: 'Mar', patients: 92, revenue: 31200 },
+    { month: 'Abr', patients: 85, revenue: 28900 },
+    { month: 'Mai', patients: 103, revenue: 35100 },
+    { month: 'Jun', patients: 89, revenue: 30400 },
+    { month: 'Jul', patients: 95, revenue: 32300 },
+    { month: 'Ago', patients: 112, revenue: 38200 },
+    { month: 'Set', patients: 98, revenue: 33400 },
+    { month: 'Out', patients: 107, revenue: 36500 },
+    { month: 'Nov', patients: 89, revenue: 30300 },
+    { month: 'Dez', patients: 94, revenue: 32000 },
+  ];
 
   // Age distribution data
   const ageDistribution = [
-    { range: "0-18", count: 156, percentage: 12.5 },
-    { range: "19-30", count: 298, percentage: 23.9 },
-    { range: "31-45", count: 387, percentage: 31.0 },
-    { range: "46-60", count: 267, percentage: 21.4 },
-    { range: "60+", count: 139, percentage: 11.2 },
-  ]
+    { range: '0-18', count: 156, percentage: 12.5 },
+    { range: '19-30', count: 298, percentage: 23.9 },
+    { range: '31-45', count: 387, percentage: 31.0 },
+    { range: '46-60', count: 267, percentage: 21.4 },
+    { range: '60+', count: 139, percentage: 11.2 },
+  ];
 
   // Plan distribution data
   const planDistribution = [
-    { name: "Essencial", value: 487, color: "#3B82F6" },
-    { name: "Premium", value: 423, color: "#8B5CF6" },
-    { name: "Executivo", value: 337, color: "#F59E0B" },
-  ]
+    { name: 'Essencial', value: 487, color: '#3B82F6' },
+    { name: 'Premium', value: 423, color: '#8B5CF6' },
+    { name: 'Executivo', value: 337, color: '#F59E0B' },
+  ];
 
   // Gender distribution data
   const genderDistribution = [
-    { name: "Feminino", value: 678, color: "#EC4899" },
-    { name: "Masculino", value: 569, color: "#06B6D4" },
-  ]
+    { name: 'Feminino', value: 678, color: '#EC4899' },
+    { name: 'Masculino', value: 569, color: '#06B6D4' },
+  ];
 
   // City distribution data
   const cityDistribution = [
-    { city: "São Paulo", count: 423, percentage: 33.9 },
-    { city: "Rio de Janeiro", count: 298, percentage: 23.9 },
-    { city: "Belo Horizonte", count: 187, percentage: 15.0 },
-    { city: "Brasília", count: 156, percentage: 12.5 },
-    { city: "Salvador", count: 98, percentage: 7.9 },
-    { city: "Outros", count: 85, percentage: 6.8 },
-  ]
+    { city: 'São Paulo', count: 423, percentage: 33.9 },
+    { city: 'Rio de Janeiro', count: 298, percentage: 23.9 },
+    { city: 'Belo Horizonte', count: 187, percentage: 15.0 },
+    { city: 'Brasília', count: 156, percentage: 12.5 },
+    { city: 'Salvador', count: 98, percentage: 7.9 },
+    { city: 'Outros', count: 85, percentage: 6.8 },
+  ];
 
   // Appointment trends
   const appointmentTrends = [
-    { day: "Seg", appointments: 45, completed: 42, cancelled: 3 },
-    { day: "Ter", appointments: 52, completed: 48, cancelled: 4 },
-    { day: "Qua", appointments: 48, completed: 45, cancelled: 3 },
-    { day: "Qui", appointments: 56, completed: 51, cancelled: 5 },
-    { day: "Sex", appointments: 49, completed: 46, cancelled: 3 },
-    { day: "Sáb", appointments: 23, completed: 21, cancelled: 2 },
-    { day: "Dom", appointments: 12, completed: 11, cancelled: 1 },
-  ]
+    { day: 'Seg', appointments: 45, completed: 42, cancelled: 3 },
+    { day: 'Ter', appointments: 52, completed: 48, cancelled: 4 },
+    { day: 'Qua', appointments: 48, completed: 45, cancelled: 3 },
+    { day: 'Qui', appointments: 56, completed: 51, cancelled: 5 },
+    { day: 'Sex', appointments: 49, completed: 46, cancelled: 3 },
+    { day: 'Sáb', appointments: 23, completed: 21, cancelled: 2 },
+    { day: 'Dom', appointments: 12, completed: 11, cancelled: 1 },
+  ];
 
   return (
     <div className="flex-1 p-8 bg-gray-50 min-h-screen">
@@ -179,12 +187,16 @@ export default function AnalyticsPage() {
                     <div className="flex items-center mt-2">
                       <span
                         className={`text-sm font-medium ${
-                          stat.changeType === "positive" ? "text-emerald-600" : "text-red-600"
+                          stat.changeType === 'positive'
+                            ? 'text-emerald-600'
+                            : 'text-red-600'
                         }`}
                       >
                         {stat.change}
                       </span>
-                      <span className="text-sm text-gray-500 ml-1">{stat.description}</span>
+                      <span className="text-sm text-gray-500 ml-1">
+                        {stat.description}
+                      </span>
                     </div>
                   </div>
                   <div className={`p-3 bg-${stat.color}-100 rounded-lg`}>
@@ -209,12 +221,12 @@ export default function AnalyticsPage() {
               <ChartContainer
                 config={{
                   patients: {
-                    label: "Pacientes",
-                    color: "hsl(var(--chart-1))",
+                    label: 'Pacientes',
+                    color: 'hsl(var(--chart-1))',
                   },
                   revenue: {
-                    label: "Receita",
-                    color: "hsl(var(--chart-2))",
+                    label: 'Receita',
+                    color: 'hsl(var(--chart-2))',
                   },
                 }}
                 className="h-[300px]"
@@ -259,8 +271,8 @@ export default function AnalyticsPage() {
               <ChartContainer
                 config={{
                   count: {
-                    label: "Pacientes",
-                    color: "hsl(var(--chart-1))",
+                    label: 'Pacientes',
+                    color: 'hsl(var(--chart-1))',
                   },
                 }}
                 className="h-[300px]"
@@ -271,7 +283,11 @@ export default function AnalyticsPage() {
                     <XAxis dataKey="range" />
                     <YAxis />
                     <ChartTooltip content={<ChartTooltipContent />} />
-                    <Bar dataKey="count" fill="var(--color-count)" radius={[4, 4, 0, 0]} />
+                    <Bar
+                      dataKey="count"
+                      fill="var(--color-count)"
+                      radius={[4, 4, 0, 0]}
+                    />
                   </BarChart>
                 </ResponsiveContainer>
               </ChartContainer>
@@ -292,16 +308,16 @@ export default function AnalyticsPage() {
               <ChartContainer
                 config={{
                   essencial: {
-                    label: "Essencial",
-                    color: "#3B82F6",
+                    label: 'Essencial',
+                    color: '#3B82F6',
                   },
                   premium: {
-                    label: "Premium",
-                    color: "#8B5CF6",
+                    label: 'Premium',
+                    color: '#8B5CF6',
                   },
                   executivo: {
-                    label: "Executivo",
-                    color: "#F59E0B",
+                    label: 'Executivo',
+                    color: '#F59E0B',
                   },
                 }}
                 className="h-[250px]"
@@ -329,10 +345,15 @@ export default function AnalyticsPage() {
                 {planDistribution.map((plan) => (
                   <div key={plan.name} className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full" style={{ backgroundColor: plan.color }}></div>
+                      <div
+                        className="w-3 h-3 rounded-full"
+                        style={{ backgroundColor: plan.color }}
+                      ></div>
                       <span className="text-sm text-gray-700">{plan.name}</span>
                     </div>
-                    <span className="text-sm font-medium text-gray-900">{plan.value}</span>
+                    <span className="text-sm font-medium text-gray-900">
+                      {plan.value}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -351,12 +372,12 @@ export default function AnalyticsPage() {
               <ChartContainer
                 config={{
                   feminino: {
-                    label: "Feminino",
-                    color: "#EC4899",
+                    label: 'Feminino',
+                    color: '#EC4899',
                   },
                   masculino: {
-                    label: "Masculino",
-                    color: "#06B6D4",
+                    label: 'Masculino',
+                    color: '#06B6D4',
                   },
                 }}
                 className="h-[250px]"
@@ -384,7 +405,10 @@ export default function AnalyticsPage() {
                 {genderDistribution.map((gender) => (
                   <div key={gender.name} className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full" style={{ backgroundColor: gender.color }}></div>
+                      <div
+                        className="w-3 h-3 rounded-full"
+                        style={{ backgroundColor: gender.color }}
+                      ></div>
                       <span className="text-sm text-gray-700">{gender.name}</span>
                     </div>
                     <span className="text-sm font-medium text-gray-900">
@@ -414,7 +438,9 @@ export default function AnalyticsPage() {
                       </div>
                       <div>
                         <p className="text-sm font-medium text-gray-900">{city.city}</p>
-                        <p className="text-xs text-gray-500">{city.percentage}% do total</p>
+                        <p className="text-xs text-gray-500">
+                          {city.percentage}% do total
+                        </p>
                       </div>
                     </div>
                     <div className="text-right">
@@ -439,22 +465,24 @@ export default function AnalyticsPage() {
         <Card>
           <CardHeader>
             <CardTitle>Tendência de Consultas</CardTitle>
-            <CardDescription>Consultas agendadas, realizadas e canceladas por dia da semana</CardDescription>
+            <CardDescription>
+              Consultas agendadas, realizadas e canceladas por dia da semana
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <ChartContainer
               config={{
                 appointments: {
-                  label: "Agendadas",
-                  color: "hsl(var(--chart-1))",
+                  label: 'Agendadas',
+                  color: 'hsl(var(--chart-1))',
                 },
                 completed: {
-                  label: "Realizadas",
-                  color: "hsl(var(--chart-2))",
+                  label: 'Realizadas',
+                  color: 'hsl(var(--chart-2))',
                 },
                 cancelled: {
-                  label: "Canceladas",
-                  color: "hsl(var(--chart-3))",
+                  label: 'Canceladas',
+                  color: 'hsl(var(--chart-3))',
                 },
               }}
               className="h-[300px]"
@@ -465,9 +493,21 @@ export default function AnalyticsPage() {
                   <XAxis dataKey="day" />
                   <YAxis />
                   <ChartTooltip content={<ChartTooltipContent />} />
-                  <Bar dataKey="appointments" fill="var(--color-appointments)" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="completed" fill="var(--color-completed)" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="cancelled" fill="var(--color-cancelled)" radius={[4, 4, 0, 0]} />
+                  <Bar
+                    dataKey="appointments"
+                    fill="var(--color-appointments)"
+                    radius={[4, 4, 0, 0]}
+                  />
+                  <Bar
+                    dataKey="completed"
+                    fill="var(--color-completed)"
+                    radius={[4, 4, 0, 0]}
+                  />
+                  <Bar
+                    dataKey="cancelled"
+                    fill="var(--color-cancelled)"
+                    radius={[4, 4, 0, 0]}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </ChartContainer>
@@ -486,7 +526,9 @@ export default function AnalyticsPage() {
                   <TrendingUp className="h-5 w-5 text-emerald-600" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Crescimento Acelerado</p>
+                  <p className="text-sm font-medium text-gray-600">
+                    Crescimento Acelerado
+                  </p>
                   <p className="text-lg font-bold text-gray-900">+23% novos pacientes</p>
                   <p className="text-xs text-gray-500">Melhor performance em 6 meses</p>
                 </div>
@@ -501,7 +543,9 @@ export default function AnalyticsPage() {
                   <Users className="h-5 w-5 text-blue-600" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Faixa Etária Dominante</p>
+                  <p className="text-sm font-medium text-gray-600">
+                    Faixa Etária Dominante
+                  </p>
                   <p className="text-lg font-bold text-gray-900">31-45 anos (31%)</p>
                   <p className="text-xs text-gray-500">Maior segmento de pacientes</p>
                 </div>
@@ -526,5 +570,5 @@ export default function AnalyticsPage() {
         </div>
       </motion.div>
     </div>
-  )
+  );
 }

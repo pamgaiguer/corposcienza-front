@@ -1,42 +1,44 @@
-"use client"
+/* eslint-disable no-console */
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { ArrowLeft, UserPlus } from "lucide-react"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import PatientForm from "@/components/admin/patient-form/patient-form"
-import type { PatientFormData } from "@/types/patient"
+'use client';
+
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowLeft, UserPlus } from 'lucide-react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import PatientForm from '@/components/admin/patient-form/patient-form';
+import type { PatientFormData } from '@/types/patient';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.6 },
-}
+};
 
 export default function NewPatientPage() {
-  const router = useRouter()
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (formData: PatientFormData) => {
-    setIsSubmitting(true)
+    setIsSubmitting(true);
 
     try {
       // Here you would integrate with your Django API
-      console.log("New patient data:", formData)
+      console.log('New patient data:', formData);
 
       // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000))
+      await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      alert("Paciente cadastrado com sucesso!")
-      router.push("/admin/patients")
+      alert('Paciente cadastrado com sucesso!');
+      router.push('/admin/patients');
     } catch (error) {
-      console.error("Error creating patient:", error)
-      alert("Erro ao cadastrar paciente. Tente novamente.")
+      console.error('Error creating patient:', error);
+      alert('Erro ao cadastrar paciente. Tente novamente.');
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   return (
     <div className="flex-1 p-8 bg-gray-50 min-h-screen">
@@ -73,5 +75,5 @@ export default function NewPatientPage() {
         />
       </motion.div>
     </div>
-  )
+  );
 }

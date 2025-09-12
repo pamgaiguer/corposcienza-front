@@ -1,20 +1,27 @@
-"use client"
+'use client';
 
-import type React from "react"
+import type React from 'react';
 
-import { motion, AnimatePresence } from "framer-motion"
-import { AlertCircle, CheckCircle } from "lucide-react"
+import { motion, AnimatePresence } from 'framer-motion';
+import { AlertCircle, CheckCircle } from 'lucide-react';
 
 interface FormFieldProps {
-  label: string
-  required?: boolean
-  error?: string
-  success?: boolean
-  children: React.ReactNode
-  className?: string
+  label: string;
+  required?: boolean;
+  error?: string;
+  success?: boolean;
+  children: React.ReactNode;
+  className?: string;
 }
 
-export default function FormField({ label, required, error, success, children, className = "" }: FormFieldProps) {
+export default function FormField({
+  label,
+  required,
+  error,
+  success,
+  children,
+  className = '',
+}: FormFieldProps) {
   return (
     <div className={`space-y-2 ${className}`}>
       <label className="block text-sm font-medium text-gray-700">
@@ -72,5 +79,5 @@ export default function FormField({ label, required, error, success, children, c
         )}
       </AnimatePresence>
     </div>
-  )
+  );
 }

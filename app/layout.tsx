@@ -1,8 +1,9 @@
 import type React from 'react';
-import type { Metadata, Viewport } from 'next'; // <-- Added Viewport type
+import type { Metadata } from 'next';
 import { Inter, Poppins } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/contexts/theme-context';
+import ClientLayout from './clientLayout';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -40,17 +41,8 @@ export const metadata: Metadata = {
     title: 'Corpo Scienza - Medicina Personalizada',
     description: 'Cuidado médico personalizado e científico',
   },
-  generator: 'v0.app',
+  viewport: 'width=device-width, initial-scale=1',
 };
-
-// New function to handle viewport settings
-export function generateViewport(): Viewport {
-  return {
-    width: 'device-width',
-    initialScale: 1,
-    themeColor: '#2563eb',
-  };
-}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -65,7 +57,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="format-detection" content="telephone=no" />
       </head>
       <body className="antialiased">
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <ClientLayout>{children}</ClientLayout>
+        </ThemeProvider>
       </body>
     </html>
   );
