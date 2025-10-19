@@ -1,5 +1,5 @@
-'use client';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+"use client"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 
 export default function AnalyticsLoading() {
   return (
@@ -98,5 +98,5 @@ export default function AnalyticsLoading() {
         </div>
       </div>
     </div>
-  );
+  )
 }

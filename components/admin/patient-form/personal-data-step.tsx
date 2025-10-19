@@ -1,35 +1,28 @@
-'use client';
+"use client"
 
-import { motion } from 'framer-motion';
-import { User } from 'lucide-react';
-import FormField from '@/components/form/form-field';
-import type { FormStepProps } from '@/types/patient';
+import { motion } from "framer-motion"
+import { User } from "lucide-react"
+import FormField from "@/components/form/form-field"
+import type { FormStepProps } from "@/types/patient"
 
-const estadosCivis = [
-  'Solteiro(a)',
-  'Casado(a)',
-  'Divorciado(a)',
-  'Viúvo(a)',
-  'União Estável',
-  'Separado(a)',
-];
+const estadosCivis = ["Solteiro(a)", "Casado(a)", "Divorciado(a)", "Viúvo(a)", "União Estável", "Separado(a)"]
 
 const formatCPF = (value: string) => {
   return value
-    .replace(/\D/g, '')
-    .replace(/(\d{3})(\d)/, '$1.$2')
-    .replace(/(\d{3})(\d)/, '$1.$2')
-    .replace(/(\d{3})(\d{1,2})/, '$1-$2')
-    .replace(/(-\d{2})\d+?$/, '$1');
-};
+    .replace(/\D/g, "")
+    .replace(/(\d{3})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d{1,2})/, "$1-$2")
+    .replace(/(-\d{2})\d+?$/, "$1")
+}
 
 const formatPhone = (value: string) => {
   return value
-    .replace(/\D/g, '')
-    .replace(/(\d{2})(\d)/, '($1) $2')
-    .replace(/(\d{5})(\d)/, '$1-$2')
-    .replace(/(-\d{4})\d+?$/, '$1');
-};
+    .replace(/\D/g, "")
+    .replace(/(\d{2})(\d)/, "($1) $2")
+    .replace(/(\d{5})(\d)/, "$1-$2")
+    .replace(/(-\d{4})\d+?$/, "$1")
+}
 
 export default function PersonalDataStep({
   formData,
@@ -53,65 +46,50 @@ export default function PersonalDataStep({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <FormField
-          label="Nome Completo"
-          required
-          error={getFieldError('nome')}
-          success={isFieldValid('nome')}
-        >
+        <FormField label="Nome Completo" required error={getFieldError("nome")} success={isFieldValid("nome")}>
           <input
             type="text"
             value={formData.nome}
-            onChange={(e) => onInputChange('nome', e.target.value)}
+            onChange={(e) => onInputChange("nome", e.target.value)}
             className={`w-full px-4 py-3 border rounded-lg transition-colors ${
-              getFieldError('nome')
-                ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-                : isFieldValid('nome')
-                  ? 'border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500'
-                  : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+              getFieldError("nome")
+                ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                : isFieldValid("nome")
+                  ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500"
+                  : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
             } focus:ring-2`}
             placeholder="Digite o nome completo"
           />
         </FormField>
 
-        <FormField
-          label="CPF"
-          required
-          error={getFieldError('cpf')}
-          success={isFieldValid('cpf')}
-        >
+        <FormField label="CPF" required error={getFieldError("cpf")} success={isFieldValid("cpf")}>
           <input
             type="text"
             value={formData.cpf}
-            onChange={(e) => onInputChange('cpf', formatCPF(e.target.value))}
+            onChange={(e) => onInputChange("cpf", formatCPF(e.target.value))}
             className={`w-full px-4 py-3 border rounded-lg transition-colors ${
-              getFieldError('cpf')
-                ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-                : isFieldValid('cpf')
-                  ? 'border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500'
-                  : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+              getFieldError("cpf")
+                ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                : isFieldValid("cpf")
+                  ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500"
+                  : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
             } focus:ring-2`}
             placeholder="000.000.000-00"
             maxLength={14}
           />
         </FormField>
 
-        <FormField
-          label="RG"
-          required
-          error={getFieldError('rg')}
-          success={isFieldValid('rg')}
-        >
+        <FormField label="RG" required error={getFieldError("rg")} success={isFieldValid("rg")}>
           <input
             type="text"
             value={formData.rg}
-            onChange={(e) => onInputChange('rg', e.target.value)}
+            onChange={(e) => onInputChange("rg", e.target.value)}
             className={`w-full px-4 py-3 border rounded-lg transition-colors ${
-              getFieldError('rg')
-                ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-                : isFieldValid('rg')
-                  ? 'border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500'
-                  : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+              getFieldError("rg")
+                ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                : isFieldValid("rg")
+                  ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500"
+                  : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
             } focus:ring-2`}
             placeholder="Digite o RG"
           />
@@ -120,18 +98,18 @@ export default function PersonalDataStep({
         <FormField
           label="Sexo Biológico"
           required
-          error={getFieldError('sexo_biologico')}
-          success={isFieldValid('sexo_biologico')}
+          error={getFieldError("sexo_biologico")}
+          success={isFieldValid("sexo_biologico")}
         >
           <select
             value={formData.sexo_biologico}
-            onChange={(e) => onInputChange('sexo_biologico', e.target.value)}
+            onChange={(e) => onInputChange("sexo_biologico", e.target.value)}
             className={`w-full px-4 py-3 border rounded-lg transition-colors ${
-              getFieldError('sexo_biologico')
-                ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-                : isFieldValid('sexo_biologico')
-                  ? 'border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500'
-                  : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+              getFieldError("sexo_biologico")
+                ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                : isFieldValid("sexo_biologico")
+                  ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500"
+                  : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
             } focus:ring-2`}
           >
             <option value="">Selecione</option>
@@ -143,61 +121,51 @@ export default function PersonalDataStep({
         <FormField
           label="Data de Nascimento"
           required
-          error={getFieldError('data_nascimento')}
-          success={isFieldValid('data_nascimento')}
+          error={getFieldError("data_nascimento")}
+          success={isFieldValid("data_nascimento")}
         >
           <input
             type="date"
             value={formData.data_nascimento}
-            onChange={(e) => onInputChange('data_nascimento', e.target.value)}
+            onChange={(e) => onInputChange("data_nascimento", e.target.value)}
             className={`w-full px-4 py-3 border rounded-lg transition-colors ${
-              getFieldError('data_nascimento')
-                ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-                : isFieldValid('data_nascimento')
-                  ? 'border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500'
-                  : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+              getFieldError("data_nascimento")
+                ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                : isFieldValid("data_nascimento")
+                  ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500"
+                  : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
             } focus:ring-2`}
           />
         </FormField>
 
-        <FormField
-          label="Telefone"
-          required
-          error={getFieldError('telefone')}
-          success={isFieldValid('telefone')}
-        >
+        <FormField label="Telefone" required error={getFieldError("telefone")} success={isFieldValid("telefone")}>
           <input
             type="text"
             value={formData.telefone}
-            onChange={(e) => onInputChange('telefone', formatPhone(e.target.value))}
+            onChange={(e) => onInputChange("telefone", formatPhone(e.target.value))}
             className={`w-full px-4 py-3 border rounded-lg transition-colors ${
-              getFieldError('telefone')
-                ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-                : isFieldValid('telefone')
-                  ? 'border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500'
-                  : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+              getFieldError("telefone")
+                ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                : isFieldValid("telefone")
+                  ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500"
+                  : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
             } focus:ring-2`}
             placeholder="(11) 99999-9999"
             maxLength={15}
           />
         </FormField>
 
-        <FormField
-          label="E-mail"
-          required
-          error={getFieldError('email')}
-          success={isFieldValid('email')}
-        >
+        <FormField label="E-mail" required error={getFieldError("email")} success={isFieldValid("email")}>
           <input
             type="email"
             value={formData.email}
-            onChange={(e) => onInputChange('email', e.target.value)}
+            onChange={(e) => onInputChange("email", e.target.value)}
             className={`w-full px-4 py-3 border rounded-lg transition-colors ${
-              getFieldError('email')
-                ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-                : isFieldValid('email')
-                  ? 'border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500'
-                  : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+              getFieldError("email")
+                ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                : isFieldValid("email")
+                  ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500"
+                  : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
             } focus:ring-2`}
             placeholder="email@exemplo.com"
           />
@@ -206,18 +174,18 @@ export default function PersonalDataStep({
         <FormField
           label="Estado Civil"
           required
-          error={getFieldError('estado_civil')}
-          success={isFieldValid('estado_civil')}
+          error={getFieldError("estado_civil")}
+          success={isFieldValid("estado_civil")}
         >
           <select
             value={formData.estado_civil}
-            onChange={(e) => onInputChange('estado_civil', e.target.value)}
+            onChange={(e) => onInputChange("estado_civil", e.target.value)}
             className={`w-full px-4 py-3 border rounded-lg transition-colors ${
-              getFieldError('estado_civil')
-                ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-                : isFieldValid('estado_civil')
-                  ? 'border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500'
-                  : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+              getFieldError("estado_civil")
+                ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                : isFieldValid("estado_civil")
+                  ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500"
+                  : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
             } focus:ring-2`}
           >
             <option value="">Selecione</option>
@@ -232,45 +200,40 @@ export default function PersonalDataStep({
         <FormField
           label="Nacionalidade"
           required
-          error={getFieldError('nacionalidade')}
-          success={isFieldValid('nacionalidade')}
+          error={getFieldError("nacionalidade")}
+          success={isFieldValid("nacionalidade")}
         >
           <input
             type="text"
             value={formData.nacionalidade}
-            onChange={(e) => onInputChange('nacionalidade', e.target.value)}
+            onChange={(e) => onInputChange("nacionalidade", e.target.value)}
             className={`w-full px-4 py-3 border rounded-lg transition-colors ${
-              getFieldError('nacionalidade')
-                ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-                : isFieldValid('nacionalidade')
-                  ? 'border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500'
-                  : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+              getFieldError("nacionalidade")
+                ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                : isFieldValid("nacionalidade")
+                  ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500"
+                  : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
             } focus:ring-2`}
             placeholder="Brasileira"
           />
         </FormField>
 
-        <FormField
-          label="Profissão"
-          required
-          error={getFieldError('profissao')}
-          success={isFieldValid('profissao')}
-        >
+        <FormField label="Profissão" required error={getFieldError("profissao")} success={isFieldValid("profissao")}>
           <input
             type="text"
             value={formData.profissao}
-            onChange={(e) => onInputChange('profissao', e.target.value)}
+            onChange={(e) => onInputChange("profissao", e.target.value)}
             className={`w-full px-4 py-3 border rounded-lg transition-colors ${
-              getFieldError('profissao')
-                ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-                : isFieldValid('profissao')
-                  ? 'border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500'
-                  : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+              getFieldError("profissao")
+                ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                : isFieldValid("profissao")
+                  ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500"
+                  : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
             } focus:ring-2`}
             placeholder="Digite a profissão"
           />
         </FormField>
       </div>
     </motion.div>
-  );
+  )
 }

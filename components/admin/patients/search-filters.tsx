@@ -1,35 +1,33 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client"
 
-'use client';
-
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Filter, X, Calendar, User, CreditCard, ChevronDown } from 'lucide-react';
+import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { Search, Filter, X, Calendar, User, CreditCard, ChevronDown } from "lucide-react"
 
 interface SearchFiltersProps {
-  searchTerm: string;
-  onSearchChange: (term: string) => void;
-  filters: PatientFilters;
-  onFiltersChange: (filters: PatientFilters) => void;
-  onClearFilters: () => void;
-  totalResults: number;
-  isFiltering: boolean;
+  searchTerm: string
+  onSearchChange: (term: string) => void
+  filters: PatientFilters
+  onFiltersChange: (filters: PatientFilters) => void
+  onClearFilters: () => void
+  totalResults: number
+  isFiltering: boolean
 }
 
 export interface PatientFilters {
-  status: string[];
-  plano: string[];
-  sexo: string[];
+  status: string[]
+  plano: string[]
+  sexo: string[]
   ageRange: {
-    min: number | null;
-    max: number | null;
-  };
+    min: number | null
+    max: number | null
+  }
   dateRange: {
-    start: string;
-    end: string;
-  };
-  city: string[];
-  hasInsurance: string;
+    start: string
+    end: string
+  }
+  city: string[]
+  hasInsurance: string
 }
 
 export default function SearchFilters({
@@ -41,45 +39,45 @@ export default function SearchFilters({
   totalResults,
   isFiltering,
 }: SearchFiltersProps) {
-  const [showFilters, setShowFilters] = useState(false);
+  const [showFilters, setShowFilters] = useState(false)
 
   // Calculate active filters count
   const calculateActiveFilters = () => {
-    let count = 0;
-    if (filters.status.length > 0) count++;
-    if (filters.plano.length > 0) count++;
-    if (filters.sexo.length > 0) count++;
-    if (filters.ageRange.min !== null || filters.ageRange.max !== null) count++;
-    if (filters.dateRange.start || filters.dateRange.end) count++;
-    if (filters.city.length > 0) count++;
-    if (filters.hasInsurance !== '') count++;
-    return count;
-  };
+    let count = 0
+    if (filters.status.length > 0) count++
+    if (filters.plano.length > 0) count++
+    if (filters.sexo.length > 0) count++
+    if (filters.ageRange.min !== null || filters.ageRange.max !== null) count++
+    if (filters.dateRange.start || filters.dateRange.end) count++
+    if (filters.city.length > 0) count++
+    if (filters.hasInsurance !== "") count++
+    return count
+  }
 
-  const activeCount = calculateActiveFilters();
+  const activeCount = calculateActiveFilters()
 
   const handleFilterChange = (key: keyof PatientFilters, value: any) => {
     onFiltersChange({
       ...filters,
       [key]: value,
-    });
-  };
+    })
+  }
 
   const handleArrayFilterToggle = (key: keyof PatientFilters, value: string) => {
-    const currentArray = filters[key] as string[];
+    const currentArray = filters[key] as string[]
     const newArray = currentArray.includes(value)
       ? currentArray.filter((item) => item !== value)
-      : [...currentArray, value];
+      : [...currentArray, value]
 
-    handleFilterChange(key, newArray);
-  };
+    handleFilterChange(key, newArray)
+  }
 
   const handleQuickFilter = (quickFilters: Partial<PatientFilters>) => {
     onFiltersChange({
       ...filters,
       ...quickFilters,
-    });
-  };
+    })
+  }
 
   return (
     <div className="space-y-4">
@@ -96,7 +94,7 @@ export default function SearchFilters({
           />
           {searchTerm && (
             <button
-              onClick={() => onSearchChange('')}
+              onClick={() => onSearchChange("")}
               className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
             >
               <X className="h-4 w-4" />
@@ -108,17 +106,15 @@ export default function SearchFilters({
           onClick={() => setShowFilters(!showFilters)}
           className={`relative flex items-center gap-2 px-4 py-3 border rounded-lg transition-colors ${
             showFilters || activeCount > 0
-              ? 'bg-blue-50 border-blue-200 text-blue-700'
-              : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+              ? "bg-blue-50 border-blue-200 text-blue-700"
+              : "border-gray-300 text-gray-700 hover:bg-gray-50"
           }`}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
           <Filter className="h-4 w-4" />
           <span>Filtros</span>
-          <ChevronDown
-            className={`h-4 w-4 transition-transform ${showFilters ? 'rotate-180' : ''}`}
-          />
+          <ChevronDown className={`h-4 w-4 transition-transform ${showFilters ? "rotate-180" : ""}`} />
           {activeCount > 0 && (
             <span className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
               {activeCount}
@@ -141,12 +137,12 @@ export default function SearchFilters({
       {/* Results Summary */}
       <div className="flex items-center justify-between text-sm text-gray-600">
         <span>
-          {isFiltering ? 'Buscando...' : `${totalResults} pacientes encontrados`}
+          {isFiltering ? "Buscando..." : `${totalResults} pacientes encontrados`}
           {(searchTerm || activeCount > 0) && (
             <span className="ml-2 text-blue-600">
               • {searchTerm && `"${searchTerm}"`}
               {activeCount > 0 &&
-                ` • ${activeCount} filtro${activeCount > 1 ? 's' : ''} ativo${activeCount > 1 ? 's' : ''}`}
+                ` • ${activeCount} filtro${activeCount > 1 ? "s" : ""} ativo${activeCount > 1 ? "s" : ""}`}
             </span>
           )}
         </span>
@@ -157,7 +153,7 @@ export default function SearchFilters({
         {showFilters && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
+            animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             className="bg-white border border-gray-200 rounded-lg p-6 space-y-6"
           >
@@ -169,12 +165,12 @@ export default function SearchFilters({
                   Status
                 </label>
                 <div className="space-y-2">
-                  {['Ativo', 'Inativo', 'Suspenso'].map((status) => (
+                  {["Ativo", "Inativo", "Suspenso"].map((status) => (
                     <label key={status} className="flex items-center">
                       <input
                         type="checkbox"
                         checked={filters.status.includes(status)}
-                        onChange={() => handleArrayFilterToggle('status', status)}
+                        onChange={() => handleArrayFilterToggle("status", status)}
                         className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                       />
                       <span className="ml-2 text-sm text-gray-700">{status}</span>
@@ -190,12 +186,12 @@ export default function SearchFilters({
                   Plano
                 </label>
                 <div className="space-y-2">
-                  {['Essencial', 'Premium', 'Executivo'].map((plano) => (
+                  {["Essencial", "Premium", "Executivo"].map((plano) => (
                     <label key={plano} className="flex items-center">
                       <input
                         type="checkbox"
                         checked={filters.plano.includes(plano)}
-                        onChange={() => handleArrayFilterToggle('plano', plano)}
+                        onChange={() => handleArrayFilterToggle("plano", plano)}
                         className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                       />
                       <span className="ml-2 text-sm text-gray-700">{plano}</span>
@@ -206,19 +202,17 @@ export default function SearchFilters({
 
               {/* Gender Filter */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Sexo
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Sexo</label>
                 <div className="space-y-2">
                   {[
-                    { value: 'M', label: 'Masculino' },
-                    { value: 'F', label: 'Feminino' },
+                    { value: "M", label: "Masculino" },
+                    { value: "F", label: "Feminino" },
                   ].map((sexo) => (
                     <label key={sexo.value} className="flex items-center">
                       <input
                         type="checkbox"
                         checked={filters.sexo.includes(sexo.value)}
-                        onChange={() => handleArrayFilterToggle('sexo', sexo.value)}
+                        onChange={() => handleArrayFilterToggle("sexo", sexo.value)}
                         className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                       />
                       <span className="ml-2 text-sm text-gray-700">{sexo.label}</span>
@@ -237,9 +231,9 @@ export default function SearchFilters({
                   <input
                     type="number"
                     placeholder="Min"
-                    value={filters.ageRange.min || ''}
+                    value={filters.ageRange.min || ""}
                     onChange={(e) =>
-                      handleFilterChange('ageRange', {
+                      handleFilterChange("ageRange", {
                         ...filters.ageRange,
                         min: e.target.value ? Number.parseInt(e.target.value) : null,
                       })
@@ -250,9 +244,9 @@ export default function SearchFilters({
                   <input
                     type="number"
                     placeholder="Max"
-                    value={filters.ageRange.max || ''}
+                    value={filters.ageRange.max || ""}
                     onChange={(e) =>
-                      handleFilterChange('ageRange', {
+                      handleFilterChange("ageRange", {
                         ...filters.ageRange,
                         max: e.target.value ? Number.parseInt(e.target.value) : null,
                       })
@@ -274,7 +268,7 @@ export default function SearchFilters({
                     type="date"
                     value={filters.dateRange.start}
                     onChange={(e) =>
-                      handleFilterChange('dateRange', {
+                      handleFilterChange("dateRange", {
                         ...filters.dateRange,
                         start: e.target.value,
                       })
@@ -285,7 +279,7 @@ export default function SearchFilters({
                     type="date"
                     value={filters.dateRange.end}
                     onChange={(e) =>
-                      handleFilterChange('dateRange', {
+                      handleFilterChange("dateRange", {
                         ...filters.dateRange,
                         end: e.target.value,
                       })
@@ -303,7 +297,7 @@ export default function SearchFilters({
                 </label>
                 <select
                   value={filters.hasInsurance}
-                  onChange={(e) => handleFilterChange('hasInsurance', e.target.value)}
+                  onChange={(e) => handleFilterChange("hasInsurance", e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
                   <option value="">Todos</option>
@@ -315,28 +309,21 @@ export default function SearchFilters({
 
             {/* Quick Filter Buttons */}
             <div className="border-t pt-4">
-              <label className="block text-sm font-medium text-gray-700 mb-3">
-                Filtros Rápidos
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-3">Filtros Rápidos</label>
               <div className="flex flex-wrap gap-2">
                 {[
+                  { label: "Ativos Premium", filters: { status: ["Ativo"], plano: ["Premium"] } },
                   {
-                    label: 'Ativos Premium',
-                    filters: { status: ['Ativo'], plano: ['Premium'] },
-                  },
-                  {
-                    label: 'Novos (30 dias)',
+                    label: "Novos (30 dias)",
                     filters: {
                       dateRange: {
-                        start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
-                          .toISOString()
-                          .split('T')[0],
-                        end: new Date().toISOString().split('T')[0],
+                        start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
+                        end: new Date().toISOString().split("T")[0],
                       },
                     },
                   },
-                  { label: 'Sem convênio', filters: { hasInsurance: 'false' } },
-                  { label: 'Inativos', filters: { status: ['Inativo'] } },
+                  { label: "Sem convênio", filters: { hasInsurance: "false" } },
+                  { label: "Inativos", filters: { status: ["Inativo"] } },
                 ].map((quickFilter) => (
                   <motion.button
                     key={quickFilter.label}
@@ -354,5 +341,5 @@ export default function SearchFilters({
         )}
       </AnimatePresence>
     </div>
-  );
+  )
 }

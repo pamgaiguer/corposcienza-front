@@ -1,16 +1,7 @@
-'use client';
+"use client"
 
-import Link from 'next/link';
-import {
-  Facebook,
-  Instagram,
-  Twitter,
-  Linkedin,
-  Phone,
-  Mail,
-  MapPin,
-  Clock,
-} from 'lucide-react';
+import Link from "next/link"
+import { Facebook, Instagram, Twitter, Linkedin, Phone, Mail, MapPin, Clock } from "lucide-react"
 
 export default function Footer() {
   return (
@@ -29,8 +20,7 @@ export default function Footer() {
               </div>
             </div>
             <p className="text-gray-400">
-              Medicina personalizada e científica com abordagem multidisciplinar e
-              tecnologia avançada.
+              Medicina personalizada e científica com abordagem multidisciplinar e tecnologia avançada.
             </p>
             <div className="flex space-x-4">
               <Link href="#" className="text-gray-400 hover:text-white transition-colors">
@@ -53,42 +43,27 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-4">Links Rápidos</h4>
             <ul className="space-y-2">
               <li>
-                <Link
-                  href="/"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
+                <Link href="/" className="text-gray-400 hover:text-white transition-colors">
                   Início
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/sobre"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
+                <Link href="/sobre" className="text-gray-400 hover:text-white transition-colors">
                   Sobre Nós
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/servicos"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
+                <Link href="/servicos" className="text-gray-400 hover:text-white transition-colors">
                   Serviços
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/planos"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
+                <Link href="/planos" className="text-gray-400 hover:text-white transition-colors">
                   Planos
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/blog"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
+                <Link href="/blog" className="text-gray-400 hover:text-white transition-colors">
                   Blog
                 </Link>
               </li>
@@ -100,42 +75,27 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-4">Especialidades</h4>
             <ul className="space-y-2">
               <li>
-                <Link
-                  href="/servicos/cardiologia"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
+                <Link href="/servicos/cardiologia" className="text-gray-400 hover:text-white transition-colors">
                   Cardiologia
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/servicos/neurologia"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
+                <Link href="/servicos/neurologia" className="text-gray-400 hover:text-white transition-colors">
                   Neurologia
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/servicos/ortopedia"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
+                <Link href="/servicos/ortopedia" className="text-gray-400 hover:text-white transition-colors">
                   Ortopedia
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/servicos/dermatologia"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
+                <Link href="/servicos/dermatologia" className="text-gray-400 hover:text-white transition-colors">
                   Dermatologia
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/servicos/pediatria"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
+                <Link href="/servicos/pediatria" className="text-gray-400 hover:text-white transition-colors">
                   Pediatria
                 </Link>
               </li>
@@ -168,11 +128,10 @@ export default function Footer() {
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center">
           <p className="text-gray-400">
-            © 2024 Corpo Scienza. Todos os direitos reservados. | Política de Privacidade
-            | Termos de Uso
+            © 2024 Corpo Scienza. Todos os direitos reservados. | Política de Privacidade | Termos de Uso
           </p>
         </div>
       </div>
     </footer>
-  );
+  )
 }

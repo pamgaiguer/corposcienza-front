@@ -1,46 +1,46 @@
-'use client';
+"use client"
 
-import { motion } from 'framer-motion';
-import { MapPin } from 'lucide-react';
-import FormField from '@/components/form/form-field';
-import type { FormStepProps } from '@/types/patient';
+import { motion } from "framer-motion"
+import { MapPin } from "lucide-react"
+import FormField from "@/components/form/form-field"
+import type { FormStepProps } from "@/types/patient"
 
 const estadosBrasil = [
-  'AC',
-  'AL',
-  'AP',
-  'AM',
-  'BA',
-  'CE',
-  'DF',
-  'ES',
-  'GO',
-  'MA',
-  'MT',
-  'MS',
-  'MG',
-  'PA',
-  'PB',
-  'PR',
-  'PE',
-  'PI',
-  'RJ',
-  'RN',
-  'RS',
-  'RO',
-  'RR',
-  'SC',
-  'SP',
-  'SE',
-  'TO',
-];
+  "AC",
+  "AL",
+  "AP",
+  "AM",
+  "BA",
+  "CE",
+  "DF",
+  "ES",
+  "GO",
+  "MA",
+  "MT",
+  "MS",
+  "MG",
+  "PA",
+  "PB",
+  "PR",
+  "PE",
+  "PI",
+  "RJ",
+  "RN",
+  "RS",
+  "RO",
+  "RR",
+  "SC",
+  "SP",
+  "SE",
+  "TO",
+]
 
 const formatCEP = (value: string) => {
   return value
-    .replace(/\D/g, '')
-    .replace(/(\d{5})(\d)/, '$1-$2')
-    .replace(/(-\d{3})\d+?$/, '$1');
-};
+    .replace(/\D/g, "")
+    .replace(/(\d{5})(\d)/, "$1-$2")
+    .replace(/(-\d{3})\d+?$/, "$1")
+}
 
 export default function AddressStep({
   formData,
@@ -64,22 +64,17 @@ export default function AddressStep({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <FormField
-          label="CEP"
-          required
-          error={getFieldError('endereco.cep')}
-          success={isFieldValid('endereco.cep')}
-        >
+        <FormField label="CEP" required error={getFieldError("endereco.cep")} success={isFieldValid("endereco.cep")}>
           <input
             type="text"
             value={formData.endereco.cep}
-            onChange={(e) => onInputChange('cep', formatCEP(e.target.value), 'endereco')}
+            onChange={(e) => onInputChange("cep", formatCEP(e.target.value), "endereco")}
             className={`w-full px-4 py-3 border rounded-lg transition-colors ${
-              getFieldError('endereco.cep')
-                ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-                : isFieldValid('endereco.cep')
-                  ? 'border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500'
-                  : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+              getFieldError("endereco.cep")
+                ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                : isFieldValid("endereco.cep")
+                  ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500"
+                  : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
             } focus:ring-2`}
             placeholder="00000-000"
             maxLength={9}
@@ -89,18 +84,18 @@ export default function AddressStep({
         <FormField
           label="Estado (UF)"
           required
-          error={getFieldError('endereco.estado')}
-          success={isFieldValid('endereco.estado')}
+          error={getFieldError("endereco.estado")}
+          success={isFieldValid("endereco.estado")}
         >
           <select
             value={formData.endereco.estado}
-            onChange={(e) => onInputChange('estado', e.target.value, 'endereco')}
+            onChange={(e) => onInputChange("estado", e.target.value, "endereco")}
             className={`w-full px-4 py-3 border rounded-lg transition-colors ${
-              getFieldError('endereco.estado')
-                ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-                : isFieldValid('endereco.estado')
-                  ? 'border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500'
-                  : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+              getFieldError("endereco.estado")
+                ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                : isFieldValid("endereco.estado")
+                  ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500"
+                  : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
             } focus:ring-2`}
           >
             <option value="">Selecione</option>
@@ -113,22 +108,17 @@ export default function AddressStep({
         </FormField>
 
         <div className="md:col-span-2">
-          <FormField
-            label="Rua"
-            required
-            error={getFieldError('endereco.rua')}
-            success={isFieldValid('endereco.rua')}
-          >
+          <FormField label="Rua" required error={getFieldError("endereco.rua")} success={isFieldValid("endereco.rua")}>
             <input
               type="text"
               value={formData.endereco.rua}
-              onChange={(e) => onInputChange('rua', e.target.value, 'endereco')}
+              onChange={(e) => onInputChange("rua", e.target.value, "endereco")}
               className={`w-full px-4 py-3 border rounded-lg transition-colors ${
-                getFieldError('endereco.rua')
-                  ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-                  : isFieldValid('endereco.rua')
-                    ? 'border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500'
-                    : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+                getFieldError("endereco.rua")
+                  ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                  : isFieldValid("endereco.rua")
+                    ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500"
+                    : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
               } focus:ring-2`}
               placeholder="Digite o nome da rua"
             />
@@ -138,19 +128,19 @@ export default function AddressStep({
         <FormField
           label="Número"
           required
-          error={getFieldError('endereco.numero')}
-          success={isFieldValid('endereco.numero')}
+          error={getFieldError("endereco.numero")}
+          success={isFieldValid("endereco.numero")}
         >
           <input
             type="text"
             value={formData.endereco.numero}
-            onChange={(e) => onInputChange('numero', e.target.value, 'endereco')}
+            onChange={(e) => onInputChange("numero", e.target.value, "endereco")}
             className={`w-full px-4 py-3 border rounded-lg transition-colors ${
-              getFieldError('endereco.numero')
-                ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-                : isFieldValid('endereco.numero')
-                  ? 'border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500'
-                  : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+              getFieldError("endereco.numero")
+                ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                : isFieldValid("endereco.numero")
+                  ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500"
+                  : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
             } focus:ring-2`}
             placeholder="123"
           />
@@ -160,7 +150,7 @@ export default function AddressStep({
           <input
             type="text"
             value={formData.endereco.complemento}
-            onChange={(e) => onInputChange('complemento', e.target.value, 'endereco')}
+            onChange={(e) => onInputChange("complemento", e.target.value, "endereco")}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
             placeholder="Apto, Bloco, etc."
           />
@@ -169,19 +159,19 @@ export default function AddressStep({
         <FormField
           label="Bairro"
           required
-          error={getFieldError('endereco.bairro')}
-          success={isFieldValid('endereco.bairro')}
+          error={getFieldError("endereco.bairro")}
+          success={isFieldValid("endereco.bairro")}
         >
           <input
             type="text"
             value={formData.endereco.bairro}
-            onChange={(e) => onInputChange('bairro', e.target.value, 'endereco')}
+            onChange={(e) => onInputChange("bairro", e.target.value, "endereco")}
             className={`w-full px-4 py-3 border rounded-lg transition-colors ${
-              getFieldError('endereco.bairro')
-                ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-                : isFieldValid('endereco.bairro')
-                  ? 'border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500'
-                  : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+              getFieldError("endereco.bairro")
+                ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                : isFieldValid("endereco.bairro")
+                  ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500"
+                  : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
             } focus:ring-2`}
             placeholder="Digite o bairro"
           />
@@ -190,24 +180,24 @@ export default function AddressStep({
         <FormField
           label="Cidade"
           required
-          error={getFieldError('endereco.cidade')}
-          success={isFieldValid('endereco.cidade')}
+          error={getFieldError("endereco.cidade")}
+          success={isFieldValid("endereco.cidade")}
         >
           <input
             type="text"
             value={formData.endereco.cidade}
-            onChange={(e) => onInputChange('cidade', e.target.value, 'endereco')}
+            onChange={(e) => onInputChange("cidade", e.target.value, "endereco")}
             className={`w-full px-4 py-3 border rounded-lg transition-colors ${
-              getFieldError('endereco.cidade')
-                ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-                : isFieldValid('endereco.cidade')
-                  ? 'border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500'
-                  : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+              getFieldError("endereco.cidade")
+                ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                : isFieldValid("endereco.cidade")
+                  ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500"
+                  : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
             } focus:ring-2`}
             placeholder="Digite a cidade"
           />
         </FormField>
       </div>
     </motion.div>
-  );
+  )
 }
