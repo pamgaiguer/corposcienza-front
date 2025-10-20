@@ -1,12 +1,22 @@
 {
-  "name": "my-v0-project",
+  "name": "corpo-scienza-front",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
     "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "lint": "next lint",
-    "start": "next start"
+    "format": "prettier --write .",
+    "prepare": "husky"
+  },
+    "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ],
+    "**/*.{js,jsx,ts,tsx,json,css,md}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@ant-design/icons": "latest",
