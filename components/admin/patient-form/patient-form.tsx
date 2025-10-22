@@ -25,7 +25,7 @@ const defaultFormData: PatientFormData = {
   cpf: "",
   rg: "",
   nome: "",
-  sexo_biologico: "",
+  sexo_biologico: "M",
   data_nascimento: "",
   telefone: "",
   email: "",

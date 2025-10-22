@@ -36,6 +36,14 @@ export interface Patient {
 }
 
 export interface PatientFormData {
+  contato_emergencia: any;
+  estado_civil: string | number | readonly string[] | undefined;
+  nacionalidade: string | number | readonly string[] | undefined;
+  profissao: string | number | readonly string[] | undefined;
+  endereco: any;
+  convenio_nome: string | number | readonly string[] | undefined;
+  numero_carteirinha: string | number | readonly string[] | undefined;
+  validade_carteirinha: string | number | readonly string[] | undefined;
   // Personal Data
   nome: string
   cpf: string

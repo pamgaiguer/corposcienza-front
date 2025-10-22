@@ -30,9 +30,7 @@ import {
   Eye,
   Zap,
 } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
+import { Button, Badge, Separator } from "@/components/ui"
 import ThemeToggle from "../theme-toggle"
 
 interface AdminSidebarProps {
