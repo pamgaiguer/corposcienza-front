@@ -119,10 +119,7 @@ export const validateCarteirinhaValidity = (validity: string): boolean => {
 };
 
 // Comprehensive form validation
-export const validatePatientForm = (
-  formData: any,
-  currentStep: number,
-): ValidationResult => {
+export const validatePatientForm = (formData: any, currentStep: number): ValidationResult => {
   const errors: ValidationError[] = [];
 
   if (currentStep === 1) {
@@ -219,20 +216,14 @@ export const validatePatientForm = (
 
   if (currentStep === 3) {
     // Emergency contact validation
-    if (
-      !formData.contato_emergencia.nome ||
-      !validateName(formData.contato_emergencia.nome)
-    ) {
+    if (!formData.contato_emergencia.nome || !validateName(formData.contato_emergencia.nome)) {
       errors.push({
         field: 'contato_emergencia.nome',
         message: 'Nome deve ter pelo menos 2 caracteres e conter apenas letras',
       });
     }
 
-    if (
-      !formData.contato_emergencia.cpf ||
-      !validateCPF(formData.contato_emergencia.cpf)
-    ) {
+    if (!formData.contato_emergencia.cpf || !validateCPF(formData.contato_emergencia.cpf)) {
       errors.push({ field: 'contato_emergencia.cpf', message: 'CPF inválido' });
     }
 
@@ -253,10 +244,7 @@ export const validatePatientForm = (
       });
     }
 
-    if (
-      !formData.contato_emergencia.email ||
-      !validateEmail(formData.contato_emergencia.email)
-    ) {
+    if (!formData.contato_emergencia.email || !validateEmail(formData.contato_emergencia.email)) {
       errors.push({ field: 'contato_emergencia.email', message: 'E-mail inválido' });
     }
 

@@ -39,26 +39,24 @@ export default function NewPatientPage() {
   };
 
   return (
-    <div className="flex-1 p-8 bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <div className="min-h-screen flex-1 bg-gray-50 p-8 dark:bg-gray-900">
       {/* Header */}
       <motion.div className="mb-8" {...fadeInUp}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link
               href="/admin/patients"
-              className="p-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
+              className="rounded-lg p-2 text-gray-600 transition-colors hover:bg-blue-50 hover:text-blue-600 dark:text-gray-400 dark:hover:bg-blue-900/20 dark:hover:text-blue-400"
             >
               <ArrowLeft className="h-5 w-5" />
             </Link>
             <div className="flex items-center gap-3">
-              <div className="p-3 bg-blue-100 rounded-lg">
+              <div className="rounded-lg bg-blue-100 p-3">
                 <UserPlus className="h-6 w-6 text-blue-600" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                  Novo Paciente
-                </h1>
-                <p className="text-gray-600 dark:text-gray-400 mt-1">
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Novo Paciente</h1>
+                <p className="mt-1 text-gray-600 dark:text-gray-400">
                   Cadastre um novo paciente no sistema
                 </p>
               </div>

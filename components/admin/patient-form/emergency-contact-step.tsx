@@ -47,14 +47,14 @@ export default function EmergencyContactStep({
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <div className="flex items-center gap-3 mb-6">
+      <div className="mb-6 flex items-center gap-3">
         <Phone className="h-6 w-6 text-blue-600" />
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
           Contato de Emergência
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <FormField
           label="Nome Completo"
           required
@@ -65,7 +65,7 @@ export default function EmergencyContactStep({
             type="text"
             value={formData.contato_emergencia.nome}
             onChange={(e) => onInputChange('nome', e.target.value, 'contato_emergencia')}
-            className={`w-full px-4 py-3 border rounded-lg transition-colors dark:bg-gray-800 dark:text-white ${
+            className={`w-full rounded-lg border px-4 py-3 transition-colors dark:bg-gray-800 dark:text-white ${
               getFieldError('contato_emergencia.nome')
                 ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
                 : isFieldValid('contato_emergencia.nome')
@@ -85,10 +85,8 @@ export default function EmergencyContactStep({
           <input
             type="text"
             value={formData.contato_emergencia.cpf}
-            onChange={(e) =>
-              onInputChange('cpf', formatCPF(e.target.value), 'contato_emergencia')
-            }
-            className={`w-full px-4 py-3 border rounded-lg transition-colors dark:bg-gray-800 dark:text-white ${
+            onChange={(e) => onInputChange('cpf', formatCPF(e.target.value), 'contato_emergencia')}
+            className={`w-full rounded-lg border px-4 py-3 transition-colors dark:bg-gray-800 dark:text-white ${
               getFieldError('contato_emergencia.cpf')
                 ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
                 : isFieldValid('contato_emergencia.cpf')
@@ -110,7 +108,7 @@ export default function EmergencyContactStep({
             type="text"
             value={formData.contato_emergencia.rg}
             onChange={(e) => onInputChange('rg', e.target.value, 'contato_emergencia')}
-            className={`w-full px-4 py-3 border rounded-lg transition-colors dark:bg-gray-800 dark:text-white ${
+            className={`w-full rounded-lg border px-4 py-3 transition-colors dark:bg-gray-800 dark:text-white ${
               getFieldError('contato_emergencia.rg')
                 ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
                 : isFieldValid('contato_emergencia.rg')
@@ -133,7 +131,7 @@ export default function EmergencyContactStep({
             onChange={(e) =>
               onInputChange('telefone', formatPhone(e.target.value), 'contato_emergencia')
             }
-            className={`w-full px-4 py-3 border rounded-lg transition-colors dark:bg-gray-800 dark:text-white ${
+            className={`w-full rounded-lg border px-4 py-3 transition-colors dark:bg-gray-800 dark:text-white ${
               getFieldError('contato_emergencia.telefone')
                 ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
                 : isFieldValid('contato_emergencia.telefone')
@@ -155,7 +153,7 @@ export default function EmergencyContactStep({
             type="email"
             value={formData.contato_emergencia.email}
             onChange={(e) => onInputChange('email', e.target.value, 'contato_emergencia')}
-            className={`w-full px-4 py-3 border rounded-lg transition-colors dark:bg-gray-800 dark:text-white ${
+            className={`w-full rounded-lg border px-4 py-3 transition-colors dark:bg-gray-800 dark:text-white ${
               getFieldError('contato_emergencia.email')
                 ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
                 : isFieldValid('contato_emergencia.email')
@@ -174,10 +172,8 @@ export default function EmergencyContactStep({
         >
           <select
             value={formData.contato_emergencia.estado_civil}
-            onChange={(e) =>
-              onInputChange('estado_civil', e.target.value, 'contato_emergencia')
-            }
-            className={`w-full px-4 py-3 border rounded-lg transition-colors dark:bg-gray-800 dark:text-white ${
+            onChange={(e) => onInputChange('estado_civil', e.target.value, 'contato_emergencia')}
+            className={`w-full rounded-lg border px-4 py-3 transition-colors dark:bg-gray-800 dark:text-white ${
               getFieldError('contato_emergencia.estado_civil')
                 ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
                 : isFieldValid('contato_emergencia.estado_civil')
@@ -203,10 +199,8 @@ export default function EmergencyContactStep({
           <input
             type="text"
             value={formData.contato_emergencia.nacionalidade}
-            onChange={(e) =>
-              onInputChange('nacionalidade', e.target.value, 'contato_emergencia')
-            }
-            className={`w-full px-4 py-3 border rounded-lg transition-colors dark:bg-gray-800 dark:text-white ${
+            onChange={(e) => onInputChange('nacionalidade', e.target.value, 'contato_emergencia')}
+            className={`w-full rounded-lg border px-4 py-3 transition-colors dark:bg-gray-800 dark:text-white ${
               getFieldError('contato_emergencia.nacionalidade')
                 ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
                 : isFieldValid('contato_emergencia.nacionalidade')
@@ -226,10 +220,8 @@ export default function EmergencyContactStep({
           <input
             type="text"
             value={formData.contato_emergencia.profissao}
-            onChange={(e) =>
-              onInputChange('profissao', e.target.value, 'contato_emergencia')
-            }
-            className={`w-full px-4 py-3 border rounded-lg transition-colors dark:bg-gray-800 dark:text-white ${
+            onChange={(e) => onInputChange('profissao', e.target.value, 'contato_emergencia')}
+            className={`w-full rounded-lg border px-4 py-3 transition-colors dark:bg-gray-800 dark:text-white ${
               getFieldError('contato_emergencia.profissao')
                 ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
                 : isFieldValid('contato_emergencia.profissao')

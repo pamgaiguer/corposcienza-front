@@ -76,8 +76,7 @@ export default function PatientViewPage() {
             numero_carteira: '123456789012345',
             validade: '2024-12-31',
           },
-          observacoes:
-            'Paciente com histórico de hipertensão. Acompanhamento regular necessário.',
+          observacoes: 'Paciente com histórico de hipertensão. Acompanhamento regular necessário.',
         };
 
         setPatient(mockPatient);
@@ -148,28 +147,28 @@ export default function PatientViewPage() {
     // Ajuste do Skeleton Loader para o Dark Mode
     return (
       // Fundo principal: gray-50 no light, gray-900 no dark
-      <div className="flex-1 p-8 bg-gray-50 dark:bg-gray-900 min-h-screen">
-        <div className="max-w-6xl mx-auto">
+      <div className="min-h-screen flex-1 bg-gray-50 p-8 dark:bg-gray-900">
+        <div className="mx-auto max-w-6xl">
           <div className="animate-pulse">
-            <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-1/4 mb-8"></div>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-2 space-y-6">
+            <div className="mb-8 h-8 w-1/4 rounded bg-gray-200 dark:bg-gray-700"></div>
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+              <div className="space-y-6 lg:col-span-2">
                 {/* Cartão: white no light, gray-800 no dark */}
-                <div className="bg-white dark:bg-gray-800 rounded-xl p-6">
-                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-4"></div>
+                <div className="rounded-xl bg-white p-6 dark:bg-gray-800">
+                  <div className="mb-4 h-6 w-1/3 rounded bg-gray-200 dark:bg-gray-700"></div>
                   <div className="space-y-3">
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full"></div>
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+                    <div className="h-4 w-full rounded bg-gray-200 dark:bg-gray-700"></div>
+                    <div className="h-4 w-3/4 rounded bg-gray-200 dark:bg-gray-700"></div>
+                    <div className="h-4 w-1/2 rounded bg-gray-200 dark:bg-gray-700"></div>
                   </div>
                 </div>
               </div>
               <div className="space-y-6">
-                <div className="bg-white dark:bg-gray-800 rounded-xl p-6">
-                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-4"></div>
+                <div className="rounded-xl bg-white p-6 dark:bg-gray-800">
+                  <div className="mb-4 h-6 w-1/2 rounded bg-gray-200 dark:bg-gray-700"></div>
                   <div className="space-y-3">
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full"></div>
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+                    <div className="h-4 w-full rounded bg-gray-200 dark:bg-gray-700"></div>
+                    <div className="h-4 w-2/3 rounded bg-gray-200 dark:bg-gray-700"></div>
                   </div>
                 </div>
               </div>
@@ -183,17 +182,17 @@ export default function PatientViewPage() {
   if (!patient) {
     // Ajuste da mensagem de paciente não encontrado
     return (
-      <div className="flex-1 p-8 bg-gray-50 dark:bg-gray-900 min-h-screen">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center py-12">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+      <div className="min-h-screen flex-1 bg-gray-50 p-8 dark:bg-gray-900">
+        <div className="mx-auto max-w-6xl">
+          <div className="py-12 text-center">
+            <h1 className="mb-4 text-2xl font-bold text-gray-900 dark:text-gray-100">
               Paciente não encontrado
             </h1>
-            <p className="text-gray-600 dark:text-gray-400 mb-8">
+            <p className="mb-8 text-gray-600 dark:text-gray-400">
               O paciente solicitado não foi encontrado no sistema.
             </p>
             <Link href="/admin/patients">
-              <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              <button className="rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700">
                 Voltar para Lista de Pacientes
               </button>
             </Link>
@@ -205,8 +204,8 @@ export default function PatientViewPage() {
 
   return (
     // Fundo principal
-    <div className="flex-1 p-8 bg-gray-50 dark:bg-gray-900 min-h-screen">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen flex-1 bg-gray-50 p-8 dark:bg-gray-900">
+      <div className="mx-auto max-w-6xl">
         {/* Header */}
         <motion.div className="mb-8" {...fadeInUp}>
           <div className="flex items-center justify-between">
@@ -214,7 +213,7 @@ export default function PatientViewPage() {
               <Link href="/admin/patients">
                 {/* Botão de Voltar */}
                 <motion.button
-                  className="p-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                  className="rounded-lg p-2 text-gray-600 transition-colors hover:bg-blue-50 hover:text-blue-600 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-blue-400"
                   whileHover={{ scale: 1.05 }}
                 >
                   <ArrowLeft className="h-5 w-5" />
@@ -222,8 +221,8 @@ export default function PatientViewPage() {
               </Link>
               <div className="flex items-center gap-4">
                 {/* Avatar do Paciente */}
-                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
-                  <span className="text-blue-700 dark:text-blue-100 font-semibold text-lg">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900">
+                  <span className="text-lg font-semibold text-blue-700 dark:text-blue-100">
                     {patient.nome
                       .split(' ')
                       .map((n: string) => n[0])
@@ -235,10 +234,9 @@ export default function PatientViewPage() {
                   <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                     {patient.nome}
                   </h1>
-                  <p className="text-gray-600 dark:text-gray-400 mt-1">
+                  <p className="mt-1 text-gray-600 dark:text-gray-400">
                     {calculateAge(patient.data_nascimento)} anos •{' '}
-                    {patient.sexo_biologico === 'M' ? 'Masculino' : 'Feminino'} •{' '}
-                    {patient.status}
+                    {patient.sexo_biologico === 'M' ? 'Masculino' : 'Feminino'} • {patient.status}
                   </p>
                 </div>
               </div>
@@ -247,7 +245,7 @@ export default function PatientViewPage() {
             <div className="flex items-center gap-2">
               <Link href={`/admin/patients/${patient.id}/edit`}>
                 <motion.button
-                  className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+                  className="inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition-colors hover:bg-blue-700"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -257,7 +255,7 @@ export default function PatientViewPage() {
               </Link>
               <motion.button
                 onClick={handleDeleteClick}
-                className="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors"
+                className="inline-flex items-center rounded-lg bg-red-600 px-4 py-2 font-medium text-white transition-colors hover:bg-red-700"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -268,45 +266,45 @@ export default function PatientViewPage() {
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           {/* Main Content */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="space-y-6 lg:col-span-2">
             {/* Informações Pessoais */}
             <motion.div
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6"
+              className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
               {...fadeInUp}
             >
-              <div className="flex items-center gap-2 mb-6">
+              <div className="mb-6 flex items-center gap-2">
                 <User className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                 <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                   Informações Pessoais
                 </h2>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 {/* Nome Completo */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
+                  <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">
                     Nome Completo
                   </label>
                   <p className="text-gray-900 dark:text-gray-100">{patient.nome}</p>
                 </div>
                 {/* CPF */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
+                  <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">
                     CPF
                   </label>
                   <p className="text-gray-900 dark:text-gray-100">{patient.cpf}</p>
                 </div>
                 {/* RG */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
+                  <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">
                     RG
                   </label>
                   <p className="text-gray-900 dark:text-gray-100">{patient.rg}</p>
                 </div>
                 {/* Data de Nascimento */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
+                  <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">
                     Data de Nascimento
                   </label>
                   <p className="text-gray-900 dark:text-gray-100">
@@ -316,7 +314,7 @@ export default function PatientViewPage() {
                 </div>
                 {/* Sexo */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
+                  <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">
                     Sexo
                   </label>
                   <p className="text-gray-900 dark:text-gray-100">
@@ -325,11 +323,11 @@ export default function PatientViewPage() {
                 </div>
                 {/* Status */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
+                  <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">
                     Status
                   </label>
                   <span
-                    className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColorScheme(
+                    className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${getStatusColorScheme(
                       patient.status,
                     )}`}
                   >
@@ -341,46 +339,38 @@ export default function PatientViewPage() {
 
             {/* Informações de Endereço */}
             <motion.div
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6"
+              className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
               {...fadeInUp}
             >
-              <div className="flex items-center gap-2 mb-6">
+              <div className="mb-6 flex items-center gap-2">
                 <MapPin className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                  Endereço
-                </h2>
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Endereço</h2>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 {/* CEP */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
+                  <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">
                     CEP
                   </label>
-                  <p className="text-gray-900 dark:text-gray-100">
-                    {patient.endereco.cep}
-                  </p>
+                  <p className="text-gray-900 dark:text-gray-100">{patient.endereco.cep}</p>
                 </div>
                 {/* Logradouro */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
+                  <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">
                     Logradouro
                   </label>
-                  <p className="text-gray-900 dark:text-gray-100">
-                    {patient.endereco.logradouro}
-                  </p>
+                  <p className="text-gray-900 dark:text-gray-100">{patient.endereco.logradouro}</p>
                 </div>
                 {/* Bairro */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
+                  <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">
                     Bairro
                   </label>
-                  <p className="text-gray-900 dark:text-gray-100">
-                    {patient.endereco.bairro}
-                  </p>
+                  <p className="text-gray-900 dark:text-gray-100">{patient.endereco.bairro}</p>
                 </div>
                 {/* Cidade/Estado */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
+                  <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">
                     Cidade/Estado
                   </label>
                   <p className="text-gray-900 dark:text-gray-100">
@@ -390,7 +380,7 @@ export default function PatientViewPage() {
                 {/* Complemento */}
                 {patient.endereco.complemento && (
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
+                    <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">
                       Complemento
                     </label>
                     <p className="text-gray-900 dark:text-gray-100">
@@ -403,19 +393,19 @@ export default function PatientViewPage() {
 
             {/* Contato de Emergência */}
             <motion.div
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6"
+              className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
               {...fadeInUp}
             >
-              <div className="flex items-center gap-2 mb-6">
+              <div className="mb-6 flex items-center gap-2">
                 <Shield className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                 <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                   Contato de Emergência
                 </h2>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 {/* Nome */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
+                  <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">
                     Nome
                   </label>
                   <p className="text-gray-900 dark:text-gray-100">
@@ -424,7 +414,7 @@ export default function PatientViewPage() {
                 </div>
                 {/* Parentesco */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
+                  <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">
                     Parentesco
                   </label>
                   <p className="text-gray-900 dark:text-gray-100">
@@ -433,7 +423,7 @@ export default function PatientViewPage() {
                 </div>
                 {/* Telefone */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
+                  <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">
                     Telefone
                   </label>
                   <p className="text-gray-900 dark:text-gray-100">
@@ -446,16 +436,16 @@ export default function PatientViewPage() {
             {/* Observações */}
             {patient.observacoes && (
               <motion.div
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6"
+                className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
                 {...fadeInUp}
               >
-                <div className="flex items-center gap-2 mb-6">
+                <div className="mb-6 flex items-center gap-2">
                   <FileText className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                   <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                     Observações
                   </h2>
                 </div>
-                <p className="text-gray-900 dark:text-gray-100 leading-relaxed">
+                <p className="leading-relaxed text-gray-900 dark:text-gray-100">
                   {patient.observacoes}
                 </p>
               </motion.div>
@@ -466,55 +456,47 @@ export default function PatientViewPage() {
           <div className="space-y-6">
             {/* Informações de Contato */}
             <motion.div
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6"
+              className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
               {...fadeInUp}
             >
-              <div className="flex items-center gap-2 mb-6">
+              <div className="mb-6 flex items-center gap-2">
                 <Phone className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                  Contato
-                </h2>
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Contato</h2>
               </div>
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
                   <Phone className="h-4 w-4 text-gray-400 dark:text-gray-500" />
-                  <span className="text-gray-900 dark:text-gray-100">
-                    {patient.telefone}
-                  </span>
+                  <span className="text-gray-900 dark:text-gray-100">{patient.telefone}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Mail className="h-4 w-4 text-gray-400 dark:text-gray-500" />
-                  <span className="text-gray-900 dark:text-gray-100">
-                    {patient.email}
-                  </span>
+                  <span className="text-gray-900 dark:text-gray-100">{patient.email}</span>
                 </div>
               </div>
             </motion.div>
 
             {/* Informações do Plano */}
             <motion.div
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6"
+              className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
               {...fadeInUp}
             >
-              <div className="flex items-center gap-2 mb-6">
+              <div className="mb-6 flex items-center gap-2">
                 <CreditCard className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                  Plano
-                </h2>
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Plano</h2>
               </div>
               <div className="space-y-4">
                 <div>
                   {/* Status do Plano */}
                   <span
-                    className={`inline-flex px-3 py-1 text-sm font-semibold rounded-full ${getPlanColorScheme(patient.plano)}`}
+                    className={`inline-flex rounded-full px-3 py-1 text-sm font-semibold ${getPlanColorScheme(patient.plano)}`}
                   >
                     {patient.plano}
                   </span>
                 </div>
                 {/* Convênio Médico */}
                 {patient.convenio_medico.possui && (
-                  <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-                    <h3 className="text-sm font-medium text-gray-700 dark:text-gray-400 mb-2">
+                  <div className="border-t border-gray-200 pt-4 dark:border-gray-700">
+                    <h3 className="mb-2 text-sm font-medium text-gray-700 dark:text-gray-400">
                       Convênio Médico
                     </h3>
                     <div className="space-y-2 text-sm">
@@ -522,14 +504,11 @@ export default function PatientViewPage() {
                         <strong>Empresa:</strong> {patient.convenio_medico.empresa}
                       </p>
                       <p className="text-gray-900 dark:text-gray-100">
-                        <strong>Carteira:</strong>{' '}
-                        {patient.convenio_medico.numero_carteira}
+                        <strong>Carteira:</strong> {patient.convenio_medico.numero_carteira}
                       </p>
                       <p className="text-gray-900 dark:text-gray-100">
                         <strong>Validade:</strong>{' '}
-                        {new Date(patient.convenio_medico.validade).toLocaleDateString(
-                          'pt-BR',
-                        )}
+                        {new Date(patient.convenio_medico.validade).toLocaleDateString('pt-BR')}
                       </p>
                     </div>
                   </div>
@@ -539,19 +518,17 @@ export default function PatientViewPage() {
 
             {/* Informações do Sistema */}
             <motion.div
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6"
+              className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
               {...fadeInUp}
             >
-              <div className="flex items-center gap-2 mb-6">
+              <div className="mb-6 flex items-center gap-2">
                 <Clock className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                  Sistema
-                </h2>
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Sistema</h2>
               </div>
               <div className="space-y-4 text-sm">
                 {/* Data de Cadastro */}
                 <div>
-                  <label className="block text-gray-700 dark:text-gray-400 font-medium mb-1">
+                  <label className="mb-1 block font-medium text-gray-700 dark:text-gray-400">
                     Data de Cadastro
                   </label>
                   <p className="text-gray-900 dark:text-gray-100">
@@ -560,7 +537,7 @@ export default function PatientViewPage() {
                 </div>
                 {/* Última Consulta */}
                 <div>
-                  <label className="block text-gray-700 dark:text-gray-400 font-medium mb-1">
+                  <label className="mb-1 block font-medium text-gray-700 dark:text-gray-400">
                     Última Consulta
                   </label>
                   <p className="text-gray-900 dark:text-gray-100">
@@ -569,7 +546,7 @@ export default function PatientViewPage() {
                 </div>
                 {/* ID do Sistema */}
                 <div>
-                  <label className="block text-gray-700 dark:text-gray-400 font-medium mb-1">
+                  <label className="mb-1 block font-medium text-gray-700 dark:text-gray-400">
                     ID do Sistema
                   </label>
                   <p className="text-gray-900 dark:text-gray-100">#{patient.id}</p>
@@ -579,10 +556,10 @@ export default function PatientViewPage() {
 
             {/* Ações Rápidas */}
             <motion.div
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6"
+              className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
               {...fadeInUp}
             >
-              <div className="flex items-center gap-2 mb-6">
+              <div className="mb-6 flex items-center gap-2">
                 <Activity className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                   Ações Rápidas
@@ -590,16 +567,16 @@ export default function PatientViewPage() {
               </div>
               <div className="space-y-3">
                 {/* Botões de Ação */}
-                <button className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                <button className="w-full rounded-lg px-4 py-2 text-left text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
                   Agendar Consulta
                 </button>
-                <button className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                <button className="w-full rounded-lg px-4 py-2 text-left text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
                   Ver Histórico Médico
                 </button>
-                <button className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                <button className="w-full rounded-lg px-4 py-2 text-left text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
                   Enviar Mensagem
                 </button>
-                <button className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                <button className="w-full rounded-lg px-4 py-2 text-left text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
                   Gerar Relatório
                 </button>
               </div>

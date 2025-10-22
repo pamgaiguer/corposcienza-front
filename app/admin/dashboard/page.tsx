@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -142,7 +136,7 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="space-y-8 bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <div className="min-h-screen space-y-8 bg-gray-50 dark:bg-gray-900">
       {/* Header */}
       <div className="flex flex-col space-y-2">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
@@ -152,24 +146,20 @@ export default function AdminDashboard() {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat, index) => (
           <Card
             key={index}
-            className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+            className="border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800"
           >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 {stat.title}
               </CardTitle>
-              <stat.icon
-                className={`h-4 w-4 text-${stat.color}-600 dark:text-${stat.color}-400`}
-              />
+              <stat.icon className={`h-4 w-4 text-${stat.color}-600 dark:text-${stat.color}-400`} />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-gray-900 dark:text-white">
-                {stat.value}
-              </div>
+              <div className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</div>
               <p
                 className={`text-xs ${
                   stat.trend === 'up'
@@ -184,13 +174,11 @@ export default function AdminDashboard() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         {/* Recent Appointments */}
-        <Card className="lg:col-span-2 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+        <Card className="border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800 lg:col-span-2">
           <CardHeader>
-            <CardTitle className="text-gray-900 dark:text-white">
-              Today's Appointments
-            </CardTitle>
+            <CardTitle className="text-gray-900 dark:text-white">Today's Appointments</CardTitle>
             <CardDescription className="text-gray-600 dark:text-gray-400">
               Upcoming appointments for today
             </CardDescription>
@@ -200,11 +188,11 @@ export default function AdminDashboard() {
               {recentAppointments.map((appointment) => (
                 <div
                   key={appointment.id}
-                  className="flex items-center space-x-4 p-3 rounded-lg bg-gray-50 dark:bg-gray-700"
+                  className="flex items-center space-x-4 rounded-lg bg-gray-50 p-3 dark:bg-gray-700"
                 >
                   <Avatar>
                     <AvatarImage src={appointment.avatar || '/placeholder.svg'} />
-                    <AvatarFallback className="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400">
+                    <AvatarFallback className="bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-400">
                       {appointment.patient
                         .split(' ')
                         .map((n) => n[0])
@@ -229,10 +217,10 @@ export default function AdminDashboard() {
                     }
                     className={
                       appointment.status === 'confirmed'
-                        ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
+                        ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
                         : appointment.status === 'in-progress'
-                          ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200'
-                          : 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200'
+                          ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
+                          : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
                     }
                   >
                     {appointment.status}
@@ -244,7 +232,7 @@ export default function AdminDashboard() {
               <Button
                 asChild
                 variant="outline"
-                className="w-full border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 bg-transparent"
+                className="w-full border-gray-300 bg-transparent text-gray-900 hover:bg-gray-100 dark:border-gray-600 dark:text-white dark:hover:bg-gray-700"
               >
                 <Link href="/admin/appointments">View All Appointments</Link>
               </Button>
@@ -253,7 +241,7 @@ export default function AdminDashboard() {
         </Card>
 
         {/* Quick Actions */}
-        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+        <Card className="border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
           <CardHeader>
             <CardTitle className="text-gray-900 dark:text-white">Quick Actions</CardTitle>
             <CardDescription className="text-gray-600 dark:text-gray-400">
@@ -267,7 +255,7 @@ export default function AdminDashboard() {
                   key={index}
                   asChild
                   variant="ghost"
-                  className="w-full justify-start h-auto p-3 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-900 dark:text-white"
+                  className="h-auto w-full justify-start p-3 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 >
                   <Link href={action.href}>
                     <action.icon
@@ -290,26 +278,22 @@ export default function AdminDashboard() {
       </div>
 
       {/* Department Statistics */}
-      <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+      <Card className="border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
         <CardHeader>
-          <CardTitle className="text-gray-900 dark:text-white">
-            Department Overview
-          </CardTitle>
+          <CardTitle className="text-gray-900 dark:text-white">Department Overview</CardTitle>
           <CardDescription className="text-gray-600 dark:text-gray-400">
             Patient distribution across departments
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
             {departmentStats.map((dept, index) => (
               <div key={index} className="space-y-3">
                 <div className="flex items-center space-x-2">
                   <dept.icon
                     className={`h-5 w-5 text-${dept.color}-600 dark:text-${dept.color}-400`}
                   />
-                  <span className="font-medium text-gray-900 dark:text-white">
-                    {dept.name}
-                  </span>
+                  <span className="font-medium text-gray-900 dark:text-white">{dept.name}</span>
                 </div>
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
@@ -330,7 +314,7 @@ export default function AdminDashboard() {
       </Card>
 
       {/* Recent Activity */}
-      <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+      <Card className="border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
         <CardHeader>
           <CardTitle className="text-gray-900 dark:text-white">Recent Activity</CardTitle>
           <CardDescription className="text-gray-600 dark:text-gray-400">
@@ -367,7 +351,7 @@ export default function AdminDashboard() {
             ].map((activity, index) => (
               <div key={index} className="flex items-start space-x-3">
                 <activity.icon
-                  className={`h-5 w-5 mt-0.5 ${
+                  className={`mt-0.5 h-5 w-5 ${
                     activity.type === 'success'
                       ? 'text-green-600 dark:text-green-400'
                       : activity.type === 'warning'
@@ -376,12 +360,8 @@ export default function AdminDashboard() {
                   }`}
                 />
                 <div className="flex-1 space-y-1">
-                  <p className="text-sm text-gray-900 dark:text-white">
-                    {activity.message}
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
-                    {activity.time}
-                  </p>
+                  <p className="text-sm text-gray-900 dark:text-white">{activity.message}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{activity.time}</p>
                 </div>
               </div>
             ))}

@@ -80,9 +80,7 @@ export default function PatientForm({
   const [errors, setErrors] = useState<ValidationError[]>([]);
   const [touchedFields, setTouchedFields] = useState<Set<string>>(new Set());
   const [validFields, setValidFields] = useState<Set<string>>(new Set());
-  const [formData, setFormData] = useState<PatientFormData>(
-    initialData || defaultFormData,
-  );
+  const [formData, setFormData] = useState<PatientFormData>(initialData || defaultFormData);
 
   const steps = [
     { id: 1, title: 'Dados Pessoais', icon: User },
@@ -216,11 +214,7 @@ export default function PatientForm({
     return validFields.has(field) && touchedFields.has(field);
   };
 
-  const handleInputChange = (
-    field: string,
-    value: string | boolean,
-    section?: string,
-  ) => {
+  const handleInputChange = (field: string, value: string | boolean, section?: string) => {
     const fieldKey = section ? `${section}.${field}` : field;
     setTouchedFields((prev) => new Set(prev).add(fieldKey));
 
@@ -257,11 +251,7 @@ export default function PatientForm({
         ...allErrors.map((error) => {
           if (error.field.startsWith('endereco.')) return 2;
           if (error.field.startsWith('contato_emergencia.')) return 3;
-          if (
-            ['convenio_nome', 'numero_carteirinha', 'validade_carteirinha'].includes(
-              error.field,
-            )
-          )
+          if (['convenio_nome', 'numero_carteirinha', 'validade_carteirinha'].includes(error.field))
             return 4;
           return 1;
         }),
@@ -316,7 +306,7 @@ export default function PatientForm({
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="mx-auto max-w-4xl">
       {/* Progress Steps */}
       <div className="mb-8">
         <div className="flex items-center justify-between">
@@ -328,14 +318,14 @@ export default function PatientForm({
             return (
               <div key={step.id} className="flex items-center">
                 <div
-                  className={`flex items-center justify-center w-12 h-12 rounded-full border-2 transition-colors ${
+                  className={`flex h-12 w-12 items-center justify-center rounded-full border-2 transition-colors ${
                     isCompleted
-                      ? 'bg-emerald-600 border-emerald-600 text-white'
+                      ? 'border-emerald-600 bg-emerald-600 text-white'
                       : isCurrent
                         ? isValid
-                          ? 'bg-blue-600 border-blue-600 text-white'
-                          : 'bg-red-100 dark:bg-red-900/30 border-red-300 dark:border-red-700 text-red-600 dark:text-red-400'
-                        : 'bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-400 dark:text-gray-500'
+                          ? 'border-blue-600 bg-blue-600 text-white'
+                          : 'border-red-300 bg-red-100 text-red-600 dark:border-red-700 dark:bg-red-900/30 dark:text-red-400'
+                        : 'border-gray-300 bg-white text-gray-400 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-500'
                   }`}
                 >
                   {isCompleted ? (
@@ -363,7 +353,7 @@ export default function PatientForm({
                 </div>
                 {index < steps.length - 1 && (
                   <div
-                    className={`w-24 h-0.5 mx-6 ${isCompleted ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-300 dark:bg-gray-600'}`}
+                    className={`mx-6 h-0.5 w-24 ${isCompleted ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-300 dark:bg-gray-600'}`}
                   />
                 )}
               </div>
@@ -375,15 +365,15 @@ export default function PatientForm({
       {/* Error Summary */}
       {errors.length > 0 && (
         <motion.div
-          className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg"
+          className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-900/20"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <div className="flex items-center gap-2 text-red-800 dark:text-red-300 font-medium mb-2">
+          <div className="mb-2 flex items-center gap-2 font-medium text-red-800 dark:text-red-300">
             <AlertTriangle className="h-5 w-5" />
             Corrija os seguintes erros:
           </div>
-          <ul className="text-sm text-red-700 dark:text-red-400 space-y-1">
+          <ul className="space-y-1 text-sm text-red-700 dark:text-red-400">
             {errors.map((error, index) => (
               <li key={index}>• {error.message}</li>
             ))}
@@ -394,7 +384,7 @@ export default function PatientForm({
       {/* Form */}
       <form
         onSubmit={handleSubmit}
-        className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700"
+        className="rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800"
       >
         <div className="p-8">
           {currentStep === 1 && <PersonalDataStep {...stepProps} />}
@@ -404,13 +394,13 @@ export default function PatientForm({
         </div>
 
         {/* Form Navigation */}
-        <div className="px-8 py-6 bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between">
+        <div className="flex items-center justify-between border-t border-gray-200 bg-gray-50 px-8 py-6 dark:border-gray-700 dark:bg-gray-800">
           <div>
             {currentStep > 1 && (
               <motion.button
                 type="button"
                 onClick={prevStep}
-                className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-lg font-medium transition-colors"
+                className="inline-flex items-center rounded-lg border border-gray-300 bg-white px-4 py-2 font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -425,7 +415,7 @@ export default function PatientForm({
               <motion.button
                 type="button"
                 onClick={onReset}
-                className="px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white border border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 rounded-lg font-medium transition-colors"
+                className="rounded-lg border border-gray-300 px-4 py-2 font-medium text-gray-600 transition-colors hover:border-gray-400 hover:text-gray-800 dark:border-gray-600 dark:text-gray-300 dark:hover:border-gray-500 dark:hover:text-white"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -437,7 +427,7 @@ export default function PatientForm({
               <motion.button
                 type="button"
                 onClick={nextStep}
-                className="inline-flex items-center px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+                className="inline-flex items-center rounded-lg bg-blue-600 px-6 py-2 font-medium text-white transition-colors hover:bg-blue-700"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -448,23 +438,21 @@ export default function PatientForm({
               <motion.button
                 type="submit"
                 disabled={isSubmitting || (hasChanges !== undefined && !hasChanges)}
-                className={`inline-flex items-center px-6 py-2 font-medium rounded-lg transition-colors ${
+                className={`inline-flex items-center rounded-lg px-6 py-2 font-medium transition-colors ${
                   hasChanges !== undefined && !hasChanges
-                    ? 'bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed'
-                    : 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                    ? 'cursor-not-allowed bg-gray-300 text-gray-500 dark:bg-gray-600 dark:text-gray-400'
+                    : 'bg-emerald-600 text-white hover:bg-emerald-700'
                 } disabled:bg-gray-400 dark:disabled:bg-gray-600`}
                 whileHover={{
-                  scale:
-                    isSubmitting || (hasChanges !== undefined && !hasChanges) ? 1 : 1.02,
+                  scale: isSubmitting || (hasChanges !== undefined && !hasChanges) ? 1 : 1.02,
                 }}
                 whileTap={{
-                  scale:
-                    isSubmitting || (hasChanges !== undefined && !hasChanges) ? 1 : 0.98,
+                  scale: isSubmitting || (hasChanges !== undefined && !hasChanges) ? 1 : 0.98,
                 }}
               >
                 {isSubmitting ? (
                   <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    <div className="mr-2 h-4 w-4 animate-spin rounded-full border-b-2 border-white"></div>
                     Salvando...
                   </>
                 ) : (

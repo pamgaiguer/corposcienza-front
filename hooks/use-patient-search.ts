@@ -92,9 +92,7 @@ export function usePatientSearch(patients: Patient[]) {
 
     // Gender filter
     if (filters.sexo.length > 0) {
-      filtered = filtered.filter((patient) =>
-        filters.sexo.includes(patient.sexo_biologico),
-      );
+      filtered = filtered.filter((patient) => filters.sexo.includes(patient.sexo_biologico));
     }
 
     // Age range filter
@@ -114,9 +112,7 @@ export function usePatientSearch(patients: Patient[]) {
         const startDate = filters.dateRange.start
           ? new Date(filters.dateRange.start)
           : new Date('1900-01-01');
-        const endDate = filters.dateRange.end
-          ? new Date(filters.dateRange.end)
-          : new Date();
+        const endDate = filters.dateRange.end ? new Date(filters.dateRange.end) : new Date();
 
         return patientDate >= startDate && patientDate <= endDate;
       });

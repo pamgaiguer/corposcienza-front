@@ -2,13 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Users, TrendingUp, Activity, UserPlus, BarChart3 } from 'lucide-react';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import {
   BarChart,
@@ -140,7 +134,7 @@ export default function AnalyticsPage() {
   ];
 
   return (
-    <div className="flex-1 p-8 bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <div className="min-h-screen flex-1 bg-gray-50 p-8 dark:bg-gray-900">
       {/* Header */}
       <motion.div className="mb-8" {...fadeInUp}>
         <div className="flex items-center justify-between">
@@ -148,19 +142,19 @@ export default function AnalyticsPage() {
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
               Analytics Dashboard
             </h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-1">
+            <p className="mt-1 text-gray-600 dark:text-gray-400">
               Insights e métricas dos seus pacientes
             </p>
           </div>
           <div className="flex items-center gap-4">
-            <select className="px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            <select className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white">
               <option>Últimos 30 dias</option>
               <option>Últimos 90 dias</option>
               <option>Últimos 6 meses</option>
               <option>Último ano</option>
             </select>
             <motion.button
-              className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+              className="inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition-colors hover:bg-blue-700"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -173,24 +167,24 @@ export default function AnalyticsPage() {
 
       {/* Key Metrics */}
       <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
+        className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4"
         variants={staggerContainer}
         initial="initial"
         animate="animate"
       >
         {stats.map((stat) => (
           <motion.div key={stat.title} variants={fadeInUp} whileHover={{ y: -2 }}>
-            <Card className="hover:shadow-md transition-shadow bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+            <Card className="border-gray-200 bg-white transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
                       {stat.title}
                     </p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">
+                    <p className="mt-1 text-2xl font-bold text-gray-900 dark:text-white">
                       {stat.value}
                     </p>
-                    <div className="flex items-center mt-2">
+                    <div className="mt-2 flex items-center">
                       <span
                         className={`text-sm font-medium ${
                           stat.changeType === 'positive'
@@ -200,7 +194,7 @@ export default function AnalyticsPage() {
                       >
                         {stat.change}
                       </span>
-                      <span className="text-sm text-gray-500 dark:text-gray-400 ml-1">
+                      <span className="ml-1 text-sm text-gray-500 dark:text-gray-400">
                         {stat.description}
                       </span>
                     </div>
@@ -219,10 +213,10 @@ export default function AnalyticsPage() {
         ))}
       </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+      <div className="mb-8 grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Patient Registration Trend */}
         <motion.div {...fadeInUp}>
-          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <Card className="border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
             <CardHeader>
               <CardTitle className="text-gray-900 dark:text-white">
                 Tendência de Cadastros
@@ -283,7 +277,7 @@ export default function AnalyticsPage() {
 
         {/* Age Distribution */}
         <motion.div {...fadeInUp}>
-          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <Card className="border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
             <CardHeader>
               <CardTitle className="text-gray-900 dark:text-white">
                 Distribuição por Idade
@@ -311,11 +305,7 @@ export default function AnalyticsPage() {
                     <XAxis dataKey="range" className="text-gray-600 dark:text-gray-400" />
                     <YAxis className="text-gray-600 dark:text-gray-400" />
                     <ChartTooltip content={<ChartTooltipContent />} />
-                    <Bar
-                      dataKey="count"
-                      fill="var(--color-count)"
-                      radius={[4, 4, 0, 0]}
-                    />
+                    <Bar dataKey="count" fill="var(--color-count)" radius={[4, 4, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </ChartContainer>
@@ -324,10 +314,10 @@ export default function AnalyticsPage() {
         </motion.div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+      <div className="mb-8 grid grid-cols-1 gap-8 lg:grid-cols-3">
         {/* Plan Distribution */}
         <motion.div {...fadeInUp}>
-          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <Card className="border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
             <CardHeader>
               <CardTitle className="text-gray-900 dark:text-white">
                 Distribuição por Plano
@@ -378,12 +368,10 @@ export default function AnalyticsPage() {
                   <div key={plan.name} className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <div
-                        className="w-3 h-3 rounded-full"
+                        className="h-3 w-3 rounded-full"
                         style={{ backgroundColor: plan.color }}
                       ></div>
-                      <span className="text-sm text-gray-700 dark:text-gray-300">
-                        {plan.name}
-                      </span>
+                      <span className="text-sm text-gray-700 dark:text-gray-300">{plan.name}</span>
                     </div>
                     <span className="text-sm font-medium text-gray-900 dark:text-white">
                       {plan.value}
@@ -397,7 +385,7 @@ export default function AnalyticsPage() {
 
         {/* Gender Distribution */}
         <motion.div {...fadeInUp}>
-          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <Card className="border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
             <CardHeader>
               <CardTitle className="text-gray-900 dark:text-white">
                 Distribuição por Gênero
@@ -444,7 +432,7 @@ export default function AnalyticsPage() {
                   <div key={gender.name} className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <div
-                        className="w-3 h-3 rounded-full"
+                        className="h-3 w-3 rounded-full"
                         style={{ backgroundColor: gender.color }}
                       ></div>
                       <span className="text-sm text-gray-700 dark:text-gray-300">
@@ -463,11 +451,9 @@ export default function AnalyticsPage() {
 
         {/* Top Cities */}
         <motion.div {...fadeInUp}>
-          <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <Card className="border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
             <CardHeader>
-              <CardTitle className="text-gray-900 dark:text-white">
-                Principais Cidades
-              </CardTitle>
+              <CardTitle className="text-gray-900 dark:text-white">Principais Cidades</CardTitle>
               <CardDescription className="text-gray-600 dark:text-gray-400">
                 Distribuição geográfica
               </CardDescription>
@@ -477,7 +463,7 @@ export default function AnalyticsPage() {
                 {cityDistribution.map((city, index) => (
                   <div key={city.city} className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="flex items-center justify-center w-6 h-6 bg-blue-100 dark:bg-blue-900/30 rounded-full text-xs font-medium text-blue-700 dark:text-blue-300">
+                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 text-xs font-medium text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
                         {index + 1}
                       </div>
                       <div>
@@ -493,9 +479,9 @@ export default function AnalyticsPage() {
                       <p className="text-sm font-medium text-gray-900 dark:text-white">
                         {city.count}
                       </p>
-                      <div className="w-16 h-2 bg-gray-200 dark:bg-gray-700 rounded-full mt-1">
+                      <div className="mt-1 h-2 w-16 rounded-full bg-gray-200 dark:bg-gray-700">
                         <div
-                          className="h-2 bg-blue-500 dark:bg-blue-400 rounded-full"
+                          className="h-2 rounded-full bg-blue-500 dark:bg-blue-400"
                           style={{ width: `${city.percentage * 3}%` }}
                         ></div>
                       </div>
@@ -510,11 +496,9 @@ export default function AnalyticsPage() {
 
       {/* Appointment Trends */}
       <motion.div {...fadeInUp}>
-        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+        <Card className="border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
           <CardHeader>
-            <CardTitle className="text-gray-900 dark:text-white">
-              Tendência de Consultas
-            </CardTitle>
+            <CardTitle className="text-gray-900 dark:text-white">Tendência de Consultas</CardTitle>
             <CardDescription className="text-gray-600 dark:text-gray-400">
               Consultas agendadas, realizadas e canceladas por dia da semana
             </CardDescription>
@@ -551,16 +535,8 @@ export default function AnalyticsPage() {
                     fill="var(--color-appointments)"
                     radius={[4, 4, 0, 0]}
                   />
-                  <Bar
-                    dataKey="completed"
-                    fill="var(--color-completed)"
-                    radius={[4, 4, 0, 0]}
-                  />
-                  <Bar
-                    dataKey="cancelled"
-                    fill="var(--color-cancelled)"
-                    radius={[4, 4, 0, 0]}
-                  />
+                  <Bar dataKey="completed" fill="var(--color-completed)" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="cancelled" fill="var(--color-cancelled)" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </ChartContainer>
@@ -570,14 +546,14 @@ export default function AnalyticsPage() {
 
       {/* Insights Cards */}
       <motion.div className="mt-8" {...fadeInUp}>
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+        <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
           Insights Principais
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card className="border-l-4 border-l-emerald-500 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <Card className="border-l-4 border-gray-200 border-l-emerald-500 bg-white dark:border-gray-700 dark:bg-gray-800">
             <CardContent className="p-6">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg">
+                <div className="rounded-lg bg-emerald-100 p-2 dark:bg-emerald-900/30">
                   <TrendingUp className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
                 </div>
                 <div>
@@ -595,10 +571,10 @@ export default function AnalyticsPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-l-4 border-l-blue-500 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <Card className="border-l-4 border-gray-200 border-l-blue-500 bg-white dark:border-gray-700 dark:bg-gray-800">
             <CardContent className="p-6">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                <div className="rounded-lg bg-blue-100 p-2 dark:bg-blue-900/30">
                   <Users className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div>
@@ -616,22 +592,18 @@ export default function AnalyticsPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-l-4 border-l-purple-500 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+          <Card className="border-l-4 border-gray-200 border-l-purple-500 bg-white dark:border-gray-700 dark:bg-gray-800">
             <CardContent className="p-6">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
+                <div className="rounded-lg bg-purple-100 p-2 dark:bg-purple-900/30">
                   <Activity className="h-5 w-5 text-purple-600 dark:text-purple-400" />
                 </div>
                 <div>
                   <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
                     Alta Retenção
                   </p>
-                  <p className="text-lg font-bold text-gray-900 dark:text-white">
-                    94.2% mantidos
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
-                    Excelente satisfação
-                  </p>
+                  <p className="text-lg font-bold text-gray-900 dark:text-white">94.2% mantidos</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">Excelente satisfação</p>
                 </div>
               </div>
             </CardContent>

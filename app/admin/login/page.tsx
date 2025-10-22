@@ -5,13 +5,7 @@ import type React from 'react';
 import { useState } from 'react';
 import { Eye, EyeOff, Lock, Mail, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -39,27 +33,27 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen flex">
+    <div className="flex min-h-screen">
       {/* Left side - Image */}
-      <div className="hidden lg:flex lg:w-1/2 relative">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-emerald-600/20 z-10" />
+      <div className="relative hidden lg:flex lg:w-1/2">
+        <div className="absolute inset-0 z-10 bg-gradient-to-br from-blue-600/20 to-emerald-600/20" />
         <Image
           width={600}
           height={800}
           priority
           src="/modern-medical-consultation-room-with-doctor-and-p.png"
           alt="Medical consultation room"
-          className="w-full h-full object-cover"
+          className="h-full w-full object-cover"
         />
         <div className="absolute inset-0 z-20 flex flex-col justify-end p-12 text-white">
-          <div className="bg-black/30 backdrop-blur-sm rounded-lg p-6">
-            <h2 className="text-3xl font-bold mb-4">Sistema de Gestão Médica</h2>
+          <div className="rounded-lg bg-black/30 p-6 backdrop-blur-sm">
+            <h2 className="mb-4 text-3xl font-bold">Sistema de Gestão Médica</h2>
             <p className="text-lg opacity-90">
-              Acesse o painel administrativo para gerenciar pacientes, consultas e
-              relatórios de forma segura e eficiente.
+              Acesse o painel administrativo para gerenciar pacientes, consultas e relatórios de
+              forma segura e eficiente.
             </p>
-            <div className="flex items-center gap-2 mt-4 text-sm">
-              <Shield className="w-4 h-4" />
+            <div className="mt-4 flex items-center gap-2 text-sm">
+              <Shield className="h-4 w-4" />
               <span>Protegido por criptografia de ponta a ponta</span>
             </div>
           </div>
@@ -67,24 +61,24 @@ export default function AdminLogin() {
       </div>
 
       {/* Right side - Login Form */}
-      <div className="flex-1 flex items-center justify-center p-8 bg-gray-50 dark:bg-gray-900">
+      <div className="flex flex-1 items-center justify-center bg-gray-50 p-8 dark:bg-gray-900">
         <div className="w-full max-w-md">
           {/* Logo/Header */}
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-full mb-4">
-              <Shield className="w-8 h-8 text-white" />
+          <div className="mb-8 text-center">
+            <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-blue-600">
+              <Shield className="h-8 w-8 text-white" />
             </div>
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
               Acesso Administrativo
             </h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
+            <p className="mt-2 text-gray-600 dark:text-gray-400">
               Entre com suas credenciais para acessar o sistema
             </p>
           </div>
 
-          <Card className="shadow-xl border-0">
+          <Card className="border-0 shadow-xl">
             <CardHeader className="space-y-1 pb-6">
-              <CardTitle className="text-xl text-center">Login</CardTitle>
+              <CardTitle className="text-center text-xl">Login</CardTitle>
               <CardDescription className="text-center">
                 Faça login em sua conta administrativa
               </CardDescription>
@@ -127,11 +121,7 @@ export default function AdminLogin() {
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute right-3 top-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
                     >
-                      {showPassword ? (
-                        <EyeOff className="h-4 w-4" />
-                      ) : (
-                        <Eye className="h-4 w-4" />
-                      )}
+                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </button>
                   </div>
                 </div>
@@ -139,11 +129,7 @@ export default function AdminLogin() {
                 {/* Remember Me & Forgot Password */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="remember"
-                      checked={rememberMe}
-                      onCheckedChange={setRememberMe}
-                    />
+                    <Checkbox id="remember" checked={rememberMe} onCheckedChange={setRememberMe} />
                     <Label htmlFor="remember" className="text-sm">
                       Lembrar-me
                     </Label>
@@ -159,12 +145,12 @@ export default function AdminLogin() {
                 {/* Submit Button */}
                 <Button
                   type="submit"
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                  className="w-full bg-blue-600 text-white hover:bg-blue-700"
                   disabled={isLoading}
                 >
                   {isLoading ? (
                     <div className="flex items-center gap-2">
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
                       Entrando...
                     </div>
                   ) : (
@@ -174,16 +160,16 @@ export default function AdminLogin() {
               </form>
 
               {/* Security Notice */}
-              <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+              <div className="mt-6 rounded-lg bg-blue-50 p-4 dark:bg-blue-900/20">
                 <div className="flex items-start gap-3">
-                  <Shield className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
+                  <Shield className="mt-0.5 h-5 w-5 flex-shrink-0 text-blue-600 dark:text-blue-400" />
                   <div className="text-sm">
-                    <p className="font-medium text-blue-900 dark:text-blue-100 mb-1">
+                    <p className="mb-1 font-medium text-blue-900 dark:text-blue-100">
                       Acesso Seguro
                     </p>
                     <p className="text-blue-700 dark:text-blue-300">
-                      Este sistema está em conformidade com as normas HIPAA e LGPD. Todas
-                      as atividades são monitoradas e registradas.
+                      Este sistema está em conformidade com as normas HIPAA e LGPD. Todas as
+                      atividades são monitoradas e registradas.
                     </p>
                   </div>
                 </div>
@@ -192,9 +178,9 @@ export default function AdminLogin() {
           </Card>
 
           {/* Footer */}
-          <div className="text-center mt-8 text-sm text-gray-500 dark:text-gray-400">
+          <div className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
             <p>© 2024 Sistema Médico. Todos os direitos reservados.</p>
-            <div className="flex items-center justify-center gap-4 mt-2">
+            <div className="mt-2 flex items-center justify-center gap-4">
               <Link href="/privacy" className="hover:text-blue-600">
                 Política de Privacidade
               </Link>

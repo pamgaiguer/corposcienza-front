@@ -58,12 +58,12 @@ export default function AddressStep({
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <div className="flex items-center gap-3 mb-6">
+      <div className="mb-6 flex items-center gap-3">
         <MapPin className="h-6 w-6 text-blue-600" />
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Endereço</h2>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <FormField
           label="CEP"
           required
@@ -74,7 +74,7 @@ export default function AddressStep({
             type="text"
             value={formData.endereco.cep}
             onChange={(e) => onInputChange('cep', formatCEP(e.target.value), 'endereco')}
-            className={`w-full px-4 py-3 border rounded-lg transition-colors ${
+            className={`w-full rounded-lg border px-4 py-3 transition-colors ${
               getFieldError('endereco.cep')
                 ? 'border-red-300 focus:border-red-500 focus:ring-red-500 dark:border-red-500 dark:focus:border-red-600 dark:focus:ring-red-600'
                 : isFieldValid('endereco.cep')
@@ -95,7 +95,7 @@ export default function AddressStep({
           <select
             value={formData.endereco.estado}
             onChange={(e) => onInputChange('estado', e.target.value, 'endereco')}
-            className={`w-full px-4 py-3 border rounded-lg transition-colors ${
+            className={`w-full rounded-lg border px-4 py-3 transition-colors ${
               getFieldError('endereco.estado')
                 ? 'border-red-300 focus:border-red-500 focus:ring-red-500 dark:border-red-500 dark:focus:border-red-600 dark:focus:ring-red-600'
                 : isFieldValid('endereco.estado')
@@ -123,7 +123,7 @@ export default function AddressStep({
               type="text"
               value={formData.endereco.rua}
               onChange={(e) => onInputChange('rua', e.target.value, 'endereco')}
-              className={`w-full px-4 py-3 border rounded-lg transition-colors ${
+              className={`w-full rounded-lg border px-4 py-3 transition-colors ${
                 getFieldError('endereco.rua')
                   ? 'border-red-300 focus:border-red-500 focus:ring-red-500 dark:border-red-500 dark:focus:border-red-600 dark:focus:ring-red-600'
                   : isFieldValid('endereco.rua')
@@ -145,7 +145,7 @@ export default function AddressStep({
             type="text"
             value={formData.endereco.numero}
             onChange={(e) => onInputChange('numero', e.target.value, 'endereco')}
-            className={`w-full px-4 py-3 border rounded-lg transition-colors ${
+            className={`w-full rounded-lg border px-4 py-3 transition-colors ${
               getFieldError('endereco.numero')
                 ? 'border-red-300 focus:border-red-500 focus:ring-red-500 dark:border-red-500 dark:focus:border-red-600 dark:focus:ring-red-600'
                 : isFieldValid('endereco.numero')
@@ -161,7 +161,7 @@ export default function AddressStep({
             type="text"
             value={formData.endereco.complemento}
             onChange={(e) => onInputChange('complemento', e.target.value, 'endereco')}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-500 dark:focus:border-blue-600 dark:focus:ring-blue-600 transition-colors"
+            className="w-full rounded-lg border border-gray-300 px-4 py-3 transition-colors focus:border-blue-500 focus:ring-2 focus:ring-blue-500 dark:border-gray-500 dark:focus:border-blue-600 dark:focus:ring-blue-600"
             placeholder="Apto, Bloco, etc."
           />
         </FormField>
@@ -176,7 +176,7 @@ export default function AddressStep({
             type="text"
             value={formData.endereco.bairro}
             onChange={(e) => onInputChange('bairro', e.target.value, 'endereco')}
-            className={`w-full px-4 py-3 border rounded-lg transition-colors ${
+            className={`w-full rounded-lg border px-4 py-3 transition-colors ${
               getFieldError('endereco.bairro')
                 ? 'border-red-300 focus:border-red-500 focus:ring-red-500 dark:border-red-500 dark:focus:border-red-600 dark:focus:ring-red-600'
                 : isFieldValid('endereco.bairro')
@@ -197,7 +197,7 @@ export default function AddressStep({
             type="text"
             value={formData.endereco.cidade}
             onChange={(e) => onInputChange('cidade', e.target.value, 'endereco')}
-            className={`w-full px-4 py-3 border rounded-lg transition-colors ${
+            className={`w-full rounded-lg border px-4 py-3 transition-colors ${
               getFieldError('endereco.cidade')
                 ? 'border-red-300 focus:border-red-500 focus:ring-red-500 dark:border-red-500 dark:focus:border-red-600 dark:focus:ring-red-600'
                 : isFieldValid('endereco.cidade')

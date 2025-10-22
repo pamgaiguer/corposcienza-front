@@ -1,27 +1,18 @@
 'use client';
 
 import Link from 'next/link';
-import {
-  Facebook,
-  Instagram,
-  Twitter,
-  Linkedin,
-  Phone,
-  Mail,
-  MapPin,
-  Clock,
-} from 'lucide-react';
+import { Facebook, Instagram, Twitter, Linkedin, Phone, Mail, MapPin, Clock } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 dark:bg-gray-950 text-white">
+    <footer className="bg-gray-900 text-white dark:bg-gray-950">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-4 gap-8">
+        <div className="grid gap-8 md:grid-cols-4">
           {/* Company Info */}
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">CS</span>
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-blue-700">
+                <span className="text-lg font-bold text-white">CS</span>
               </div>
               <div>
                 <h3 className="text-xl font-bold">Corpo Scienza</h3>
@@ -29,20 +20,20 @@ export default function Footer() {
               </div>
             </div>
             <p className="text-gray-400">
-              Medicina personalizada e científica com abordagem multidisciplinar e
-              tecnologia avançada.
+              Medicina personalizada e científica com abordagem multidisciplinar e tecnologia
+              avançada.
             </p>
             <div className="flex space-x-4">
-              <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+              <Link href="#" className="text-gray-400 transition-colors hover:text-white">
                 <Facebook className="h-5 w-5" />
               </Link>
-              <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+              <Link href="#" className="text-gray-400 transition-colors hover:text-white">
                 <Instagram className="h-5 w-5" />
               </Link>
-              <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+              <Link href="#" className="text-gray-400 transition-colors hover:text-white">
                 <Twitter className="h-5 w-5" />
               </Link>
-              <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+              <Link href="#" className="text-gray-400 transition-colors hover:text-white">
                 <Linkedin className="h-5 w-5" />
               </Link>
             </div>
@@ -50,45 +41,30 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Links Rápidos</h4>
+            <h4 className="mb-4 text-lg font-semibold">Links Rápidos</h4>
             <ul className="space-y-2">
               <li>
-                <Link
-                  href="/"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
+                <Link href="/" className="text-gray-400 transition-colors hover:text-white">
                   Início
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/sobre"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
+                <Link href="/sobre" className="text-gray-400 transition-colors hover:text-white">
                   Sobre Nós
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/servicos"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
+                <Link href="/servicos" className="text-gray-400 transition-colors hover:text-white">
                   Serviços
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/planos"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
+                <Link href="/planos" className="text-gray-400 transition-colors hover:text-white">
                   Planos
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/blog"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
+                <Link href="/blog" className="text-gray-400 transition-colors hover:text-white">
                   Blog
                 </Link>
               </li>
@@ -97,12 +73,12 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Especialidades</h4>
+            <h4 className="mb-4 text-lg font-semibold">Especialidades</h4>
             <ul className="space-y-2">
               <li>
                 <Link
                   href="/servicos/cardiologia"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-400 transition-colors hover:text-white"
                 >
                   Cardiologia
                 </Link>
@@ -110,7 +86,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/servicos/neurologia"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-400 transition-colors hover:text-white"
                 >
                   Neurologia
                 </Link>
@@ -118,7 +94,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/servicos/ortopedia"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-400 transition-colors hover:text-white"
                 >
                   Ortopedia
                 </Link>
@@ -126,7 +102,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/servicos/dermatologia"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-400 transition-colors hover:text-white"
                 >
                   Dermatologia
                 </Link>
@@ -134,7 +110,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/servicos/pediatria"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-400 transition-colors hover:text-white"
                 >
                   Pediatria
                 </Link>
@@ -144,7 +120,7 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Contato</h4>
+            <h4 className="mb-4 text-lg font-semibold">Contato</h4>
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <Phone className="h-4 w-4 text-blue-400" />
@@ -166,10 +142,10 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center">
+        <div className="mt-8 border-t border-gray-800 pt-8 text-center">
           <p className="text-gray-400">
-            © 2024 Corpo Scienza. Todos os direitos reservados. | Política de Privacidade
-            | Termos de Uso
+            © 2024 Corpo Scienza. Todos os direitos reservados. | Política de Privacidade | Termos
+            de Uso
           </p>
         </div>
       </div>

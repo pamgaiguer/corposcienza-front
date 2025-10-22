@@ -252,12 +252,12 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }: AdminSideb
 
   return (
     <div
-      className={`h-screen bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 flex flex-col transition-all duration-300 ease-in-out ${
+      className={`flex h-screen flex-col border-r border-gray-200 bg-white transition-all duration-300 ease-in-out dark:border-gray-700 dark:bg-gray-900 ${
         isCollapsed ? 'w-16' : 'w-64'
       }`}
     >
       {/* Header */}
-      <div className="flex h-16 items-center justify-between px-4 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
+      <div className="flex h-16 flex-shrink-0 items-center justify-between border-b border-gray-200 px-4 dark:border-gray-700">
         <AnimatePresence mode="wait">
           {!isCollapsed && (
             <motion.div
@@ -267,16 +267,12 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }: AdminSideb
               transition={{ duration: 0.2 }}
               className="flex items-center space-x-3"
             >
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-lg flex items-center justify-center">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-emerald-600">
                 <Stethoscope className="h-4 w-4 text-white" />
               </div>
               <div className="flex flex-col">
-                <span className="text-sm font-bold text-gray-900 dark:text-white">
-                  Admin Panel
-                </span>
-                <span className="text-xs text-gray-500 dark:text-gray-400">
-                  Corpo Scienza
-                </span>
+                <span className="text-sm font-bold text-gray-900 dark:text-white">Admin Panel</span>
+                <span className="text-xs text-gray-500 dark:text-gray-400">Corpo Scienza</span>
               </div>
             </motion.div>
           )}
@@ -286,14 +282,10 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }: AdminSideb
           variant="ghost"
           size="icon"
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="h-8 w-8 flex-shrink-0 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300"
+          className="h-8 w-8 flex-shrink-0 text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
           aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
-          {isCollapsed ? (
-            <ChevronRight className="h-4 w-4" />
-          ) : (
-            <ChevronLeft className="h-4 w-4" />
-          )}
+          {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
         </Button>
       </div>
 
@@ -306,14 +298,14 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }: AdminSideb
                 <>
                   <button
                     onClick={() => toggleExpanded(item.title)}
-                    className={`w-full flex items-center justify-between px-3 py-2 text-sm font-medium rounded-lg transition-colors group relative ${
+                    className={`group relative flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                       hasActiveSubmenu(item) || expandedItems.includes(item.title)
-                        ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300'
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                        ? 'bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300'
+                        : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
                     }`}
                     title={isCollapsed ? item.title : undefined}
                   >
-                    <div className="flex items-center min-w-0">
+                    <div className="flex min-w-0 items-center">
                       <item.icon className="h-4 w-4 flex-shrink-0" />
                       <AnimatePresence mode="wait">
                         {!isCollapsed && (
@@ -322,13 +314,13 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }: AdminSideb
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: -10 }}
                             transition={{ duration: 0.2 }}
-                            className="flex items-center ml-3 min-w-0"
+                            className="ml-3 flex min-w-0 items-center"
                           >
                             <span className="truncate">{item.title}</span>
                             {item.badge && (
                               <Badge
                                 variant={item.badge === 'New' ? 'default' : 'secondary'}
-                                className="ml-2 text-xs flex-shrink-0"
+                                className="ml-2 flex-shrink-0 text-xs"
                               >
                                 {item.badge}
                               </Badge>
@@ -339,7 +331,7 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }: AdminSideb
                     </div>
                     {!isCollapsed && (
                       <ChevronRight
-                        className={`h-4 w-4 transition-transform flex-shrink-0 ${
+                        className={`h-4 w-4 flex-shrink-0 transition-transform ${
                           expandedItems.includes(item.title) ? 'rotate-90' : ''
                         }`}
                       />
@@ -347,11 +339,9 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }: AdminSideb
 
                     {/* Tooltip for collapsed state */}
                     {isCollapsed && (
-                      <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50">
+                      <div className="pointer-events-none absolute left-full z-50 ml-2 whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100 dark:bg-gray-700">
                         {item.title}
-                        {item.badge && (
-                          <span className="ml-1 text-blue-300">({item.badge})</span>
-                        )}
+                        {item.badge && <span className="ml-1 text-blue-300">({item.badge})</span>}
                       </div>
                     )}
                   </button>
@@ -369,13 +359,13 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }: AdminSideb
                           <Link
                             key={subItem.href}
                             href={subItem.href}
-                            className={`flex items-center px-3 py-2 text-sm rounded-lg transition-colors ${
+                            className={`flex items-center rounded-lg px-3 py-2 text-sm transition-colors ${
                               isActive(subItem.href)
-                                ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300'
-                                : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50'
+                                ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
+                                : 'text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800/50'
                             }`}
                           >
-                            <subItem.icon className="h-3 w-3 mr-2 flex-shrink-0" />
+                            <subItem.icon className="mr-2 h-3 w-3 flex-shrink-0" />
                             <span className="truncate">{subItem.title}</span>
                           </Link>
                         ))}
@@ -386,14 +376,14 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }: AdminSideb
               ) : (
                 <Link
                   href={item.href}
-                  className={`flex items-center justify-between px-3 py-2 text-sm font-medium rounded-lg transition-colors group relative ${
+                  className={`group relative flex items-center justify-between rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                     isActive(item.href)
-                      ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300'
-                      : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                      ? 'bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300'
+                      : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
                   }`}
                   title={isCollapsed ? item.title : undefined}
                 >
-                  <div className="flex items-center min-w-0">
+                  <div className="flex min-w-0 items-center">
                     <item.icon className="h-4 w-4 flex-shrink-0" />
                     <AnimatePresence mode="wait">
                       {!isCollapsed && (
@@ -402,13 +392,13 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }: AdminSideb
                           animate={{ opacity: 1, x: 0 }}
                           exit={{ opacity: 0, x: -10 }}
                           transition={{ duration: 0.2 }}
-                          className="flex items-center ml-3 min-w-0"
+                          className="ml-3 flex min-w-0 items-center"
                         >
                           <span className="truncate">{item.title}</span>
                           {item.badge && (
                             <Badge
                               variant={item.badge === 'New' ? 'default' : 'secondary'}
-                              className="ml-2 text-xs flex-shrink-0"
+                              className="ml-2 flex-shrink-0 text-xs"
                             >
                               {item.badge}
                             </Badge>
@@ -420,11 +410,9 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }: AdminSideb
 
                   {/* Tooltip for collapsed state */}
                   {isCollapsed && (
-                    <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50">
+                    <div className="pointer-events-none absolute left-full z-50 ml-2 whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100 dark:bg-gray-700">
                       {item.title}
-                      {item.badge && (
-                        <span className="ml-1 text-blue-300">({item.badge})</span>
-                      )}
+                      {item.badge && <span className="ml-1 text-blue-300">({item.badge})</span>}
                     </div>
                   )}
                 </Link>
@@ -435,7 +423,7 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }: AdminSideb
       </nav>
 
       {/* Footer */}
-      <div className="border-t border-gray-200 dark:border-gray-700 p-4 flex-shrink-0">
+      <div className="flex-shrink-0 border-t border-gray-200 p-4 dark:border-gray-700">
         <div className="space-y-3">
           {/* Theme Toggle - Now properly styled */}
           <div className="flex items-center justify-center">
@@ -452,10 +440,10 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }: AdminSideb
                   <ThemeToggle
                     variant="ghost"
                     size="icon"
-                    className="h-8 w-8 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300"
+                    className="h-8 w-8 text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
                   />
                   {/* Tooltip for collapsed theme toggle */}
-                  <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50">
+                  <div className="pointer-events-none absolute left-full z-50 ml-2 whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100 dark:bg-gray-700">
                     Toggle Theme
                   </div>
                 </motion.div>
@@ -472,7 +460,7 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }: AdminSideb
                     variant="ghost"
                     size="sm"
                     showLabel={true}
-                    className="w-full justify-start h-8 px-3 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300"
+                    className="h-8 w-full justify-start px-3 text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
                   />
                 </motion.div>
               )}
@@ -483,7 +471,7 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }: AdminSideb
 
           {/* User Profile */}
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-full flex items-center justify-center flex-shrink-0">
+            <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-emerald-600">
               <User className="h-4 w-4 text-white" />
             </div>
             <AnimatePresence mode="wait">
@@ -493,12 +481,12 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }: AdminSideb
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -10 }}
                   transition={{ duration: 0.2 }}
-                  className="flex-1 min-w-0"
+                  className="min-w-0 flex-1"
                 >
-                  <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                  <p className="truncate text-sm font-medium text-gray-900 dark:text-white">
                     Dr. Admin
                   </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                  <p className="truncate text-xs text-gray-500 dark:text-gray-400">
                     admin@corposcienza.com
                   </p>
                 </motion.div>
@@ -510,7 +498,7 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }: AdminSideb
           <Button
             variant="ghost"
             size={isCollapsed ? 'icon' : 'sm'}
-            className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 group relative h-8"
+            className="group relative h-8 w-full justify-start text-red-600 hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-900/20"
             title={isCollapsed ? 'Logout' : undefined}
           >
             <LogOut className="h-4 w-4 flex-shrink-0" />
@@ -530,7 +518,7 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }: AdminSideb
 
             {/* Tooltip for collapsed state */}
             {isCollapsed && (
-              <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50">
+              <div className="pointer-events-none absolute left-full z-50 ml-2 whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100 dark:bg-gray-700">
                 Logout
               </div>
             )}

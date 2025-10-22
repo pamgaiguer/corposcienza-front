@@ -26,7 +26,7 @@ export default function FormField({
     <div className={`space-y-2 ${className}`}>
       <label className="block text-sm font-medium text-gray-700">
         {label}
-        {required && <span className="text-red-500 ml-1">*</span>}
+        {required && <span className="ml-1 text-red-500">*</span>}
       </label>
 
       <div className="relative">
@@ -36,7 +36,7 @@ export default function FormField({
         <AnimatePresence>
           {success && !error && (
             <motion.div
-              className="absolute right-3 top-1/2 transform -translate-y-1/2"
+              className="absolute right-3 top-1/2 -translate-y-1/2 transform"
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0 }}
@@ -51,7 +51,7 @@ export default function FormField({
         <AnimatePresence>
           {error && (
             <motion.div
-              className="absolute right-3 top-1/2 transform -translate-y-1/2"
+              className="absolute right-3 top-1/2 -translate-y-1/2 transform"
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0 }}
