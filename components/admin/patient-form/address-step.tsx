@@ -60,7 +60,7 @@ export default function AddressStep({
     >
       <div className="flex items-center gap-3 mb-6">
         <MapPin className="h-6 w-6 text-blue-600" />
-        <h2 className="text-xl font-semibold text-gray-900">Endereço</h2>
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Endereço</h2>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -71,10 +71,10 @@ export default function AddressStep({
             onChange={(e) => onInputChange("cep", formatCEP(e.target.value), "endereco")}
             className={`w-full px-4 py-3 border rounded-lg transition-colors ${
               getFieldError("endereco.cep")
-                ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                ? "border-red-300 focus:border-red-500 focus:ring-red-500 dark:border-red-500 dark:focus:border-red-600 dark:focus:ring-red-600"
                 : isFieldValid("endereco.cep")
-                  ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500"
-                  : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                  ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500 dark:border-emerald-500 dark:focus:border-emerald-600 dark:focus:ring-emerald-600"
+                  : "border-gray-300 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-500 dark:focus:border-blue-600 dark:focus:ring-blue-600"
             } focus:ring-2`}
             placeholder="00000-000"
             maxLength={9}
@@ -92,10 +92,10 @@ export default function AddressStep({
             onChange={(e) => onInputChange("estado", e.target.value, "endereco")}
             className={`w-full px-4 py-3 border rounded-lg transition-colors ${
               getFieldError("endereco.estado")
-                ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                ? "border-red-300 focus:border-red-500 focus:ring-red-500 dark:border-red-500 dark:focus:border-red-600 dark:focus:ring-red-600"
                 : isFieldValid("endereco.estado")
-                  ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500"
-                  : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                  ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500 dark:border-emerald-500 dark:focus:border-emerald-600 dark:focus:ring-emerald-600"
+                  : "border-gray-300 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-500 dark:focus:border-blue-600 dark:focus:ring-blue-600"
             } focus:ring-2`}
           >
             <option value="">Selecione</option>
@@ -115,10 +115,10 @@ export default function AddressStep({
               onChange={(e) => onInputChange("rua", e.target.value, "endereco")}
               className={`w-full px-4 py-3 border rounded-lg transition-colors ${
                 getFieldError("endereco.rua")
-                  ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                  ? "border-red-300 focus:border-red-500 focus:ring-red-500 dark:border-red-500 dark:focus:border-red-600 dark:focus:ring-red-600"
                   : isFieldValid("endereco.rua")
-                    ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500"
-                    : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                    ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500 dark:border-emerald-500 dark:focus:border-emerald-600 dark:focus:ring-emerald-600"
+                    : "border-gray-300 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-500 dark:focus:border-blue-600 dark:focus:ring-blue-600"
               } focus:ring-2`}
               placeholder="Digite o nome da rua"
             />
@@ -137,10 +137,10 @@ export default function AddressStep({
             onChange={(e) => onInputChange("numero", e.target.value, "endereco")}
             className={`w-full px-4 py-3 border rounded-lg transition-colors ${
               getFieldError("endereco.numero")
-                ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                ? "border-red-300 focus:border-red-500 focus:ring-red-500 dark:border-red-500 dark:focus:border-red-600 dark:focus:ring-red-600"
                 : isFieldValid("endereco.numero")
-                  ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500"
-                  : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                  ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500 dark:border-emerald-500 dark:focus:border-emerald-600 dark:focus:ring-emerald-600"
+                  : "border-gray-300 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-500 dark:focus:border-blue-600 dark:focus:ring-blue-600"
             } focus:ring-2`}
             placeholder="123"
           />
@@ -151,7 +151,7 @@ export default function AddressStep({
             type="text"
             value={formData.endereco.complemento}
             onChange={(e) => onInputChange("complemento", e.target.value, "endereco")}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-500 dark:focus:border-blue-600 dark:focus:ring-blue-600 transition-colors"
             placeholder="Apto, Bloco, etc."
           />
         </FormField>
@@ -168,10 +168,10 @@ export default function AddressStep({
             onChange={(e) => onInputChange("bairro", e.target.value, "endereco")}
             className={`w-full px-4 py-3 border rounded-lg transition-colors ${
               getFieldError("endereco.bairro")
-                ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                ? "border-red-300 focus:border-red-500 focus:ring-red-500 dark:border-red-500 dark:focus:border-red-600 dark:focus:ring-red-600"
                 : isFieldValid("endereco.bairro")
-                  ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500"
-                  : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                  ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500 dark:border-emerald-500 dark:focus:border-emerald-600 dark:focus:ring-emerald-600"
+                  : "border-gray-300 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-500 dark:focus:border-blue-600 dark:focus:ring-blue-600"
             } focus:ring-2`}
             placeholder="Digite o bairro"
           />
@@ -189,10 +189,10 @@ export default function AddressStep({
             onChange={(e) => onInputChange("cidade", e.target.value, "endereco")}
             className={`w-full px-4 py-3 border rounded-lg transition-colors ${
               getFieldError("endereco.cidade")
-                ? "border-red-300 focus:border-red-500 focus:ring-red-500"
+                ? "border-red-300 focus:border-red-500 focus:ring-red-500 dark:border-red-500 dark:focus:border-red-600 dark:focus:ring-red-600"
                 : isFieldValid("endereco.cidade")
-                  ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500"
-                  : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                  ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500 dark:border-emerald-500 dark:focus:border-emerald-600 dark:focus:ring-emerald-600"
+                  : "border-gray-300 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-500 dark:focus:border-blue-600 dark:focus:ring-blue-600"
             } focus:ring-2`}
             placeholder="Digite a cidade"
           />

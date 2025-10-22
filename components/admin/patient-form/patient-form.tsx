@@ -25,7 +25,7 @@ const defaultFormData: PatientFormData = {
   cpf: "",
   rg: "",
   nome: "",
-  sexo_biologico: "M",
+  sexo_biologico: "",
   data_nascimento: "",
   telefone: "",
   email: "",
@@ -311,8 +311,8 @@ export default function PatientForm({
                       : isCurrent
                         ? isValid
                           ? "bg-blue-600 border-blue-600 text-white"
-                          : "bg-red-100 border-red-300 text-red-600"
-                        : "bg-white border-gray-300 text-gray-400"
+                          : "bg-red-100 dark:bg-red-900/30 border-red-300 dark:border-red-700 text-red-600 dark:text-red-400"
+                        : "bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-400 dark:text-gray-500"
                   }`}
                 >
                   {isCompleted ? (
@@ -327,19 +327,21 @@ export default function PatientForm({
                   <p
                     className={`text-sm font-medium ${
                       isCompleted
-                        ? "text-emerald-600"
+                        ? "text-emerald-600 dark:text-emerald-400"
                         : isCurrent
                           ? isValid
-                            ? "text-blue-600"
-                            : "text-red-600"
-                          : "text-gray-400"
+                            ? "text-blue-600 dark:text-blue-400"
+                            : "text-red-600 dark:text-red-400"
+                          : "text-gray-400 dark:text-gray-500"
                     }`}
                   >
                     {step.title}
                   </p>
                 </div>
                 {index < steps.length - 1 && (
-                  <div className={`w-24 h-0.5 mx-6 ${isCompleted ? "bg-emerald-600" : "bg-gray-300"}`} />
+                  <div
+                    className={`w-24 h-0.5 mx-6 ${isCompleted ? "bg-emerald-600 dark:bg-emerald-500" : "bg-gray-300 dark:bg-gray-600"}`}
+                  />
                 )}
               </div>
             )
@@ -350,15 +352,15 @@ export default function PatientForm({
       {/* Error Summary */}
       {errors.length > 0 && (
         <motion.div
-          className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg"
+          className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <div className="flex items-center gap-2 text-red-800 font-medium mb-2">
+          <div className="flex items-center gap-2 text-red-800 dark:text-red-300 font-medium mb-2">
             <AlertTriangle className="h-5 w-5" />
             Corrija os seguintes erros:
           </div>
-          <ul className="text-sm text-red-700 space-y-1">
+          <ul className="text-sm text-red-700 dark:text-red-400 space-y-1">
             {errors.map((error, index) => (
               <li key={index}>• {error.message}</li>
             ))}
@@ -367,7 +369,10 @@ export default function PatientForm({
       )}
 
       {/* Form */}
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border border-gray-200">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700"
+      >
         <div className="p-8">
           {currentStep === 1 && <PersonalDataStep {...stepProps} />}
           {currentStep === 2 && <AddressStep {...stepProps} />}
@@ -376,13 +381,13 @@ export default function PatientForm({
         </div>
 
         {/* Form Navigation */}
-        <div className="px-8 py-6 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
+        <div className="px-8 py-6 bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between">
           <div>
             {currentStep > 1 && (
               <motion.button
                 type="button"
                 onClick={prevStep}
-                className="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 bg-white hover:bg-gray-50 rounded-lg font-medium transition-colors"
+                className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-lg font-medium transition-colors"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -397,7 +402,7 @@ export default function PatientForm({
               <motion.button
                 type="button"
                 onClick={onReset}
-                className="px-4 py-2 text-gray-600 hover:text-gray-800 border border-gray-300 hover:border-gray-400 rounded-lg font-medium transition-colors"
+                className="px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white border border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 rounded-lg font-medium transition-colors"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -422,9 +427,9 @@ export default function PatientForm({
                 disabled={isSubmitting || (hasChanges !== undefined && !hasChanges)}
                 className={`inline-flex items-center px-6 py-2 font-medium rounded-lg transition-colors ${
                   hasChanges !== undefined && !hasChanges
-                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                    ? "bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed"
                     : "bg-emerald-600 hover:bg-emerald-700 text-white"
-                } disabled:bg-gray-400`}
+                } disabled:bg-gray-400 dark:disabled:bg-gray-600`}
                 whileHover={{ scale: isSubmitting || (hasChanges !== undefined && !hasChanges) ? 1 : 1.02 }}
                 whileTap={{ scale: isSubmitting || (hasChanges !== undefined && !hasChanges) ? 1 : 0.98 }}
               >

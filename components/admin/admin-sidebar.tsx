@@ -41,7 +41,7 @@ interface AdminSidebarProps {
 const menuItems = [
   {
     title: "Dashboard",
-    href: "/admin",
+    href: "/admin/dashboard",
     icon: LayoutDashboard,
     badge: null,
   },
@@ -69,18 +69,18 @@ const menuItems = [
         icon: UserPlus,
         description: "Register new patient",
       },
-      {
-        title: "Search & Filter",
-        href: "/admin/patients?tab=search",
-        icon: Search,
-        description: "Advanced patient search",
-      },
-      {
-        title: "Import/Export",
-        href: "/admin/patients/import-export",
-        icon: Database,
-        description: "Bulk operations",
-      },
+      // {
+      //   title: "Search & Filter",
+      //   href: "/admin/patients?tab=search",
+      //   icon: Search,
+      //   description: "Advanced patient search",
+      // },
+      // {
+      //   title: "Import/Export",
+      //   href: "/admin/patients/import-export",
+      //   icon: Database,
+      //   description: "Bulk operations",
+      // },
     ],
   },
   {

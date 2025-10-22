@@ -123,29 +123,51 @@ export default function PatientViewPage() {
     }
   }
 
+  // Helper para cores de status/pills
+  const getStatusColorScheme = (status: string) => {
+    if (status === "Ativo") {
+      return "bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-100"
+    }
+    return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100"
+  }
+
+  const getPlanColorScheme = (plan: string) => {
+    switch (plan) {
+      case "Premium":
+        return "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-100"
+      case "Executivo":
+        return "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-100"
+      default:
+        return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100"
+    }
+  }
+
   if (loading) {
+    // Ajuste do Skeleton Loader para o Dark Mode
     return (
-      <div className="flex-1 p-8 bg-gray-50 min-h-screen">
+      // Fundo principal: gray-50 no light, gray-900 no dark
+      <div className="flex-1 p-8 bg-gray-50 dark:bg-gray-900 min-h-screen">
         <div className="max-w-6xl mx-auto">
           <div className="animate-pulse">
-            <div className="h-8 bg-gray-200 rounded w-1/4 mb-8"></div>
+            <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-1/4 mb-8"></div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2 space-y-6">
-                <div className="bg-white rounded-xl p-6">
-                  <div className="h-6 bg-gray-200 rounded w-1/3 mb-4"></div>
+                {/* Cartão: white no light, gray-800 no dark */}
+                <div className="bg-white dark:bg-gray-800 rounded-xl p-6">
+                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-4"></div>
                   <div className="space-y-3">
-                    <div className="h-4 bg-gray-200 rounded w-full"></div>
-                    <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-                    <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
                   </div>
                 </div>
               </div>
               <div className="space-y-6">
-                <div className="bg-white rounded-xl p-6">
-                  <div className="h-6 bg-gray-200 rounded w-1/2 mb-4"></div>
+                <div className="bg-white dark:bg-gray-800 rounded-xl p-6">
+                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-4"></div>
                   <div className="space-y-3">
-                    <div className="h-4 bg-gray-200 rounded w-full"></div>
-                    <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
                   </div>
                 </div>
               </div>
@@ -157,12 +179,13 @@ export default function PatientViewPage() {
   }
 
   if (!patient) {
+    // Ajuste da mensagem de paciente não encontrado
     return (
-      <div className="flex-1 p-8 bg-gray-50 min-h-screen">
+      <div className="flex-1 p-8 bg-gray-50 dark:bg-gray-900 min-h-screen">
         <div className="max-w-6xl mx-auto">
           <div className="text-center py-12">
-            <h1 className="text-2xl font-bold text-gray-900 mb-4">Paciente não encontrado</h1>
-            <p className="text-gray-600 mb-8">O paciente solicitado não foi encontrado no sistema.</p>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Paciente não encontrado</h1>
+            <p className="text-gray-600 dark:text-gray-400 mb-8">O paciente solicitado não foi encontrado no sistema.</p>
             <Link href="/admin/patients">
               <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
                 Voltar para Lista de Pacientes
@@ -175,23 +198,26 @@ export default function PatientViewPage() {
   }
 
   return (
-    <div className="flex-1 p-8 bg-gray-50 min-h-screen">
+    // Fundo principal
+    <div className="flex-1 p-8 bg-gray-50 dark:bg-gray-900 min-h-screen">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <motion.div className="mb-8" {...fadeInUp}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Link href="/admin/patients">
+                {/* Botão de Voltar */}
                 <motion.button
-                  className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                  className="p-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-800 rounded-lg transition-colors"
                   whileHover={{ scale: 1.05 }}
                 >
                   <ArrowLeft className="h-5 w-5" />
                 </motion.button>
               </Link>
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                  <span className="text-blue-700 font-semibold text-lg">
+                {/* Avatar do Paciente */}
+                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                  <span className="text-blue-700 dark:text-blue-100 font-semibold text-lg">
                     {patient.nome
                       .split(" ")
                       .map((n: string) => n[0])
@@ -200,14 +226,15 @@ export default function PatientViewPage() {
                   </span>
                 </div>
                 <div>
-                  <h1 className="text-3xl font-bold text-gray-900">{patient.nome}</h1>
-                  <p className="text-gray-600 mt-1">
+                  <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">{patient.nome}</h1>
+                  <p className="text-gray-600 dark:text-gray-400 mt-1">
                     {calculateAge(patient.data_nascimento)} anos •{" "}
                     {patient.sexo_biologico === "M" ? "Masculino" : "Feminino"} • {patient.status}
                   </p>
                 </div>
               </div>
             </div>
+            {/* Ações: Editar e Excluir */}
             <div className="flex items-center gap-2">
               <Link href={`/admin/patients/${patient.id}/edit`}>
                 <motion.button
@@ -235,42 +262,48 @@ export default function PatientViewPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Personal Information */}
-            <motion.div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6" {...fadeInUp}>
+            {/* Informações Pessoais */}
+            <motion.div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6" {...fadeInUp}>
               <div className="flex items-center gap-2 mb-6">
-                <User className="h-5 w-5 text-blue-600" />
-                <h2 className="text-xl font-semibold text-gray-900">Informações Pessoais</h2>
+                <User className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Informações Pessoais</h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Nome Completo */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
-                  <p className="text-gray-900">{patient.nome}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">Nome Completo</label>
+                  <p className="text-gray-900 dark:text-gray-100">{patient.nome}</p>
                 </div>
+                {/* CPF */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">CPF</label>
-                  <p className="text-gray-900">{patient.cpf}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">CPF</label>
+                  <p className="text-gray-900 dark:text-gray-100">{patient.cpf}</p>
                 </div>
+                {/* RG */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">RG</label>
-                  <p className="text-gray-900">{patient.rg}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">RG</label>
+                  <p className="text-gray-900 dark:text-gray-100">{patient.rg}</p>
                 </div>
+                {/* Data de Nascimento */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Data de Nascimento</label>
-                  <p className="text-gray-900">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">Data de Nascimento</label>
+                  <p className="text-gray-900 dark:text-gray-100">
                     {new Date(patient.data_nascimento).toLocaleDateString("pt-BR")} (
                     {calculateAge(patient.data_nascimento)} anos)
                   </p>
                 </div>
+                {/* Sexo */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Sexo</label>
-                  <p className="text-gray-900">{patient.sexo_biologico === "M" ? "Masculino" : "Feminino"}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">Sexo</label>
+                  <p className="text-gray-900 dark:text-gray-100">{patient.sexo_biologico === "M" ? "Masculino" : "Feminino"}</p>
                 </div>
+                {/* Status */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">Status</label>
                   <span
-                    className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                      patient.status === "Ativo" ? "bg-emerald-100 text-emerald-800" : "bg-red-100 text-red-800"
-                    }`}
+                    className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColorScheme(
+                      patient.status,
+                    )}`}
                   >
                     {patient.status}
                   </span>
@@ -278,125 +311,127 @@ export default function PatientViewPage() {
               </div>
             </motion.div>
 
-            {/* Address Information */}
-            <motion.div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6" {...fadeInUp}>
+            {/* Informações de Endereço */}
+            <motion.div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6" {...fadeInUp}>
               <div className="flex items-center gap-2 mb-6">
-                <MapPin className="h-5 w-5 text-blue-600" />
-                <h2 className="text-xl font-semibold text-gray-900">Endereço</h2>
+                <MapPin className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Endereço</h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* CEP */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">CEP</label>
-                  <p className="text-gray-900">{patient.endereco.cep}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">CEP</label>
+                  <p className="text-gray-900 dark:text-gray-100">{patient.endereco.cep}</p>
                 </div>
+                {/* Logradouro */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Logradouro</label>
-                  <p className="text-gray-900">{patient.endereco.logradouro}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">Logradouro</label>
+                  <p className="text-gray-900 dark:text-gray-100">{patient.endereco.logradouro}</p>
                 </div>
+                {/* Bairro */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Bairro</label>
-                  <p className="text-gray-900">{patient.endereco.bairro}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">Bairro</label>
+                  <p className="text-gray-900 dark:text-gray-100">{patient.endereco.bairro}</p>
                 </div>
+                {/* Cidade/Estado */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Cidade/Estado</label>
-                  <p className="text-gray-900">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">Cidade/Estado</label>
+                  <p className="text-gray-900 dark:text-gray-100">
                     {patient.endereco.cidade}, {patient.endereco.estado}
                   </p>
                 </div>
+                {/* Complemento */}
                 {patient.endereco.complemento && (
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Complemento</label>
-                    <p className="text-gray-900">{patient.endereco.complemento}</p>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">Complemento</label>
+                    <p className="text-gray-900 dark:text-gray-100">{patient.endereco.complemento}</p>
                   </div>
                 )}
               </div>
             </motion.div>
 
-            {/* Emergency Contact */}
-            <motion.div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6" {...fadeInUp}>
+            {/* Contato de Emergência */}
+            <motion.div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6" {...fadeInUp}>
               <div className="flex items-center gap-2 mb-6">
-                <Shield className="h-5 w-5 text-blue-600" />
-                <h2 className="text-xl font-semibold text-gray-900">Contato de Emergência</h2>
+                <Shield className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Contato de Emergência</h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Nome */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Nome</label>
-                  <p className="text-gray-900">{patient.contato_emergencia.nome}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">Nome</label>
+                  <p className="text-gray-900 dark:text-gray-100">{patient.contato_emergencia.nome}</p>
                 </div>
+                {/* Parentesco */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Parentesco</label>
-                  <p className="text-gray-900">{patient.contato_emergencia.parentesco}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">Parentesco</label>
+                  <p className="text-gray-900 dark:text-gray-100">{patient.contato_emergencia.parentesco}</p>
                 </div>
+                {/* Telefone */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Telefone</label>
-                  <p className="text-gray-900">{patient.contato_emergencia.telefone}</p>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">Telefone</label>
+                  <p className="text-gray-900 dark:text-gray-100">{patient.contato_emergencia.telefone}</p>
                 </div>
               </div>
             </motion.div>
 
-            {/* Observations */}
+            {/* Observações */}
             {patient.observacoes && (
-              <motion.div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6" {...fadeInUp}>
+              <motion.div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6" {...fadeInUp}>
                 <div className="flex items-center gap-2 mb-6">
-                  <FileText className="h-5 w-5 text-blue-600" />
-                  <h2 className="text-xl font-semibold text-gray-900">Observações</h2>
+                  <FileText className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Observações</h2>
                 </div>
-                <p className="text-gray-900 leading-relaxed">{patient.observacoes}</p>
+                <p className="text-gray-900 dark:text-gray-100 leading-relaxed">{patient.observacoes}</p>
               </motion.div>
             )}
           </div>
 
           {/* Sidebar */}
           <div className="space-y-6">
-            {/* Contact Information */}
-            <motion.div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6" {...fadeInUp}>
+            {/* Informações de Contato */}
+            <motion.div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6" {...fadeInUp}>
               <div className="flex items-center gap-2 mb-6">
-                <Phone className="h-5 w-5 text-blue-600" />
-                <h2 className="text-lg font-semibold text-gray-900">Contato</h2>
+                <Phone className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Contato</h2>
               </div>
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <Phone className="h-4 w-4 text-gray-400" />
-                  <span className="text-gray-900">{patient.telefone}</span>
+                  <Phone className="h-4 w-4 text-gray-400 dark:text-gray-500" />
+                  <span className="text-gray-900 dark:text-gray-100">{patient.telefone}</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Mail className="h-4 w-4 text-gray-400" />
-                  <span className="text-gray-900">{patient.email}</span>
+                  <Mail className="h-4 w-4 text-gray-400 dark:text-gray-500" />
+                  <span className="text-gray-900 dark:text-gray-100">{patient.email}</span>
                 </div>
               </div>
             </motion.div>
 
-            {/* Plan Information */}
-            <motion.div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6" {...fadeInUp}>
+            {/* Informações do Plano */}
+            <motion.div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6" {...fadeInUp}>
               <div className="flex items-center gap-2 mb-6">
-                <CreditCard className="h-5 w-5 text-blue-600" />
-                <h2 className="text-lg font-semibold text-gray-900">Plano</h2>
+                <CreditCard className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Plano</h2>
               </div>
               <div className="space-y-4">
                 <div>
-                  <span
-                    className={`inline-flex px-3 py-1 text-sm font-semibold rounded-full ${
-                      patient.plano === "Premium"
-                        ? "bg-purple-100 text-purple-800"
-                        : patient.plano === "Executivo"
-                          ? "bg-orange-100 text-orange-800"
-                          : "bg-blue-100 text-blue-800"
-                    }`}
-                  >
+                  {/* Status do Plano */}
+                  <span className={`inline-flex px-3 py-1 text-sm font-semibold rounded-full ${getPlanColorScheme(patient.plano)}`}>
                     {patient.plano}
                   </span>
                 </div>
+                {/* Convênio Médico */}
                 {patient.convenio_medico.possui && (
-                  <div className="pt-4 border-t">
-                    <h3 className="text-sm font-medium text-gray-700 mb-2">Convênio Médico</h3>
+                  <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <h3 className="text-sm font-medium text-gray-700 dark:text-gray-400 mb-2">Convênio Médico</h3>
                     <div className="space-y-2 text-sm">
-                      <p className="text-gray-900">
+                      <p className="text-gray-900 dark:text-gray-100">
                         <strong>Empresa:</strong> {patient.convenio_medico.empresa}
                       </p>
-                      <p className="text-gray-900">
+                      <p className="text-gray-900 dark:text-gray-100">
                         <strong>Carteira:</strong> {patient.convenio_medico.numero_carteira}
                       </p>
-                      <p className="text-gray-900">
+                      <p className="text-gray-900 dark:text-gray-100">
                         <strong>Validade:</strong>{" "}
                         {new Date(patient.convenio_medico.validade).toLocaleDateString("pt-BR")}
                       </p>
@@ -406,45 +441,49 @@ export default function PatientViewPage() {
               </div>
             </motion.div>
 
-            {/* System Information */}
-            <motion.div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6" {...fadeInUp}>
+            {/* Informações do Sistema */}
+            <motion.div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6" {...fadeInUp}>
               <div className="flex items-center gap-2 mb-6">
-                <Clock className="h-5 w-5 text-blue-600" />
-                <h2 className="text-lg font-semibold text-gray-900">Sistema</h2>
+                <Clock className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Sistema</h2>
               </div>
               <div className="space-y-4 text-sm">
+                {/* Data de Cadastro */}
                 <div>
-                  <label className="block text-gray-700 font-medium mb-1">Data de Cadastro</label>
-                  <p className="text-gray-900">{new Date(patient.data_cadastro).toLocaleDateString("pt-BR")}</p>
+                  <label className="block text-gray-700 dark:text-gray-400 font-medium mb-1">Data de Cadastro</label>
+                  <p className="text-gray-900 dark:text-gray-100">{new Date(patient.data_cadastro).toLocaleDateString("pt-BR")}</p>
                 </div>
+                {/* Última Consulta */}
                 <div>
-                  <label className="block text-gray-700 font-medium mb-1">Última Consulta</label>
-                  <p className="text-gray-900">{new Date(patient.ultima_consulta).toLocaleDateString("pt-BR")}</p>
+                  <label className="block text-gray-700 dark:text-gray-400 font-medium mb-1">Última Consulta</label>
+                  <p className="text-gray-900 dark:text-gray-100">{new Date(patient.ultima_consulta).toLocaleDateString("pt-BR")}</p>
                 </div>
+                {/* ID do Sistema */}
                 <div>
-                  <label className="block text-gray-700 font-medium mb-1">ID do Sistema</label>
-                  <p className="text-gray-900">#{patient.id}</p>
+                  <label className="block text-gray-700 dark:text-gray-400 font-medium mb-1">ID do Sistema</label>
+                  <p className="text-gray-900 dark:text-gray-100">#{patient.id}</p>
                 </div>
               </div>
             </motion.div>
 
-            {/* Quick Actions */}
-            <motion.div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6" {...fadeInUp}>
+            {/* Ações Rápidas */}
+            <motion.div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6" {...fadeInUp}>
               <div className="flex items-center gap-2 mb-6">
-                <Activity className="h-5 w-5 text-blue-600" />
-                <h2 className="text-lg font-semibold text-gray-900">Ações Rápidas</h2>
+                <Activity className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Ações Rápidas</h2>
               </div>
               <div className="space-y-3">
-                <button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                {/* Botões de Ação */}
+                <button className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
                   Agendar Consulta
                 </button>
-                <button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                <button className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
                   Ver Histórico Médico
                 </button>
-                <button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                <button className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
                   Enviar Mensagem
                 </button>
-                <button className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                <button className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
                   Gerar Relatório
                 </button>
               </div>

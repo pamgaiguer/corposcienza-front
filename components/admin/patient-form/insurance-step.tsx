@@ -23,7 +23,7 @@ export default function InsuranceStep({
     >
       <div className="flex items-center gap-3 mb-6">
         <Shield className="h-6 w-6 text-blue-600" />
-        <h2 className="text-xl font-semibold text-gray-900">Convênio Médico</h2>
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Convênio Médico</h2>
       </div>
 
       <div className="space-y-6">
@@ -33,9 +33,9 @@ export default function InsuranceStep({
             id="possui_convenio"
             checked={formData.possui_convenio_medico}
             onChange={(e) => onInputChange("possui_convenio_medico", e.target.checked)}
-            className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+            className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 rounded focus:ring-blue-500"
           />
-          <label htmlFor="possui_convenio" className="text-sm font-medium text-gray-700">
+          <label htmlFor="possui_convenio" className="text-sm font-medium text-gray-700 dark:text-gray-300">
             Possui convênio médico
           </label>
         </div>
@@ -63,8 +63,8 @@ export default function InsuranceStep({
                     ? "border-red-300 focus:border-red-500 focus:ring-red-500"
                     : isFieldValid("convenio_nome")
                       ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500"
-                      : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                } focus:ring-2`}
+                      : "border-gray-300 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                } focus:ring-2 bg-white dark:bg-gray-800`}
                 placeholder="Ex: Unimed, Bradesco Saúde"
               />
             </FormField>
@@ -84,8 +84,8 @@ export default function InsuranceStep({
                     ? "border-red-300 focus:border-red-500 focus:ring-red-500"
                     : isFieldValid("numero_carteirinha")
                       ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500"
-                      : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                } focus:ring-2`}
+                      : "border-gray-300 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                } focus:ring-2 bg-white dark:bg-gray-800`}
                 placeholder="Digite o número da carteirinha"
               />
             </FormField>
@@ -111,8 +111,8 @@ export default function InsuranceStep({
                     ? "border-red-300 focus:border-red-500 focus:ring-red-500"
                     : isFieldValid("validade_carteirinha")
                       ? "border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500"
-                      : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                } focus:ring-2`}
+                      : "border-gray-300 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                } focus:ring-2 bg-white dark:bg-gray-800`}
                 placeholder="MM/AAAA"
                 maxLength={7}
               />
