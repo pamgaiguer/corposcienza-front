@@ -1,3 +1,5 @@
+/* eslint-disable quotes */
+
 'use client';
 
 import * as React from 'react';

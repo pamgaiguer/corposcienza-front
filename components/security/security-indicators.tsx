@@ -1,4 +1,4 @@
-import { Shield, Lock } from "lucide-react"
+import { Shield, Lock } from 'lucide-react';
 
 export default function SecurityIndicators() {
   return (
@@ -12,5 +12,5 @@ export default function SecurityIndicators() {
         <span>SSL Secured</span>
       </div>
     </div>
-  )
+  );
 }

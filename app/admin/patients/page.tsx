@@ -1,114 +1,123 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { Search, Plus, Download, Upload, UserPlus, Eye, Edit, Trash2 } from "lucide-react"
-import Link from "next/link"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import SearchFilters from "@/components/admin/patients/search-filters"
-import { usePatientSearch } from "@/hooks/use-patient-search"
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import {
+  Search,
+  Plus,
+  Download,
+  Upload,
+  UserPlus,
+  Eye,
+  Edit,
+  Trash2,
+} from 'lucide-react';
+import Link from 'next/link';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import SearchFilters from '@/components/admin/patients/search-filters';
+import { usePatientSearch } from '@/hooks/use-patient-search';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.6 },
-}
+};
 
 // Mock patient data
 const mockPatients = [
   {
     id: 1,
-    nome: "Maria Silva Santos",
-    cpf: "123.456.789-00",
-    email: "maria.silva@email.com",
-    telefone: "(11) 99999-9999",
-    data_nascimento: "1985-03-15",
-    sexo_biologico: "F" as const,
-    status: "Ativo",
-    plano: "Premium",
-    ultima_consulta: "2024-01-15",
+    nome: 'Maria Silva Santos',
+    cpf: '123.456.789-00',
+    email: 'maria.silva@email.com',
+    telefone: '(11) 99999-9999',
+    data_nascimento: '1985-03-15',
+    sexo_biologico: 'F' as const,
+    status: 'Ativo',
+    plano: 'Premium',
+    ultima_consulta: '2024-01-15',
     endereco: {
-      cidade: "São Paulo",
-      estado: "SP",
+      cidade: 'São Paulo',
+      estado: 'SP',
     },
     possui_convenio_medico: true,
-    data_cadastro: "2023-01-10",
+    data_cadastro: '2023-01-10',
   },
   {
     id: 2,
-    nome: "João Pedro Costa",
-    cpf: "987.654.321-00",
-    email: "joao.costa@email.com",
-    telefone: "(11) 98888-8888",
-    data_nascimento: "1990-07-22",
-    sexo_biologico: "M" as const,
-    status: "Ativo",
-    plano: "Essencial",
-    ultima_consulta: "2024-01-20",
+    nome: 'João Pedro Costa',
+    cpf: '987.654.321-00',
+    email: 'joao.costa@email.com',
+    telefone: '(11) 98888-8888',
+    data_nascimento: '1990-07-22',
+    sexo_biologico: 'M' as const,
+    status: 'Ativo',
+    plano: 'Essencial',
+    ultima_consulta: '2024-01-20',
     endereco: {
-      cidade: "Rio de Janeiro",
-      estado: "RJ",
+      cidade: 'Rio de Janeiro',
+      estado: 'RJ',
     },
     possui_convenio_medico: false,
-    data_cadastro: "2023-03-15",
+    data_cadastro: '2023-03-15',
   },
   {
     id: 3,
-    nome: "Ana Carolina Lima",
-    cpf: "456.789.123-00",
-    email: "ana.lima@email.com",
-    telefone: "(11) 97777-7777",
-    data_nascimento: "1978-11-30",
-    sexo_biologico: "F" as const,
-    status: "Ativo",
-    plano: "Executivo",
-    ultima_consulta: "2024-01-18",
+    nome: 'Ana Carolina Lima',
+    cpf: '456.789.123-00',
+    email: 'ana.lima@email.com',
+    telefone: '(11) 97777-7777',
+    data_nascimento: '1978-11-30',
+    sexo_biologico: 'F' as const,
+    status: 'Ativo',
+    plano: 'Executivo',
+    ultima_consulta: '2024-01-18',
     endereco: {
-      cidade: "Belo Horizonte",
-      estado: "MG",
+      cidade: 'Belo Horizonte',
+      estado: 'MG',
     },
     possui_convenio_medico: true,
-    data_cadastro: "2023-02-20",
+    data_cadastro: '2023-02-20',
   },
   {
     id: 4,
-    nome: "Carlos Eduardo Souza",
-    cpf: "321.654.987-00",
-    email: "carlos.souza@email.com",
-    telefone: "(11) 96666-6666",
-    data_nascimento: "1995-05-10",
-    sexo_biologico: "M" as const,
-    status: "Inativo",
-    plano: "Premium",
-    ultima_consulta: "2023-12-01",
+    nome: 'Carlos Eduardo Souza',
+    cpf: '321.654.987-00',
+    email: 'carlos.souza@email.com',
+    telefone: '(11) 96666-6666',
+    data_nascimento: '1995-05-10',
+    sexo_biologico: 'M' as const,
+    status: 'Inativo',
+    plano: 'Premium',
+    ultima_consulta: '2023-12-01',
     endereco: {
-      cidade: "Brasília",
-      estado: "DF",
+      cidade: 'Brasília',
+      estado: 'DF',
     },
     possui_convenio_medico: true,
-    data_cadastro: "2023-05-10",
+    data_cadastro: '2023-05-10',
   },
   {
     id: 5,
-    nome: "Juliana Ferreira",
-    cpf: "159.753.486-00",
-    email: "juliana.ferreira@email.com",
-    telefone: "(11) 95555-5555",
-    data_nascimento: "1988-09-25",
-    sexo_biologico: "F" as const,
-    status: "Ativo",
-    plano: "Essencial",
-    ultima_consulta: "2024-01-22",
+    nome: 'Juliana Ferreira',
+    cpf: '159.753.486-00',
+    email: 'juliana.ferreira@email.com',
+    telefone: '(11) 95555-5555',
+    data_nascimento: '1988-09-25',
+    sexo_biologico: 'F' as const,
+    status: 'Ativo',
+    plano: 'Essencial',
+    ultima_consulta: '2024-01-22',
     endereco: {
-      cidade: "Salvador",
-      estado: "BA",
+      cidade: 'Salvador',
+      estado: 'BA',
     },
     possui_convenio_medico: false,
-    data_cadastro: "2023-04-05",
+    data_cadastro: '2023-04-05',
   },
-]
+];
 
 export default function PatientsPage() {
   const {
@@ -120,48 +129,50 @@ export default function PatientsPage() {
     handleSearchChange,
     handleFiltersChange,
     handleClearFilters,
-  } = usePatientSearch(mockPatients)
+  } = usePatientSearch(mockPatients);
 
-  const [selectedPatients, setSelectedPatients] = useState<number[]>([])
-  const [viewMode, setViewMode] = useState<"grid" | "table">("table")
+  const [selectedPatients, setSelectedPatients] = useState<number[]>([]);
+  const [viewMode, setViewMode] = useState<'grid' | 'table'>('table');
 
   const handleSelectAll = () => {
     if (selectedPatients.length === filteredPatients.length) {
-      setSelectedPatients([])
+      setSelectedPatients([]);
     } else {
-      setSelectedPatients(filteredPatients.map((p) => p.id))
+      setSelectedPatients(filteredPatients.map((p) => p.id));
     }
-  }
+  };
 
   const handleSelectPatient = (id: number) => {
-    setSelectedPatients((prev) => (prev.includes(id) ? prev.filter((p) => p !== id) : [...prev, id]))
-  }
+    setSelectedPatients((prev) =>
+      prev.includes(id) ? prev.filter((p) => p !== id) : [...prev, id],
+    );
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "Ativo":
-        return "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300"
-      case "Inativo":
-        return "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300"
-      case "Suspenso":
-        return "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300"
+      case 'Ativo':
+        return 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300';
+      case 'Inativo':
+        return 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300';
+      case 'Suspenso':
+        return 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300';
       default:
-        return "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300"
+        return 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300';
     }
-  }
+  };
 
   const getPlanColor = (plano: string) => {
     switch (plano) {
-      case "Essencial":
-        return "bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300"
-      case "Premium":
-        return "bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300"
-      case "Executivo":
-        return "bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300"
+      case 'Essencial':
+        return 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300';
+      case 'Premium':
+        return 'bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300';
+      case 'Executivo':
+        return 'bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300';
       default:
-        return "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300"
+        return 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300';
     }
-  }
+  };
 
   return (
     <div className="flex-1 p-8 bg-gray-50 dark:bg-gray-900 min-h-screen">
@@ -169,8 +180,12 @@ export default function PatientsPage() {
       <motion.div className="mb-8" {...fadeInUp}>
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Pacientes</h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-1">Gerencie e visualize todos os pacientes cadastrados</p>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+              Pacientes
+            </h1>
+            <p className="text-gray-600 dark:text-gray-400 mt-1">
+              Gerencie e visualize todos os pacientes cadastrados
+            </p>
           </div>
           <div className="flex items-center gap-3">
             <Button
@@ -254,7 +269,10 @@ export default function PatientsPage() {
                     <th className="px-6 py-3 text-left">
                       <input
                         type="checkbox"
-                        checked={selectedPatients.length === filteredPatients.length && filteredPatients.length > 0}
+                        checked={
+                          selectedPatients.length === filteredPatients.length &&
+                          filteredPatients.length > 0
+                        }
                         onChange={handleSelectAll}
                         className="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500"
                       />
@@ -281,7 +299,10 @@ export default function PatientsPage() {
                 </thead>
                 <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                   {filteredPatients.map((patient) => (
-                    <tr key={patient.id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                    <tr
+                      key={patient.id}
+                      className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                    >
                       <td className="px-6 py-4">
                         <input
                           type="checkbox"
@@ -295,30 +316,42 @@ export default function PatientsPage() {
                           <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
                             <span className="text-sm font-medium text-blue-700 dark:text-blue-300">
                               {patient.nome
-                                .split(" ")
+                                .split(' ')
                                 .map((n) => n[0])
-                                .join("")
+                                .join('')
                                 .slice(0, 2)}
                             </span>
                           </div>
                           <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900 dark:text-white">{patient.nome}</div>
-                            <div className="text-sm text-gray-500 dark:text-gray-400">{patient.cpf}</div>
+                            <div className="text-sm font-medium text-gray-900 dark:text-white">
+                              {patient.nome}
+                            </div>
+                            <div className="text-sm text-gray-500 dark:text-gray-400">
+                              {patient.cpf}
+                            </div>
                           </div>
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="text-sm text-gray-900 dark:text-white">{patient.email}</div>
-                        <div className="text-sm text-gray-500 dark:text-gray-400">{patient.telefone}</div>
+                        <div className="text-sm text-gray-900 dark:text-white">
+                          {patient.email}
+                        </div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">
+                          {patient.telefone}
+                        </div>
                       </td>
                       <td className="px-6 py-4">
-                        <Badge className={getStatusColor(patient.status)}>{patient.status}</Badge>
+                        <Badge className={getStatusColor(patient.status)}>
+                          {patient.status}
+                        </Badge>
                       </td>
                       <td className="px-6 py-4">
-                        <Badge className={getPlanColor(patient.plano)}>{patient.plano}</Badge>
+                        <Badge className={getPlanColor(patient.plano)}>
+                          {patient.plano}
+                        </Badge>
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
-                        {new Date(patient.ultima_consulta).toLocaleDateString("pt-BR")}
+                        {new Date(patient.ultima_consulta).toLocaleDateString('pt-BR')}
                       </td>
                       <td className="px-6 py-4 text-right text-sm font-medium">
                         <div className="flex items-center justify-end gap-2">
@@ -363,7 +396,9 @@ export default function PatientsPage() {
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full mb-4">
                   <Search className="h-8 w-8 text-gray-400 dark:text-gray-500" />
                 </div>
-                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Nenhum paciente encontrado</h3>
+                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                  Nenhum paciente encontrado
+                </h3>
                 <p className="text-gray-500 dark:text-gray-400 mb-4">
                   Tente ajustar seus filtros ou adicione um novo paciente
                 </p>
@@ -383,7 +418,7 @@ export default function PatientsPage() {
       {filteredPatients.length > 0 && (
         <motion.div className="mt-6 flex items-center justify-between" {...fadeInUp}>
           <div className="text-sm text-gray-700 dark:text-gray-300">
-            Mostrando <span className="font-medium">{filteredPatients.length}</span> de{" "}
+            Mostrando <span className="font-medium">{filteredPatients.length}</span> de{' '}
             <span className="font-medium">{mockPatients.length}</span> pacientes
           </div>
           <div className="flex items-center gap-2">
@@ -405,5 +440,5 @@ export default function PatientsPage() {
         </motion.div>
       )}
     </div>
-  )
+  );
 }

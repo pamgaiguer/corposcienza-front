@@ -1,61 +1,71 @@
-"use client"
+/* eslint-disable @typescript-eslint/no-explicit-any */
+'use client';
 
-import type React from "react"
-import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
-import { User, MapPin, Phone, Shield, Save, ArrowLeft, CheckCircle, AlertTriangle } from "lucide-react"
-import { validatePatientForm, type ValidationError } from "@/utils/validation"
-import type { PatientFormData } from "@/types/patient"
-import PersonalDataStep from "./personal-data-step"
-import AddressStep from "./address-step"
-import EmergencyContactStep from "./emergency-contact-step"
-import InsuranceStep from "./insurance-step"
+import type React from 'react';
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import {
+  User,
+  MapPin,
+  Phone,
+  Shield,
+  Save,
+  ArrowLeft,
+  CheckCircle,
+  AlertTriangle,
+} from 'lucide-react';
+import { validatePatientForm, type ValidationError } from '@/utils/validation';
+import type { PatientFormData } from '@/types/patient';
+import PersonalDataStep from './personal-data-step';
+import AddressStep from './address-step';
+import EmergencyContactStep from './emergency-contact-step';
+import InsuranceStep from './insurance-step';
 
 interface PatientFormProps {
-  initialData?: PatientFormData
-  onSubmit: (data: PatientFormData) => Promise<void>
-  isSubmitting: boolean
-  submitButtonText: string
-  title: string
-  hasChanges?: boolean
-  onReset?: () => void
+  initialData?: PatientFormData;
+  onSubmit: (data: PatientFormData) => Promise<void>;
+  isSubmitting: boolean;
+  submitButtonText: string;
+  title: string;
+  hasChanges?: boolean;
+  onReset?: () => void;
 }
 
 const defaultFormData: PatientFormData = {
-  cpf: "",
-  rg: "",
-  nome: "",
-  sexo_biologico: "",
-  data_nascimento: "",
-  telefone: "",
-  email: "",
-  estado_civil: "",
-  nacionalidade: "Brasileira",
-  profissao: "",
+  cpf: '',
+  rg: '',
+  nome: '',
+  sexo_biologico: '',
+  data_nascimento: '',
+  telefone: '',
+  email: '',
+  estado_civil: '',
+  nacionalidade: 'Brasileira',
+  profissao: '',
   endereco: {
-    cep: "",
-    rua: "",
-    numero: "",
-    complemento: "",
-    bairro: "",
-    cidade: "",
-    estado: "",
+    cep: '',
+    rua: '',
+    numero: '',
+    complemento: '',
+    bairro: '',
+    cidade: '',
+    estado: '',
   },
   contato_emergencia: {
-    cpf: "",
-    nome: "",
-    telefone: "",
-    rg: "",
-    email: "",
-    estado_civil: "",
-    nacionalidade: "Brasileira",
-    profissao: "",
+    cpf: '',
+    nome: '',
+    telefone: '',
+    rg: '',
+    email: '',
+    estado_civil: '',
+    nacionalidade: 'Brasileira',
+    profissao: '',
   },
   possui_convenio_medico: false,
-  convenio_nome: "",
-  numero_carteirinha: "",
-  validade_carteirinha: "",
-}
+  convenio_nome: '',
+  numero_carteirinha: '',
+  validade_carteirinha: '',
+};
 
 export default function PatientForm({
   initialData,
@@ -66,145 +76,153 @@ export default function PatientForm({
   hasChanges,
   onReset,
 }: PatientFormProps) {
-  const [currentStep, setCurrentStep] = useState(1)
-  const [errors, setErrors] = useState<ValidationError[]>([])
-  const [touchedFields, setTouchedFields] = useState<Set<string>>(new Set())
-  const [validFields, setValidFields] = useState<Set<string>>(new Set())
-  const [formData, setFormData] = useState<PatientFormData>(initialData || defaultFormData)
+  const [currentStep, setCurrentStep] = useState(1);
+  const [errors, setErrors] = useState<ValidationError[]>([]);
+  const [touchedFields, setTouchedFields] = useState<Set<string>>(new Set());
+  const [validFields, setValidFields] = useState<Set<string>>(new Set());
+  const [formData, setFormData] = useState<PatientFormData>(
+    initialData || defaultFormData,
+  );
 
   const steps = [
-    { id: 1, title: "Dados Pessoais", icon: User },
-    { id: 2, title: "Endereço", icon: MapPin },
-    { id: 3, title: "Contato de Emergência", icon: Phone },
-    { id: 4, title: "Convênio Médico", icon: Shield },
-  ]
+    { id: 1, title: 'Dados Pessoais', icon: User },
+    { id: 2, title: 'Endereço', icon: MapPin },
+    { id: 3, title: 'Contato de Emergência', icon: Phone },
+    { id: 4, title: 'Convênio Médico', icon: Shield },
+  ];
 
   // Update form data when initialData changes
   useEffect(() => {
     if (initialData) {
-      setFormData(initialData)
+      setFormData(initialData);
 
       // Mark all fields as initially valid and touched for edit mode
       const allFields = [
-        "nome",
-        "cpf",
-        "rg",
-        "sexo_biologico",
-        "data_nascimento",
-        "telefone",
-        "email",
-        "estado_civil",
-        "nacionalidade",
-        "profissao",
-        "endereco.cep",
-        "endereco.rua",
-        "endereco.numero",
-        "endereco.bairro",
-        "endereco.cidade",
-        "endereco.estado",
-        "contato_emergencia.nome",
-        "contato_emergencia.cpf",
-        "contato_emergencia.rg",
-        "contato_emergencia.telefone",
-        "contato_emergencia.email",
-        "contato_emergencia.estado_civil",
-        "contato_emergencia.nacionalidade",
-        "contato_emergencia.profissao",
-      ]
+        'nome',
+        'cpf',
+        'rg',
+        'sexo_biologico',
+        'data_nascimento',
+        'telefone',
+        'email',
+        'estado_civil',
+        'nacionalidade',
+        'profissao',
+        'endereco.cep',
+        'endereco.rua',
+        'endereco.numero',
+        'endereco.bairro',
+        'endereco.cidade',
+        'endereco.estado',
+        'contato_emergencia.nome',
+        'contato_emergencia.cpf',
+        'contato_emergencia.rg',
+        'contato_emergencia.telefone',
+        'contato_emergencia.email',
+        'contato_emergencia.estado_civil',
+        'contato_emergencia.nacionalidade',
+        'contato_emergencia.profissao',
+      ];
 
       if (initialData.possui_convenio_medico) {
-        allFields.push("convenio_nome", "numero_carteirinha", "validade_carteirinha")
+        allFields.push('convenio_nome', 'numero_carteirinha', 'validade_carteirinha');
       }
 
-      setValidFields(new Set(allFields))
-      setTouchedFields(new Set(allFields))
+      setValidFields(new Set(allFields));
+      setTouchedFields(new Set(allFields));
     }
-  }, [initialData])
+  }, [initialData]);
 
   // Real-time validation
   useEffect(() => {
-    const validation = validatePatientForm(formData, currentStep)
-    setErrors(validation.errors)
+    const validation = validatePatientForm(formData, currentStep);
+    setErrors(validation.errors);
 
     // Update valid fields
-    const currentErrors = validation.errors.map((e) => e.field)
-    const fieldsToCheck = getFieldsForStep(currentStep)
+    const currentErrors = validation.errors.map((e) => e.field);
+    const fieldsToCheck = getFieldsForStep(currentStep);
 
     setValidFields((prev) => {
-      const updated = new Set(prev)
+      const updated = new Set(prev);
       fieldsToCheck.forEach((field) => {
         if (!currentErrors.includes(field) && isFieldFilled(field)) {
-          updated.add(field)
+          updated.add(field);
         } else {
-          updated.delete(field)
+          updated.delete(field);
         }
-      })
-      return updated
-    })
-  }, [formData, currentStep])
+      });
+      return updated;
+    });
+  }, [formData, currentStep]);
 
   const getFieldsForStep = (step: number): string[] => {
     switch (step) {
       case 1:
         return [
-          "nome",
-          "cpf",
-          "rg",
-          "sexo_biologico",
-          "data_nascimento",
-          "telefone",
-          "email",
-          "estado_civil",
-          "nacionalidade",
-          "profissao",
-        ]
+          'nome',
+          'cpf',
+          'rg',
+          'sexo_biologico',
+          'data_nascimento',
+          'telefone',
+          'email',
+          'estado_civil',
+          'nacionalidade',
+          'profissao',
+        ];
       case 2:
         return [
-          "endereco.cep",
-          "endereco.rua",
-          "endereco.numero",
-          "endereco.bairro",
-          "endereco.cidade",
-          "endereco.estado",
-        ]
+          'endereco.cep',
+          'endereco.rua',
+          'endereco.numero',
+          'endereco.bairro',
+          'endereco.cidade',
+          'endereco.estado',
+        ];
       case 3:
         return [
-          "contato_emergencia.nome",
-          "contato_emergencia.cpf",
-          "contato_emergencia.rg",
-          "contato_emergencia.telefone",
-          "contato_emergencia.email",
-          "contato_emergencia.estado_civil",
-          "contato_emergencia.nacionalidade",
-          "contato_emergencia.profissao",
-        ]
+          'contato_emergencia.nome',
+          'contato_emergencia.cpf',
+          'contato_emergencia.rg',
+          'contato_emergencia.telefone',
+          'contato_emergencia.email',
+          'contato_emergencia.estado_civil',
+          'contato_emergencia.nacionalidade',
+          'contato_emergencia.profissao',
+        ];
       case 4:
-        return formData.possui_convenio_medico ? ["convenio_nome", "numero_carteirinha", "validade_carteirinha"] : []
+        return formData.possui_convenio_medico
+          ? ['convenio_nome', 'numero_carteirinha', 'validade_carteirinha']
+          : [];
       default:
-        return []
+        return [];
     }
-  }
+  };
 
   const isFieldFilled = (field: string): boolean => {
-    const keys = field.split(".")
-    let value = formData as any
+    const keys = field.split('.');
+    let value = formData as any;
     for (const key of keys) {
-      value = value?.[key]
+      value = value?.[key];
     }
-    return value !== "" && value !== null && value !== undefined
-  }
+    return value !== '' && value !== null && value !== undefined;
+  };
 
   const getFieldError = (field: string): string | undefined => {
-    return errors.find((error) => error.field === field)?.message
-  }
+    return errors.find((error) => error.field === field)?.message;
+  };
 
   const isFieldValid = (field: string): boolean => {
-    return validFields.has(field) && touchedFields.has(field)
-  }
+    return validFields.has(field) && touchedFields.has(field);
+  };
 
-  const handleInputChange = (field: string, value: string | boolean, section?: string) => {
-    const fieldKey = section ? `${section}.${field}` : field
-    setTouchedFields((prev) => new Set(prev).add(fieldKey))
+  const handleInputChange = (
+    field: string,
+    value: string | boolean,
+    section?: string,
+  ) => {
+    const fieldKey = section ? `${section}.${field}` : field;
+    setTouchedFields((prev) => new Set(prev).add(fieldKey));
 
     if (section) {
       setFormData((prev) => ({
@@ -213,74 +231,79 @@ export default function PatientForm({
           ...prev[section as keyof PatientFormData],
           [field]: value,
         },
-      }))
+      }));
     } else {
       setFormData((prev) => ({
         ...prev,
         [field]: value,
-      }))
+      }));
     }
-  }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     // Validate all steps
-    const allErrors: ValidationError[] = []
+    const allErrors: ValidationError[] = [];
     for (let step = 1; step <= 4; step++) {
-      const validation = validatePatientForm(formData, step)
-      allErrors.push(...validation.errors)
+      const validation = validatePatientForm(formData, step);
+      allErrors.push(...validation.errors);
     }
 
     if (allErrors.length > 0) {
-      setErrors(allErrors)
+      setErrors(allErrors);
       // Go to first step with errors
       const firstErrorStep = Math.min(
         ...allErrors.map((error) => {
-          if (error.field.startsWith("endereco.")) return 2
-          if (error.field.startsWith("contato_emergencia.")) return 3
-          if (["convenio_nome", "numero_carteirinha", "validade_carteirinha"].includes(error.field)) return 4
-          return 1
+          if (error.field.startsWith('endereco.')) return 2;
+          if (error.field.startsWith('contato_emergencia.')) return 3;
+          if (
+            ['convenio_nome', 'numero_carteirinha', 'validade_carteirinha'].includes(
+              error.field,
+            )
+          )
+            return 4;
+          return 1;
         }),
-      )
-      setCurrentStep(firstErrorStep)
-      return
+      );
+      setCurrentStep(firstErrorStep);
+      return;
     }
 
-    await onSubmit(formData)
-  }
+    await onSubmit(formData);
+  };
 
   const nextStep = () => {
-    const validation = validatePatientForm(formData, currentStep)
+    const validation = validatePatientForm(formData, currentStep);
     if (!validation.isValid) {
-      setErrors(validation.errors)
+      setErrors(validation.errors);
       // Mark all fields in current step as touched
-      const fieldsToTouch = getFieldsForStep(currentStep)
+      const fieldsToTouch = getFieldsForStep(currentStep);
       setTouchedFields((prev) => {
-        const newSet = new Set(prev)
-        fieldsToTouch.forEach((field) => newSet.add(field))
-        return newSet
-      })
-      return
+        const newSet = new Set(prev);
+        fieldsToTouch.forEach((field) => newSet.add(field));
+        return newSet;
+      });
+      return;
     }
 
     if (currentStep < steps.length) {
-      setCurrentStep(currentStep + 1)
-      setErrors([])
+      setCurrentStep(currentStep + 1);
+      setErrors([]);
     }
-  }
+  };
 
   const prevStep = () => {
     if (currentStep > 1) {
-      setCurrentStep(currentStep - 1)
-      setErrors([])
+      setCurrentStep(currentStep - 1);
+      setErrors([]);
     }
-  }
+  };
 
   const getStepValidationStatus = (stepNumber: number) => {
-    const validation = validatePatientForm(formData, stepNumber)
-    return validation.isValid
-  }
+    const validation = validatePatientForm(formData, stepNumber);
+    return validation.isValid;
+  };
 
   const stepProps = {
     formData,
@@ -290,7 +313,7 @@ export default function PatientForm({
     onInputChange: handleInputChange,
     getFieldError,
     isFieldValid,
-  }
+  };
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -298,21 +321,21 @@ export default function PatientForm({
       <div className="mb-8">
         <div className="flex items-center justify-between">
           {steps.map((step, index) => {
-            const isCompleted = currentStep > step.id
-            const isCurrent = currentStep === step.id
-            const isValid = getStepValidationStatus(step.id)
+            const isCompleted = currentStep > step.id;
+            const isCurrent = currentStep === step.id;
+            const isValid = getStepValidationStatus(step.id);
 
             return (
               <div key={step.id} className="flex items-center">
                 <div
                   className={`flex items-center justify-center w-12 h-12 rounded-full border-2 transition-colors ${
                     isCompleted
-                      ? "bg-emerald-600 border-emerald-600 text-white"
+                      ? 'bg-emerald-600 border-emerald-600 text-white'
                       : isCurrent
                         ? isValid
-                          ? "bg-blue-600 border-blue-600 text-white"
-                          : "bg-red-100 dark:bg-red-900/30 border-red-300 dark:border-red-700 text-red-600 dark:text-red-400"
-                        : "bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-400 dark:text-gray-500"
+                          ? 'bg-blue-600 border-blue-600 text-white'
+                          : 'bg-red-100 dark:bg-red-900/30 border-red-300 dark:border-red-700 text-red-600 dark:text-red-400'
+                        : 'bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-400 dark:text-gray-500'
                   }`}
                 >
                   {isCompleted ? (
@@ -327,12 +350,12 @@ export default function PatientForm({
                   <p
                     className={`text-sm font-medium ${
                       isCompleted
-                        ? "text-emerald-600 dark:text-emerald-400"
+                        ? 'text-emerald-600 dark:text-emerald-400'
                         : isCurrent
                           ? isValid
-                            ? "text-blue-600 dark:text-blue-400"
-                            : "text-red-600 dark:text-red-400"
-                          : "text-gray-400 dark:text-gray-500"
+                            ? 'text-blue-600 dark:text-blue-400'
+                            : 'text-red-600 dark:text-red-400'
+                          : 'text-gray-400 dark:text-gray-500'
                     }`}
                   >
                     {step.title}
@@ -340,11 +363,11 @@ export default function PatientForm({
                 </div>
                 {index < steps.length - 1 && (
                   <div
-                    className={`w-24 h-0.5 mx-6 ${isCompleted ? "bg-emerald-600 dark:bg-emerald-500" : "bg-gray-300 dark:bg-gray-600"}`}
+                    className={`w-24 h-0.5 mx-6 ${isCompleted ? 'bg-emerald-600 dark:bg-emerald-500' : 'bg-gray-300 dark:bg-gray-600'}`}
                   />
                 )}
               </div>
-            )
+            );
           })}
         </div>
       </div>
@@ -427,11 +450,17 @@ export default function PatientForm({
                 disabled={isSubmitting || (hasChanges !== undefined && !hasChanges)}
                 className={`inline-flex items-center px-6 py-2 font-medium rounded-lg transition-colors ${
                   hasChanges !== undefined && !hasChanges
-                    ? "bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed"
-                    : "bg-emerald-600 hover:bg-emerald-700 text-white"
+                    ? 'bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed'
+                    : 'bg-emerald-600 hover:bg-emerald-700 text-white'
                 } disabled:bg-gray-400 dark:disabled:bg-gray-600`}
-                whileHover={{ scale: isSubmitting || (hasChanges !== undefined && !hasChanges) ? 1 : 1.02 }}
-                whileTap={{ scale: isSubmitting || (hasChanges !== undefined && !hasChanges) ? 1 : 0.98 }}
+                whileHover={{
+                  scale:
+                    isSubmitting || (hasChanges !== undefined && !hasChanges) ? 1 : 1.02,
+                }}
+                whileTap={{
+                  scale:
+                    isSubmitting || (hasChanges !== undefined && !hasChanges) ? 1 : 0.98,
+                }}
               >
                 {isSubmitting ? (
                   <>
@@ -450,5 +479,5 @@ export default function PatientForm({
         </div>
       </form>
     </div>
-  )
+  );
 }

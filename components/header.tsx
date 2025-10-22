@@ -1,13 +1,13 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import Link from "next/link"
-import { Menu, X, Phone, Mail, MapPin, Clock } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import ThemeToggle from "@/components/theme-toggle"
+import { useState } from 'react';
+import Link from 'next/link';
+import { Menu, X, Phone, Mail, MapPin, Clock } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import ThemeToggle from '@/components/theme-toggle';
 
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <header className="bg-white dark:bg-gray-900 shadow-sm transition-colors duration-200">
@@ -46,8 +46,12 @@ export default function Header() {
               <span className="text-white font-bold text-lg">CS</span>
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900 dark:text-white">Corpo Scienza</h1>
-              <p className="text-xs text-gray-600 dark:text-gray-400">Advanced Medical Care</p>
+              <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+                Corpo Scienza
+              </h1>
+              <p className="text-xs text-gray-600 dark:text-gray-400">
+                Advanced Medical Care
+              </p>
             </div>
           </Link>
 
@@ -94,7 +98,9 @@ export default function Header() {
           {/* Right Side Actions */}
           <div className="flex items-center space-x-4">
             <ThemeToggle />
-            <Button className="hidden lg:inline-flex bg-blue-600 hover:bg-blue-700 text-white">Agendar Consulta</Button>
+            <Button className="hidden lg:inline-flex bg-blue-600 hover:bg-blue-700 text-white">
+              Agendar Consulta
+            </Button>
 
             {/* Mobile Menu Button */}
             <button
@@ -146,11 +152,13 @@ export default function Header() {
               >
                 Contato
               </Link>
-              <Button className="mt-4 bg-blue-600 hover:bg-blue-700 text-white w-full">Agendar Consulta</Button>
+              <Button className="mt-4 bg-blue-600 hover:bg-blue-700 text-white w-full">
+                Agendar Consulta
+              </Button>
             </div>
           </nav>
         )}
       </div>
     </header>
-  )
+  );
 }
