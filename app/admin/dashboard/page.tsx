@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -17,44 +18,70 @@ import {
   Heart,
   Brain,
   Stethoscope,
+  Loader2,
 } from 'lucide-react';
 import Link from 'next/link';
+import { analyticsService } from '@/services/api/analytics';
+import type { DashboardStats } from '@/services/api/analytics';
 
 export default function AdminDashboard() {
-  const stats = [
+  const [dashboardData, setDashboardData] = useState<DashboardStats | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        setIsLoading(true);
+        const data = await analyticsService.getDashboardStats();
+        setDashboardData(data);
+      } catch (err: any) {
+        console.error('Erro ao carregar dados do dashboard:', err);
+        setError('Erro ao carregar dados do dashboard');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchDashboardData();
+  }, []);
+
+  const stats = dashboardData ? [
     {
-      title: 'Total Patients',
-      value: '2,847',
-      change: '+12%',
+      title: 'Total de Pacientes',
+      value: dashboardData.totalPatients.toLocaleString('pt-BR'),
+      change: dashboardData.totalPatientsChange,
       trend: 'up',
       icon: Users,
       color: 'blue',
     },
     {
-      title: 'Appointments Today',
-      value: '24',
-      change: '+3',
+      title: 'Novos Pacientes (30d)',
+      value: dashboardData.newPatientsLast30Days.toString(),
+      change: dashboardData.newPatientsChange,
       trend: 'up',
-      icon: Calendar,
+      icon: UserPlus,
       color: 'green',
     },
     {
-      title: 'Revenue This Month',
-      value: '$45,231',
-      change: '+8%',
+      title: 'Consultas Hoje',
+      value: dashboardData.appointmentsToday.toString(),
+      change: 'Em desenvolvimento',
       trend: 'up',
-      icon: TrendingUp,
+      icon: Calendar,
       color: 'emerald',
+      badge: 'Em breve',
     },
     {
-      title: 'Active Cases',
-      value: '156',
-      change: '-2%',
-      trend: 'down',
+      title: 'Casos Ativos',
+      value: dashboardData.activeCases.toString(),
+      change: 'Em desenvolvimento',
+      trend: 'up',
       icon: Activity,
       color: 'orange',
+      badge: 'Em breve',
     },
-  ];
+  ] : [];
 
   const recentAppointments = [
     {
@@ -135,13 +162,37 @@ export default function AdminDashboard() {
     { name: 'Pediatrics', patients: 87, progress: 56, icon: Users, color: 'green' },
   ];
 
+  if (isLoading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="mx-auto h-12 w-12 animate-spin text-blue-600" />
+          <p className="mt-4 text-gray-600 dark:text-gray-400">Carregando dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <Card className="w-full max-w-md border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20">
+          <CardHeader>
+            <CardTitle className="text-red-800 dark:text-red-400">Erro</CardTitle>
+            <CardDescription className="text-red-600 dark:text-red-300">{error}</CardDescription>
+          </CardHeader>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen space-y-8 bg-gray-50 dark:bg-gray-900">
       {/* Header */}
       <div className="flex flex-col space-y-2">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
         <p className="text-gray-600 dark:text-gray-400">
-          Welcome back! Here's what's happening at your medical center today.
+          Bem-vindo! Aqui está o que está acontecendo no seu centro médico hoje.
         </p>
       </div>
 
@@ -159,7 +210,14 @@ export default function AdminDashboard() {
               <stat.icon className={`h-4 w-4 text-${stat.color}-600 dark:text-${stat.color}-400`} />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</div>
+              <div className="flex items-center justify-between">
+                <div className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</div>
+                {(stat as any).badge && (
+                  <Badge variant="secondary" className="text-xs">
+                    {(stat as any).badge}
+                  </Badge>
+                )}
+              </div>
               <p
                 className={`text-xs ${
                   stat.trend === 'up'
@@ -167,7 +225,7 @@ export default function AdminDashboard() {
                     : 'text-red-600 dark:text-red-400'
                 }`}
               >
-                {stat.change} from last month
+                {stat.change}
               </p>
             </CardContent>
           </Card>

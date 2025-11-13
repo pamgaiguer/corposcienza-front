@@ -30,51 +30,26 @@ export default function EditPatientPage() {
       try {
         setIsLoading(true);
 
-        // Simulate API call - replace with actual API integration
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        // Importar services e transformers
+        const { pacientesService } = await import('@/services/api');
+        const { transformAPIPacienteToFormData } = await import('@/lib/transformers/patient');
 
-        // Mock patient data - replace with actual API response
-        const mockPatientData: PatientFormData = {
-          cpf: '123.456.789-00',
-          rg: '12.345.678-9',
-          nome: 'Maria Silva Santos',
-          sexo_biologico: 'F',
-          data_nascimento: '1985-03-15',
-          telefone: '(11) 99999-9999',
-          email: 'maria.silva@email.com',
-          estado_civil: 'Casado(a)',
-          nacionalidade: 'Brasileira',
-          profissao: 'Engenheira',
-          endereco: {
-            cep: '01234-567',
-            rua: 'Rua das Flores',
-            numero: '123',
-            complemento: 'Apto 45',
-            bairro: 'Centro',
-            cidade: 'São Paulo',
-            estado: 'SP',
-          },
-          contato_emergencia: {
-            cpf: '987.654.321-00',
-            nome: 'João Silva Santos',
-            telefone: '(11) 88888-8888',
-            rg: '98.765.432-1',
-            email: 'joao.silva@email.com',
-            estado_civil: 'Casado(a)',
-            nacionalidade: 'Brasileira',
-            profissao: 'Médico',
-          },
-          possui_convenio_medico: true,
-          convenio_nome: 'Unimed',
-          numero_carteirinha: '123456789',
-          validade_carteirinha: '12/2025',
-        };
+        // Buscar dados do paciente da API
+        const id = Number.parseInt(patientId);
+        const apiPatient = await pacientesService.getById(id);
 
-        setOriginalData(mockPatientData);
-        setCurrentData(mockPatientData);
+        // Transformar dados da API para formato do formulário
+        const formData = transformAPIPacienteToFormData(apiPatient);
+
+        setOriginalData(formData);
+        setCurrentData(formData);
       } catch (error) {
         console.error('Error loading patient data:', error);
-        alert('Erro ao carregar dados do paciente');
+
+        const { getErrorMessage } = await import('@/lib/api/client');
+        const errorMsg = getErrorMessage(error);
+
+        alert(`Erro ao carregar dados do paciente: ${errorMsg}`);
         router.push('/admin/patients');
       } finally {
         setIsLoading(false);
@@ -103,18 +78,38 @@ export default function EditPatientPage() {
     setIsSubmitting(true);
 
     try {
-      // Here you would integrate with your Django API
-      console.log('Updated patient data:', formData);
-      console.log('Patient ID:', patientId);
+      // Importar services e transformers
+      const { pacientesService } = await import('@/services/api');
+      const { transformFormDataToAPI } = await import('@/lib/transformers/patient');
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const id = Number.parseInt(patientId);
+
+      // Transformar dados do formulário para formato da API
+      const { endereco, contatoEmergencia, paciente } = transformFormDataToAPI(formData);
+
+      // Atualizar paciente completo (endereço, contato e paciente)
+      // NOTA: Precisamos dos IDs do endereço e contato existentes
+      // Eles estão armazenados na API, vamos buscar do paciente atual
+      const apiPatient = await pacientesService.getById(id);
+
+      await pacientesService.updateComplete(
+        id,
+        paciente,
+        apiPatient.endereco.id,
+        endereco,
+        apiPatient.contato_emergencia.id,
+        contatoEmergencia,
+      );
 
       alert('Paciente atualizado com sucesso!');
       router.push('/admin/patients');
     } catch (error) {
       console.error('Error updating patient:', error);
-      alert('Erro ao atualizar paciente. Tente novamente.');
+
+      const { getErrorMessage } = await import('@/lib/api/client');
+      const errorMsg = getErrorMessage(error);
+
+      alert(`Erro ao atualizar paciente: ${errorMsg}`);
     } finally {
       setIsSubmitting(false);
     }

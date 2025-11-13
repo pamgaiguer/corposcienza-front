@@ -3,7 +3,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { authService } from '@/services/api/auth';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   LayoutDashboard,
@@ -231,6 +232,12 @@ const menuItems = [
 export default function AdminSidebar({ isCollapsed, setIsCollapsed }: AdminSidebarProps) {
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    authService.logout();
+    router.push('/admin/login');
+  };
 
   const toggleExpanded = (title: string) => {
     if (isCollapsed) return; // Don't expand submenus when collapsed
@@ -500,6 +507,7 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }: AdminSideb
             size={isCollapsed ? 'icon' : 'sm'}
             className="group relative h-8 w-full justify-start text-red-600 hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-900/20"
             title={isCollapsed ? 'Logout' : undefined}
+            onClick={handleLogout}
           >
             <LogOut className="h-4 w-4 flex-shrink-0" />
             <AnimatePresence mode="wait">

@@ -17,9 +17,14 @@ import {
   Clock,
   FileText,
   Activity,
+  Loader,
+  AlertCircle,
 } from 'lucide-react';
 import DeleteConfirmationModal from '@/components/admin/delete-confirmation-modal';
 import { Patient } from '@/types/patient';
+import { pacientesService } from '@/services/api';
+import { transformAPIPacienteToUI } from '@/lib/transformers/patient';
+import { getErrorMessage } from '@/lib/api/client';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -32,62 +37,32 @@ export default function PatientViewPage() {
   const router = useRouter();
   const [patient, setPatient] = useState<Patient | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    // Simulate API call to fetch patient data
     const fetchPatient = async () => {
       try {
         setLoading(true);
-        // Mock API delay
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        setError(null);
 
-        // Mock patient data - in real app, this would come from API
-        const mockPatient = {
-          id: Number.parseInt(params.id as string),
-          nome: 'Maria Silva Santos',
-          cpf: '123.456.789-00',
-          rg: '12.345.678-9',
-          email: 'maria.silva@email.com',
-          telefone: '(11) 99999-9999',
-          data_nascimento: '1985-03-15',
-          sexo_biologico: 'F',
-          status: 'Ativo',
-          plano: 'Premium',
-          ultima_consulta: '2024-01-15',
-          data_cadastro: '2023-12-01',
-          endereco: {
-            cep: '01234-567',
-            logradouro: 'Rua das Flores, 123',
-            bairro: 'Centro',
-            cidade: 'São Paulo',
-            estado: 'SP',
-            complemento: 'Apto 45',
-          },
-          contato_emergencia: {
-            nome: 'João Silva Santos',
-            parentesco: 'Cônjuge',
-            telefone: '(11) 88888-8888',
-          },
-          convenio_medico: {
-            possui: true,
-            empresa: 'Unimed',
-            numero_carteira: '123456789012345',
-            validade: '2024-12-31',
-          },
-          observacoes: 'Paciente com histórico de hipertensão. Acompanhamento regular necessário.',
-        };
+        const id = Number.parseInt(params.id as string);
+        const apiPatient = await pacientesService.getById(id);
+        const transformedPatient = transformAPIPacienteToUI(apiPatient);
 
-        setPatient(mockPatient);
-      } catch (error) {
-        console.error('Error fetching patient:', error);
+        setPatient(transformedPatient);
+      } catch (err) {
+        console.error('Error fetching patient:', err);
+        setError(getErrorMessage(err));
       } finally {
         setLoading(false);
       }
     };
 
-    fetchPatient();
+    if (params.id) {
+      fetchPatient();
+    }
   }, [params.id]);
 
   const calculateAge = (birthDate: string) => {
@@ -110,14 +85,13 @@ export default function PatientViewPage() {
 
     setIsDeleting(true);
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
+      await pacientesService.delete(patient.id);
       alert('Paciente excluído com sucesso!');
       router.push('/admin/patients');
-    } catch (error) {
-      console.error('Error deleting patient:', error);
-      alert('Erro ao excluir paciente. Tente novamente.');
+    } catch (err) {
+      console.error('Error deleting patient:', err);
+      const errorMsg = getErrorMessage(err);
+      alert(`Erro ao excluir paciente: ${errorMsg}`);
     } finally {
       setIsDeleting(false);
       setShowDeleteModal(false);
@@ -144,34 +118,41 @@ export default function PatientViewPage() {
   };
 
   if (loading) {
-    // Ajuste do Skeleton Loader para o Dark Mode
     return (
-      // Fundo principal: gray-50 no light, gray-900 no dark
       <div className="min-h-screen flex-1 bg-gray-50 p-8 dark:bg-gray-900">
-        <div className="mx-auto max-w-6xl">
-          <div className="animate-pulse">
-            <div className="mb-8 h-8 w-1/4 rounded bg-gray-200 dark:bg-gray-700"></div>
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-              <div className="space-y-6 lg:col-span-2">
-                {/* Cartão: white no light, gray-800 no dark */}
-                <div className="rounded-xl bg-white p-6 dark:bg-gray-800">
-                  <div className="mb-4 h-6 w-1/3 rounded bg-gray-200 dark:bg-gray-700"></div>
-                  <div className="space-y-3">
-                    <div className="h-4 w-full rounded bg-gray-200 dark:bg-gray-700"></div>
-                    <div className="h-4 w-3/4 rounded bg-gray-200 dark:bg-gray-700"></div>
-                    <div className="h-4 w-1/2 rounded bg-gray-200 dark:bg-gray-700"></div>
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-6">
-                <div className="rounded-xl bg-white p-6 dark:bg-gray-800">
-                  <div className="mb-4 h-6 w-1/2 rounded bg-gray-200 dark:bg-gray-700"></div>
-                  <div className="space-y-3">
-                    <div className="h-4 w-full rounded bg-gray-200 dark:bg-gray-700"></div>
-                    <div className="h-4 w-2/3 rounded bg-gray-200 dark:bg-gray-700"></div>
-                  </div>
-                </div>
-              </div>
+        <div className="flex h-64 items-center justify-center">
+          <div className="text-center">
+            <Loader className="mx-auto mb-4 h-8 w-8 animate-spin text-blue-600 dark:text-blue-400" />
+            <p className="text-gray-600 dark:text-gray-400">Carregando dados do paciente...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex-1 bg-gray-50 p-8 dark:bg-gray-900">
+        <div className="flex h-64 items-center justify-center">
+          <div className="max-w-md text-center">
+            <AlertCircle className="mx-auto mb-4 h-12 w-12 text-red-600 dark:text-red-400" />
+            <h3 className="mb-2 text-lg font-medium text-gray-900 dark:text-white">
+              Erro ao carregar paciente
+            </h3>
+            <p className="mb-4 text-gray-600 dark:text-gray-400">{error}</p>
+            <div className="flex justify-center gap-2">
+              <button
+                onClick={() => window.location.reload()}
+                className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+              >
+                Tentar Novamente
+              </button>
+              <Link
+                href="/admin/patients"
+                className="rounded-lg bg-gray-200 px-4 py-2 text-gray-900 hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
+              >
+                Voltar
+              </Link>
             </div>
           </div>
         </div>
@@ -180,7 +161,6 @@ export default function PatientViewPage() {
   }
 
   if (!patient) {
-    // Ajuste da mensagem de paciente não encontrado
     return (
       <div className="min-h-screen flex-1 bg-gray-50 p-8 dark:bg-gray-900">
         <div className="mx-auto max-w-6xl">

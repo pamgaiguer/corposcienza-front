@@ -41,9 +41,13 @@ export const metadata: Metadata = {
     title: 'Corpo Scienza - Medicina Personalizada',
     description: 'Cuidado médico personalizado e científico',
   },
-  viewport: 'width=device-width, initial-scale=1',
-  themeColor: '#2563eb',
   generator: 'v0.app',
+};
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#2563eb',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

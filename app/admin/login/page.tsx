@@ -12,24 +12,46 @@ import { Checkbox } from '@/components/ui/checkbox';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { authService } from '@/services/api/auth';
+import { useToast } from '@/components/ui/use-toast';
 
 export default function AdminLogin() {
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
   const router = useRouter();
+  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError('');
 
-    // Simulate login process
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      await authService.login({ username, password });
+      
+      toast({
+        title: 'Login realizado com sucesso',
+        description: 'Redirecionando para o painel...',
+      });
 
-    // Redirect to admin dashboard
-    router.push('/admin');
+      // Redirect to admin dashboard
+      router.push('/admin/dashboard');
+    } catch (err: any) {
+      const errorMessage = err.response?.data?.detail || 'Credenciais inválidas. Tente novamente.';
+      setError(errorMessage);
+      
+      toast({
+        title: 'Erro ao fazer login',
+        description: errorMessage,
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -85,19 +107,27 @@ export default function AdminLogin() {
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-4">
-                {/* Email Field */}
+                {/* Error Message */}
+                {error && (
+                  <div className="rounded-lg bg-red-50 p-3 text-sm text-red-800 dark:bg-red-900/20 dark:text-red-400">
+                    {error}
+                  </div>
+                )}
+
+                {/* Username Field */}
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="username">Usuário</Label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                     <Input
-                      id="email"
-                      type="email"
-                      placeholder="admin@exemplo.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      id="username"
+                      type="text"
+                      placeholder="Digite seu usuário"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
                       className="pl-10"
                       required
+                      disabled={isLoading}
                     />
                   </div>
                 </div>
@@ -115,6 +145,7 @@ export default function AdminLogin() {
                       onChange={(e) => setPassword(e.target.value)}
                       className="pl-10 pr-10"
                       required
+                      disabled={isLoading}
                     />
                     <button
                       type="button"
