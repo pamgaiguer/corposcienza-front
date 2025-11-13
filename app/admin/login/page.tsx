@@ -32,7 +32,7 @@ export default function AdminLogin() {
 
     try {
       await authService.login({ username, password });
-      
+
       toast({
         title: 'Login realizado com sucesso',
         description: 'Redirecionando para o painel...',
@@ -40,10 +40,12 @@ export default function AdminLogin() {
 
       // Redirect to admin dashboard
       router.push('/admin/dashboard');
-    } catch (err: any) {
-      const errorMessage = err.response?.data?.detail || 'Credenciais inválidas. Tente novamente.';
+    } catch (err: unknown) {
+      const errorMessage =
+        (err as { response?: { data?: { detail?: string } } }).response?.data?.detail ||
+        'Credenciais inválidas. Tente novamente.';
       setError(errorMessage);
-      
+
       toast({
         title: 'Erro ao fazer login',
         description: errorMessage,

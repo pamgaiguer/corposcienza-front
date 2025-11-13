@@ -40,8 +40,7 @@ export const financeiroService = {
 
       // Retorna o primeiro resultado ou null se não encontrar
       return data.results.length > 0 ? data.results[0] : null;
-    } catch (error) {
-      console.error('Erro ao buscar dados financeiros do paciente:', error);
+    } catch {
       return null;
     }
   },

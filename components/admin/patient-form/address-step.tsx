@@ -44,9 +44,6 @@ const formatCEP = (value: string) => {
 
 export default function AddressStep({
   formData,
-  errors,
-  touchedFields,
-  validFields,
   onInputChange,
   getFieldError,
   isFieldValid,

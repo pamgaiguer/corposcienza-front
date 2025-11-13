@@ -24,7 +24,6 @@ import {
   Activity,
   TrendingUp,
   UserPlus,
-  Search,
   Mail,
   Phone,
   Clock,

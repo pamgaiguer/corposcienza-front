@@ -56,11 +56,11 @@ export function getRefreshToken(): string | null {
  */
 export function setTokens(accessToken: string, refreshToken: string): void {
   if (typeof window === 'undefined') return;
-  
+
   // Salva no localStorage
   localStorage.setItem(TOKEN_STORAGE_KEY, accessToken);
   localStorage.setItem(REFRESH_TOKEN_STORAGE_KEY, refreshToken);
-  
+
   // Salva em cookies para o middleware
   document.cookie = `access_token=${accessToken}; path=/; max-age=14400`; // 4 horas
   document.cookie = `refresh_token=${refreshToken}; path=/; max-age=86400`; // 1 dia
@@ -71,11 +71,11 @@ export function setTokens(accessToken: string, refreshToken: string): void {
  */
 export function clearTokens(): void {
   if (typeof window === 'undefined') return;
-  
+
   // Remove do localStorage
   localStorage.removeItem(TOKEN_STORAGE_KEY);
   localStorage.removeItem(REFRESH_TOKEN_STORAGE_KEY);
-  
+
   // Remove dos cookies
   document.cookie = 'access_token=; path=/; max-age=0';
   document.cookie = 'refresh_token=; path=/; max-age=0';

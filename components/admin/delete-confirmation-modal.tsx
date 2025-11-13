@@ -10,7 +10,6 @@ interface DeleteConfirmationModalProps {
   isDeleting: boolean;
   title: string;
   description: string;
-  itemName: string;
   warningMessage: string;
 }
 
@@ -21,7 +20,6 @@ export default function DeleteConfirmationModal({
   isDeleting,
   title,
   description,
-  itemName,
   warningMessage,
 }: DeleteConfirmationModalProps) {
   if (!isOpen) return null;

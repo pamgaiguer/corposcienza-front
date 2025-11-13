@@ -44,8 +44,6 @@ export default function EditPatientPage() {
         setOriginalData(formData);
         setCurrentData(formData);
       } catch (error) {
-        console.error('Error loading patient data:', error);
-
         const { getErrorMessage } = await import('@/lib/api/client');
         const errorMsg = getErrorMessage(error);
 
@@ -104,8 +102,6 @@ export default function EditPatientPage() {
       alert('Paciente atualizado com sucesso!');
       router.push('/admin/patients');
     } catch (error) {
-      console.error('Error updating patient:', error);
-
       const { getErrorMessage } = await import('@/lib/api/client');
       const errorMsg = getErrorMessage(error);
 

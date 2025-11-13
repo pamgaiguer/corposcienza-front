@@ -35,8 +35,6 @@ export default function NewPatientPage() {
       alert('Paciente cadastrado com sucesso!');
       router.push('/admin/patients');
     } catch (error) {
-      console.error('Error creating patient:', error);
-
       // Importar getErrorMessage para exibir mensagem de erro apropriada
       const { getErrorMessage } = await import('@/lib/api/client');
       const errorMsg = getErrorMessage(error);

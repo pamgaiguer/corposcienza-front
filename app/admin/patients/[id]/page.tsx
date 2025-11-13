@@ -53,7 +53,6 @@ export default function PatientViewPage() {
 
         setPatient(transformedPatient);
       } catch (err) {
-        console.error('Error fetching patient:', err);
         setError(getErrorMessage(err));
       } finally {
         setLoading(false);
@@ -89,7 +88,6 @@ export default function PatientViewPage() {
       alert('Paciente excluído com sucesso!');
       router.push('/admin/patients');
     } catch (err) {
-      console.error('Error deleting patient:', err);
       const errorMsg = getErrorMessage(err);
       alert(`Erro ao excluir paciente: ${errorMsg}`);
     } finally {

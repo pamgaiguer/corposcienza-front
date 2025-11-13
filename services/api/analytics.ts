@@ -1,10 +1,10 @@
 /**
  * Service para analytics e métricas do sistema
- * 
+ *
  * IMPORTANTE: Este serviço usa dados reais da API sempre que possível,
  * mas calcula agregações no client-side devido à falta de endpoints
  * específicos de analytics no backend Django.
- * 
+ *
  * TODO: Quando o backend disponibilizar endpoints de analytics
  * (ex: /api/analytics/dashboard-stats/), substituir os cálculos
  * client-side por chamadas diretas.
@@ -45,7 +45,7 @@ export const analyticsService = {
     try {
       // Busca total de pacientes (página 1 para obter count)
       const { data } = await apiClient.get<APIPaginatedResponse<APIPaciente>>('/pacientes/', {
-        params: { page: 1, page_size: 1 }
+        params: { page: 1, page_size: 1 },
       });
 
       const totalPatients = data.count || 0;
@@ -53,19 +53,21 @@ export const analyticsService = {
       // Busca pacientes dos últimos 30 dias
       const thirtyDaysAgo = new Date();
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-      const dateStr = thirtyDaysAgo.toISOString().split('T')[0];
 
-      const { data: recentData } = await apiClient.get<APIPaginatedResponse<APIPaciente>>('/pacientes/', {
-        params: { 
-          page: 1, 
-          page_size: 1000, // Busca todos para contar
-          // Se a API suportar filtro por data:
-          // criado_em__gte: dateStr
-        }
-      });
+      const { data: recentData } = await apiClient.get<APIPaginatedResponse<APIPaciente>>(
+        '/pacientes/',
+        {
+          params: {
+            page: 1,
+            page_size: 1000, // Busca todos para contar
+            // Se a API suportar filtro por data:
+            // criado_em__gte: dateStr
+          },
+        },
+      );
 
       // Conta manualmente pacientes criados nos últimos 30 dias
-      const recentPatients = recentData.results.filter(p => {
+      const recentPatients = recentData.results.filter((p) => {
         if (!p.criado_em) return false;
         const createdDate = new Date(p.criado_em);
         return createdDate >= thirtyDaysAgo;
@@ -78,14 +80,13 @@ export const analyticsService = {
         totalPatientsChange: '+12%', // TODO: Calcular baseado em histórico
         newPatientsLast30Days: newPatientsCount,
         newPatientsChange: `+${Math.round((newPatientsCount / totalPatients) * 100)}%`,
-        
+
         // Valores estimados/mockados (aguardando endpoints específicos)
         appointmentsToday: 0, // TODO: Endpoint de appointments
         revenueThisMonth: 0, // TODO: Endpoint de revenue
         activeCases: 0, // TODO: Endpoint de cases
       };
     } catch (error) {
-      console.error('Erro ao buscar stats do dashboard:', error);
       throw error;
     }
   },
@@ -97,7 +98,7 @@ export const analyticsService = {
     try {
       // Busca todos os pacientes (ou amostra grande)
       const { data } = await apiClient.get<APIPaginatedResponse<APIPaciente>>('/pacientes/', {
-        params: { page: 1, page_size: 1000 }
+        params: { page: 1, page_size: 1000 },
       });
 
       const patients = data.results;
@@ -112,11 +113,11 @@ export const analyticsService = {
         '60+': 0,
       };
 
-      patients.forEach(patient => {
+      patients.forEach((patient) => {
         if (!patient.data_nascimento) return;
-        
+
         const age = this.calculateAge(patient.data_nascimento);
-        
+
         if (age <= 18) ranges['0-18']++;
         else if (age <= 30) ranges['19-30']++;
         else if (age <= 45) ranges['31-45']++;
@@ -130,7 +131,6 @@ export const analyticsService = {
         percentage: total > 0 ? (count / total) * 100 : 0,
       }));
     } catch (error) {
-      console.error('Erro ao calcular distribuição de idade:', error);
       throw error;
     }
   },
@@ -143,15 +143,28 @@ export const analyticsService = {
     try {
       // Busca todos os pacientes
       const { data } = await apiClient.get<APIPaginatedResponse<APIPaciente>>('/pacientes/', {
-        params: { page: 1, page_size: 5000 } // Ajustar conforme necessário
+        params: { page: 1, page_size: 5000 }, // Ajustar conforme necessário
       });
 
       const patients = data.results;
-      
+
       // Cria array de últimos N meses
       const monthsData: Record<string, number> = {};
-      const monthNames = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
-      
+      const monthNames = [
+        'Jan',
+        'Fev',
+        'Mar',
+        'Abr',
+        'Mai',
+        'Jun',
+        'Jul',
+        'Ago',
+        'Set',
+        'Out',
+        'Nov',
+        'Dez',
+      ];
+
       for (let i = months - 1; i >= 0; i--) {
         const date = new Date();
         date.setMonth(date.getMonth() - i);
@@ -160,12 +173,12 @@ export const analyticsService = {
       }
 
       // Conta pacientes por mês
-      patients.forEach(patient => {
+      patients.forEach((patient) => {
         if (!patient.criado_em) return;
-        
+
         const date = new Date(patient.criado_em);
         const key = `${monthNames[date.getMonth()]}/${date.getFullYear()}`;
-        
+
         if (key in monthsData) {
           monthsData[key]++;
         }
@@ -176,7 +189,6 @@ export const analyticsService = {
         patients,
       }));
     } catch (error) {
-      console.error('Erro ao calcular tendência mensal:', error);
       throw error;
     }
   },
@@ -189,11 +201,11 @@ export const analyticsService = {
     const birth = new Date(birthDate);
     let age = today.getFullYear() - birth.getFullYear();
     const monthDiff = today.getMonth() - birth.getMonth();
-    
+
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
       age--;
     }
-    
+
     return age;
   },
 
@@ -214,7 +226,6 @@ export const analyticsService = {
         monthlyTrend,
       };
     } catch (error) {
-      console.error('Erro ao buscar stats do sistema:', error);
       throw error;
     }
   },

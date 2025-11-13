@@ -58,7 +58,6 @@ export default function PatientsPage() {
         setTotalCount(response.count);
         setTotalPages(Math.ceil(response.count / 10)); // Assumindo 10 por página
       } catch (err) {
-        console.error('Erro ao buscar pacientes:', err);
         setError(getErrorMessage(err));
       } finally {
         setLoading(false);
@@ -81,7 +80,6 @@ export default function PatientsPage() {
   } = usePatientSearch(patients);
 
   const [selectedPatients, setSelectedPatients] = useState<number[]>([]);
-  const [viewMode, setViewMode] = useState<'grid' | 'table'>('table');
 
   const handleSelectAll = () => {
     if (selectedPatients.length === filteredPatients.length) {

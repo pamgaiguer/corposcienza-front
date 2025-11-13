@@ -109,7 +109,7 @@ export function useAnalyticsData() {
         };
 
         setData(mockData);
-      } catch (err) {
+      } catch {
         setError('Erro ao carregar dados de analytics');
       } finally {
         setLoading(false);

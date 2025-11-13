@@ -33,9 +33,6 @@ const formatPhone = (value: string) => {
 
 export default function EmergencyContactStep({
   formData,
-  errors,
-  touchedFields,
-  validFields,
   onInputChange,
   getFieldError,
   isFieldValid,

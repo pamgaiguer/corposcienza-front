@@ -7,9 +7,6 @@ import type { FormStepProps } from '@/types/patient';
 
 export default function InsuranceStep({
   formData,
-  errors,
-  touchedFields,
-  validFields,
   onInputChange,
   getFieldError,
   isFieldValid,

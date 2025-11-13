@@ -2,7 +2,7 @@
 'use client';
 
 import type React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import {
   User,
@@ -72,7 +72,6 @@ export default function PatientForm({
   onSubmit,
   isSubmitting,
   submitButtonText,
-  title,
   hasChanges,
   onReset,
 }: PatientFormProps) {
@@ -131,6 +130,65 @@ export default function PatientForm({
     }
   }, [initialData]);
 
+  const getFieldsForStep = useCallback(
+    (step: number): string[] => {
+      switch (step) {
+        case 1:
+          return [
+            'nome',
+            'cpf',
+            'rg',
+            'sexo_biologico',
+            'data_nascimento',
+            'telefone',
+            'email',
+            'estado_civil',
+            'nacionalidade',
+            'profissao',
+          ];
+        case 2:
+          return [
+            'endereco.cep',
+            'endereco.rua',
+            'endereco.numero',
+            'endereco.bairro',
+            'endereco.cidade',
+            'endereco.estado',
+          ];
+        case 3:
+          return [
+            'contato_emergencia.nome',
+            'contato_emergencia.cpf',
+            'contato_emergencia.rg',
+            'contato_emergencia.telefone',
+            'contato_emergencia.email',
+            'contato_emergencia.estado_civil',
+            'contato_emergencia.nacionalidade',
+            'contato_emergencia.profissao',
+          ];
+        case 4:
+          return formData.possui_convenio_medico
+            ? ['convenio_nome', 'numero_carteirinha', 'validade_carteirinha']
+            : [];
+        default:
+          return [];
+      }
+    },
+    [formData.possui_convenio_medico],
+  );
+
+  const isFieldFilled = useCallback(
+    (field: string): boolean => {
+      const keys = field.split('.');
+      let value = formData as any;
+      for (const key of keys) {
+        value = value?.[key];
+      }
+      return value !== '' && value !== null && value !== undefined;
+    },
+    [formData],
+  );
+
   // Real-time validation
   useEffect(() => {
     const validation = validatePatientForm(formData, currentStep);
@@ -151,60 +209,7 @@ export default function PatientForm({
       });
       return updated;
     });
-  }, [formData, currentStep]);
-
-  const getFieldsForStep = (step: number): string[] => {
-    switch (step) {
-      case 1:
-        return [
-          'nome',
-          'cpf',
-          'rg',
-          'sexo_biologico',
-          'data_nascimento',
-          'telefone',
-          'email',
-          'estado_civil',
-          'nacionalidade',
-          'profissao',
-        ];
-      case 2:
-        return [
-          'endereco.cep',
-          'endereco.rua',
-          'endereco.numero',
-          'endereco.bairro',
-          'endereco.cidade',
-          'endereco.estado',
-        ];
-      case 3:
-        return [
-          'contato_emergencia.nome',
-          'contato_emergencia.cpf',
-          'contato_emergencia.rg',
-          'contato_emergencia.telefone',
-          'contato_emergencia.email',
-          'contato_emergencia.estado_civil',
-          'contato_emergencia.nacionalidade',
-          'contato_emergencia.profissao',
-        ];
-      case 4:
-        return formData.possui_convenio_medico
-          ? ['convenio_nome', 'numero_carteirinha', 'validade_carteirinha']
-          : [];
-      default:
-        return [];
-    }
-  };
-
-  const isFieldFilled = (field: string): boolean => {
-    const keys = field.split('.');
-    let value = formData as any;
-    for (const key of keys) {
-      value = value?.[key];
-    }
-    return value !== '' && value !== null && value !== undefined;
-  };
+  }, [formData, currentStep, getFieldsForStep, isFieldFilled]);
 
   const getFieldError = (field: string): string | undefined => {
     return errors.find((error) => error.field === field)?.message;

@@ -271,13 +271,13 @@ export function transformFormDataToAPI(formData: PatientFormData): {
       profissao: formData.profissao as string,
       possui_convenio_medico: formData.possui_convenio_medico,
       convenio_nome: formData.possui_convenio_medico
-        ? (formData.convenio_nome || formData.convenio_empresa) as string
+        ? ((formData.convenio_nome || formData.convenio_empresa) as string)
         : undefined,
       numero_carteirinha: formData.possui_convenio_medico
-        ? (formData.numero_carteirinha || formData.convenio_numero_carteira) as string
+        ? ((formData.numero_carteirinha || formData.convenio_numero_carteira) as string)
         : undefined,
       validade_carteirinha: formData.possui_convenio_medico
-        ? (formData.validade_carteirinha || formData.convenio_validade) as string
+        ? ((formData.validade_carteirinha || formData.convenio_validade) as string)
         : undefined,
     },
   };

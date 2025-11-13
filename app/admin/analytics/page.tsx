@@ -51,8 +51,7 @@ export default function AnalyticsPage() {
         setDashboardStats(data.dashboardStats);
         setAgeDistribution(data.ageDistribution);
         setMonthlyTrend(data.monthlyTrend);
-      } catch (err: any) {
-        console.error('Erro ao carregar analytics:', err);
+      } catch {
         setError('Erro ao carregar dados de analytics');
       } finally {
         setIsLoading(false);

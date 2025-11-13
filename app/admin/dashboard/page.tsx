@@ -9,7 +9,6 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Users,
   Calendar,
-  TrendingUp,
   Activity,
   AlertCircle,
   CheckCircle,
@@ -23,6 +22,17 @@ import {
 import Link from 'next/link';
 import { analyticsService } from '@/services/api/analytics';
 import type { DashboardStats } from '@/services/api/analytics';
+import type { LucideIcon } from 'lucide-react';
+
+interface StatCard {
+  title: string;
+  value: string;
+  change: string;
+  trend: 'up' | 'down';
+  icon: LucideIcon;
+  color: string;
+  badge?: string;
+}
 
 export default function AdminDashboard() {
   const [dashboardData, setDashboardData] = useState<DashboardStats | null>(null);
@@ -35,8 +45,7 @@ export default function AdminDashboard() {
         setIsLoading(true);
         const data = await analyticsService.getDashboardStats();
         setDashboardData(data);
-      } catch (err: any) {
-        console.error('Erro ao carregar dados do dashboard:', err);
+      } catch {
         setError('Erro ao carregar dados do dashboard');
       } finally {
         setIsLoading(false);
@@ -46,42 +55,44 @@ export default function AdminDashboard() {
     fetchDashboardData();
   }, []);
 
-  const stats = dashboardData ? [
-    {
-      title: 'Total de Pacientes',
-      value: dashboardData.totalPatients.toLocaleString('pt-BR'),
-      change: dashboardData.totalPatientsChange,
-      trend: 'up',
-      icon: Users,
-      color: 'blue',
-    },
-    {
-      title: 'Novos Pacientes (30d)',
-      value: dashboardData.newPatientsLast30Days.toString(),
-      change: dashboardData.newPatientsChange,
-      trend: 'up',
-      icon: UserPlus,
-      color: 'green',
-    },
-    {
-      title: 'Consultas Hoje',
-      value: dashboardData.appointmentsToday.toString(),
-      change: 'Em desenvolvimento',
-      trend: 'up',
-      icon: Calendar,
-      color: 'emerald',
-      badge: 'Em breve',
-    },
-    {
-      title: 'Casos Ativos',
-      value: dashboardData.activeCases.toString(),
-      change: 'Em desenvolvimento',
-      trend: 'up',
-      icon: Activity,
-      color: 'orange',
-      badge: 'Em breve',
-    },
-  ] : [];
+  const stats: StatCard[] = dashboardData
+    ? [
+        {
+          title: 'Total de Pacientes',
+          value: dashboardData.totalPatients.toLocaleString('pt-BR'),
+          change: dashboardData.totalPatientsChange,
+          trend: 'up' as const,
+          icon: Users,
+          color: 'blue',
+        },
+        {
+          title: 'Novos Pacientes (30d)',
+          value: dashboardData.newPatientsLast30Days.toString(),
+          change: dashboardData.newPatientsChange,
+          trend: 'up' as const,
+          icon: UserPlus,
+          color: 'green',
+        },
+        {
+          title: 'Consultas Hoje',
+          value: dashboardData.appointmentsToday.toString(),
+          change: 'Em desenvolvimento',
+          trend: 'up' as const,
+          icon: Calendar,
+          color: 'emerald',
+          badge: 'Em breve',
+        },
+        {
+          title: 'Casos Ativos',
+          value: dashboardData.activeCases.toString(),
+          change: 'Em desenvolvimento',
+          trend: 'up' as const,
+          icon: Activity,
+          color: 'orange',
+          badge: 'Em breve',
+        },
+      ]
+    : [];
 
   const recentAppointments = [
     {
@@ -212,9 +223,9 @@ export default function AdminDashboard() {
             <CardContent>
               <div className="flex items-center justify-between">
                 <div className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</div>
-                {(stat as any).badge && (
+                {stat.badge && (
                   <Badge variant="secondary" className="text-xs">
-                    {(stat as any).badge}
+                    {stat.badge}
                   </Badge>
                 )}
               </div>

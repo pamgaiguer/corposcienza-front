@@ -109,16 +109,16 @@ export const pacientesService = {
       if (contatoEmergenciaId) {
         try {
           await contatosEmergenciaService.delete(contatoEmergenciaId);
-        } catch (rollbackError) {
-          console.error('Erro ao fazer rollback do contato de emergência:', rollbackError);
+        } catch {
+          // Ignora erro de rollback
         }
       }
 
       if (enderecoId) {
         try {
           await enderecosService.delete(enderecoId);
-        } catch (rollbackError) {
-          console.error('Erro ao fazer rollback do endereço:', rollbackError);
+        } catch {
+          // Ignora erro de rollback
         }
       }
 
