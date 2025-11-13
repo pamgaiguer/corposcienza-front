@@ -237,8 +237,7 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }: AdminSideb
     try {
       await authService.logout();
       router.push('/admin/login');
-    } catch (error) {
-      console.error('Erro ao fazer logout:', error);
+    } catch {
       // Mesmo com erro, redireciona para login
       router.push('/admin/login');
     }

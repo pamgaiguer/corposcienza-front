@@ -17,12 +17,12 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8
 export const authService = {
   /**
    * Realiza login e obtém tokens JWT
-   * 
+   *
    * WORKAROUND: O backend está com token_blacklist no INSTALLED_APPS mas sem as migrações.
    * Por isso, estamos informando ao backend que você tem acesso SOMENTE aos endpoints
    * que não dependem do blacklist. Você precisa pedir ao administrador do backend para
    * executar: python manage.py migrate token_blacklist
-   * 
+   *
    * Enquanto isso, vamos usar autenticação básica diretamente.
    */
   async login(credentials: APILoginCredentials): Promise<APITokenResponse> {
@@ -35,7 +35,7 @@ export const authService = {
           headers: {
             'Content-Type': 'application/json',
           },
-        }
+        },
       );
 
       // Salva os tokens no localStorage e cookies
@@ -47,7 +47,7 @@ export const authService = {
       if (axios.isAxiosError(error) && error.response?.status === 500) {
         throw new Error(
           'Erro no servidor: O backend precisa executar as migrações do token_blacklist. ' +
-          'Contate o administrador do sistema para executar: python manage.py migrate token_blacklist'
+            'Contate o administrador do sistema para executar: python manage.py migrate token_blacklist',
         );
       }
       throw error;
@@ -57,7 +57,7 @@ export const authService = {
   /**
    * Realiza logout e invalida o refresh token na API
    * Endpoint: POST /api/accounts/logout/
-   * 
+   *
    * NOTA: Temporariamente desabilitado até que as migrações do token_blacklist
    * sejam executadas no backend. Execute: python manage.py migrate token_blacklist
    */
@@ -69,12 +69,10 @@ export const authService = {
         // Envia o refresh token para ser adicionado à blacklist
         const payload: APILogoutPayload = { refresh: refreshToken };
         await apiClient.post('/accounts/logout/', payload);
-      } catch (error) {
+      } catch {
         // Ignora erro se o token_blacklist não estiver configurado no backend
         // O token ainda será removido localmente
-        if (error instanceof Error) {
-          console.warn('Logout API falhou (token_blacklist pode não estar migrado):', error.message);
-        }
+        // Silenciosamente ignora o erro do logout na API
       }
     }
 
