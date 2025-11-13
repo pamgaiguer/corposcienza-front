@@ -158,7 +158,25 @@ export type APIFinanceiroUpdate = Partial<APIFinanceiroCreate>;
 // ============================================================================
 
 /**
- * Resposta do endpoint de login (POST /api/token/)
+ * Usuário customizado do sistema (CustomUser model)
+ * Retornado pelo endpoint GET /api/accounts/me/
+ */
+export interface APICustomUser {
+  id: number;
+  username: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+  full_name: string; // Propriedade calculada (first_name + last_name)
+  phone?: string;
+  is_active: boolean;
+  is_staff: boolean;
+  date_joined: string; // datetime ISO 8601
+  last_login?: string; // datetime ISO 8601
+}
+
+/**
+ * Resposta do endpoint de login (POST /api/accounts/login/)
  */
 export interface APITokenResponse {
   access: string;
@@ -178,6 +196,13 @@ export interface APITokenRefreshResponse {
 export interface APILoginCredentials {
   username: string;
   password: string;
+}
+
+/**
+ * Payload para logout (POST /api/accounts/logout/)
+ */
+export interface APILogoutPayload {
+  refresh: string;
 }
 
 // ============================================================================

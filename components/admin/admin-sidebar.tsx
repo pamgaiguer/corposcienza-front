@@ -233,9 +233,15 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }: AdminSideb
   const pathname = usePathname();
   const router = useRouter();
 
-  const handleLogout = () => {
-    authService.logout();
-    router.push('/admin/login');
+  const handleLogout = async () => {
+    try {
+      await authService.logout();
+      router.push('/admin/login');
+    } catch (error) {
+      console.error('Erro ao fazer logout:', error);
+      // Mesmo com erro, redireciona para login
+      router.push('/admin/login');
+    }
   };
 
   const toggleExpanded = (title: string) => {
