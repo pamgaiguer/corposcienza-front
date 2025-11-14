@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 'use client';
 
 import FormField from '@/components/form/form-field';
@@ -46,9 +44,6 @@ const formatCEP = (value: string) => {
 
 export default function AddressStep({
   formData,
-  errors,
-  touchedFields,
-  validFields,
   onInputChange,
   getFieldError,
   isFieldValid,

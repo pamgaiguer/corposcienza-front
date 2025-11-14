@@ -36,7 +36,7 @@ const eslintConfig = [
       quotes: ['error', 'single'],
       semi: ['error', 'always', { omitLastInOneLineBlock: true }],
       'no-console': 1,
-      camelcase: ['warn'],
+      camelcase: ['warn', { properties: 'never', ignoreDestructuring: true }],
       eqeqeq: ['error', 'always'],
       '@typescript-eslint/no-unused-vars': 'warn',
     },

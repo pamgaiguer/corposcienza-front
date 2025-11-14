@@ -1,17 +1,27 @@
-/* eslint-disable camelcase */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 'use client';
 
 import SearchFilters from '@/components/admin/patients/search-filters';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { Badge, Button, Card, CardContent } from '@/components/ui';
 import { usePatientSearch } from '@/hooks/use-patient-search';
+import { getErrorMessage } from '@/lib/api/client';
+import { transformAPIPacienteBasicoToUI } from '@/lib/transformers/patient';
+import pacientesService from '@/services/api';
+import type { Patient } from '@/types/patient';
 import { motion } from 'framer-motion';
-import { Download, Edit, Eye, Plus, Search, Trash2, Upload, UserPlus } from 'lucide-react';
+import {
+  AlertCircle,
+  Download,
+  Edit,
+  Eye,
+  Loader,
+  Plus,
+  Search,
+  Trash2,
+  Upload,
+  UserPlus,
+} from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -19,101 +29,43 @@ const fadeInUp = {
   transition: { duration: 0.6 },
 };
 
-// Mock patient data
-const mockPatients = [
-  {
-    id: 1,
-    nome: 'Maria Silva Santos',
-    cpf: '123.456.789-00',
-    email: 'maria.silva@email.com',
-    telefone: '(11) 99999-9999',
-    data_nascimento: '1985-03-15',
-    sexo_biologico: 'F' as const,
-    status: 'Ativo',
-    plano: 'Premium',
-    ultima_consulta: '2024-01-15',
-    endereco: {
-      cidade: 'São Paulo',
-      estado: 'SP',
-    },
-    possui_convenio_medico: true,
-    data_cadastro: '2023-01-10',
-  },
-  {
-    id: 2,
-    nome: 'João Pedro Costa',
-    cpf: '987.654.321-00',
-    email: 'joao.costa@email.com',
-    telefone: '(11) 98888-8888',
-    data_nascimento: '1990-07-22',
-    sexo_biologico: 'M' as const,
-    status: 'Ativo',
-    plano: 'Essencial',
-    ultima_consulta: '2024-01-20',
-    endereco: {
-      cidade: 'Rio de Janeiro',
-      estado: 'RJ',
-    },
-    possui_convenio_medico: false,
-    data_cadastro: '2023-03-15',
-  },
-  {
-    id: 3,
-    nome: 'Ana Carolina Lima',
-    cpf: '456.789.123-00',
-    email: 'ana.lima@email.com',
-    telefone: '(11) 97777-7777',
-    data_nascimento: '1978-11-30',
-    sexo_biologico: 'F' as const,
-    status: 'Ativo',
-    plano: 'Executivo',
-    ultima_consulta: '2024-01-18',
-    endereco: {
-      cidade: 'Belo Horizonte',
-      estado: 'MG',
-    },
-    possui_convenio_medico: true,
-    data_cadastro: '2023-02-20',
-  },
-  {
-    id: 4,
-    nome: 'Carlos Eduardo Souza',
-    cpf: '321.654.987-00',
-    email: 'carlos.souza@email.com',
-    telefone: '(11) 96666-6666',
-    data_nascimento: '1995-05-10',
-    sexo_biologico: 'M' as const,
-    status: 'Inativo',
-    plano: 'Premium',
-    ultima_consulta: '2023-12-01',
-    endereco: {
-      cidade: 'Brasília',
-      estado: 'DF',
-    },
-    possui_convenio_medico: true,
-    data_cadastro: '2023-05-10',
-  },
-  {
-    id: 5,
-    nome: 'Juliana Ferreira',
-    cpf: '159.753.486-00',
-    email: 'juliana.ferreira@email.com',
-    telefone: '(11) 95555-5555',
-    data_nascimento: '1988-09-25',
-    sexo_biologico: 'F' as const,
-    status: 'Ativo',
-    plano: 'Essencial',
-    ultima_consulta: '2024-01-22',
-    endereco: {
-      cidade: 'Salvador',
-      estado: 'BA',
-    },
-    possui_convenio_medico: false,
-    data_cadastro: '2023-04-05',
-  },
-];
-
 export default function PatientsPage() {
+  // Estado para dados da API
+  const [patients, setPatients] = useState<Patient[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
+
+  // Buscar pacientes da API
+  useEffect(() => {
+    const fetchPatients = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const response = await pacientesService.list({ page: currentPage });
+
+        // Transformar dados da API para o formato da UI
+        const transformedPatients = response.results.map((apiPatient) =>
+          transformAPIPacienteBasicoToUI(apiPatient),
+        );
+
+        setPatients(transformedPatients);
+        setTotalCount(response.count);
+        setTotalPages(Math.ceil(response.count / 10)); // Assumindo 10 por página
+      } catch (err) {
+        setError(getErrorMessage(err));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPatients();
+  }, [currentPage]);
+
+  // Hook de busca e filtros (agora com dados da API)
   const {
     searchTerm,
     filters,
@@ -123,10 +75,9 @@ export default function PatientsPage() {
     handleSearchChange,
     handleFiltersChange,
     handleClearFilters,
-  } = usePatientSearch(mockPatients);
+  } = usePatientSearch(patients);
 
   const [selectedPatients, setSelectedPatients] = useState<number[]>([]);
-  const [viewMode, setViewMode] = useState<'grid' | 'table'>('table');
 
   const handleSelectAll = () => {
     if (selectedPatients.length === filteredPatients.length) {
@@ -167,6 +118,43 @@ export default function PatientsPage() {
         return 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300';
     }
   };
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen flex-1 bg-gray-50 p-8 dark:bg-gray-900">
+        <div className="flex h-64 items-center justify-center">
+          <div className="text-center">
+            <Loader className="mx-auto mb-4 h-8 w-8 animate-spin text-blue-600 dark:text-blue-400" />
+            <p className="text-gray-600 dark:text-gray-400">Carregando pacientes...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen flex-1 bg-gray-50 p-8 dark:bg-gray-900">
+        <div className="flex h-64 items-center justify-center">
+          <div className="max-w-md text-center">
+            <AlertCircle className="mx-auto mb-4 h-12 w-12 text-red-600 dark:text-red-400" />
+            <h3 className="mb-2 text-lg font-medium text-gray-900 dark:text-white">
+              Erro ao carregar pacientes
+            </h3>
+            <p className="mb-4 text-gray-600 dark:text-gray-400">{error}</p>
+            <Button
+              onClick={() => window.location.reload()}
+              className="bg-blue-600 text-white hover:bg-blue-700"
+            >
+              Tentar Novamente
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex-1 bg-gray-50 p-8 dark:bg-gray-900">
@@ -405,20 +393,27 @@ export default function PatientsPage() {
         <motion.div className="mt-6 flex items-center justify-between" {...fadeInUp}>
           <div className="text-sm text-gray-700 dark:text-gray-300">
             Mostrando <span className="font-medium">{filteredPatients.length}</span> de{' '}
-            <span className="font-medium">{mockPatients.length}</span> pacientes
+            <span className="font-medium">{totalCount}</span> pacientes
           </div>
           <div className="flex items-center gap-2">
             <Button
               variant="outline"
               size="sm"
-              className="border-gray-300 bg-transparent text-gray-900 hover:bg-gray-100 dark:border-gray-600 dark:text-white dark:hover:bg-gray-700"
+              onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+              disabled={currentPage === 1}
+              className="border-gray-300 bg-transparent text-gray-900 hover:bg-gray-100 disabled:opacity-50 dark:border-gray-600 dark:text-white dark:hover:bg-gray-700"
             >
               Anterior
             </Button>
+            <span className="text-sm text-gray-600 dark:text-gray-400">
+              Página {currentPage} de {totalPages}
+            </span>
             <Button
               variant="outline"
               size="sm"
-              className="border-gray-300 bg-transparent text-gray-900 hover:bg-gray-100 dark:border-gray-600 dark:text-white dark:hover:bg-gray-700"
+              onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
+              disabled={currentPage === totalPages}
+              className="border-gray-300 bg-transparent text-gray-900 hover:bg-gray-100 disabled:opacity-50 dark:border-gray-600 dark:text-white dark:hover:bg-gray-700"
             >
               Próximo
             </Button>

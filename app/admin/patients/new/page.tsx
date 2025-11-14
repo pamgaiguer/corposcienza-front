@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 'use client';
 
 import PatientForm from '@/components/admin/patient-form/patient-form';
@@ -24,17 +22,24 @@ export default function NewPatientPage() {
     setIsSubmitting(true);
 
     try {
-      // Here you would integrate with your Django API
-      console.log('New patient data:', formData);
+      // Importar services e transformers
+      const { pacientesService } = await import('@/services/api');
+      const { transformFormDataToAPI } = await import('@/lib/transformers/patient');
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // Transformar dados do formulário para formato da API
+      const { endereco, contatoEmergencia, paciente } = transformFormDataToAPI(formData);
+
+      // Criar paciente (o service já faz o fluxo completo: endereço → contato → paciente)
+      await pacientesService.create(paciente, endereco, contatoEmergencia);
 
       alert('Paciente cadastrado com sucesso!');
       router.push('/admin/patients');
     } catch (error) {
-      console.error('Error creating patient:', error);
-      alert('Erro ao cadastrar paciente. Tente novamente.');
+      // Importar getErrorMessage para exibir mensagem de erro apropriada
+      const { getErrorMessage } = await import('@/lib/api/client');
+      const errorMsg = getErrorMessage(error);
+
+      alert(`Erro ao cadastrar paciente: ${errorMsg}`);
     } finally {
       setIsSubmitting(false);
     }

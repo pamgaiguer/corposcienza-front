@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 'use client';
 
 import { AnimatePresence, motion } from 'framer-motion';
@@ -12,7 +10,6 @@ interface DeleteConfirmationModalProps {
   isDeleting: boolean;
   title: string;
   description: string;
-  itemName: string;
   warningMessage: string;
 }
 
@@ -23,7 +20,6 @@ export default function DeleteConfirmationModal({
   isDeleting,
   title,
   description,
-  itemName,
   warningMessage,
 }: DeleteConfirmationModalProps) {
   if (!isOpen) return null;

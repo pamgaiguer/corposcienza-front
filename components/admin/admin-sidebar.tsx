@@ -2,7 +2,7 @@
 
 'use client';
 
-import { Badge, Button, Separator } from '@/components/ui';
+import { authService } from '@/services/api/auth';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   Activity,
@@ -30,9 +30,10 @@ import {
   Zap,
 } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import ThemeToggle from '../theme-toggle';
+import { Badge, Button, Separator } from '../ui';
 
 interface AdminSidebarProps {
   isCollapsed: boolean;
@@ -231,6 +232,17 @@ const menuItems = [
 export default function AdminSidebar({ isCollapsed, setIsCollapsed }: AdminSidebarProps) {
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await authService.logout();
+      router.push('/admin/login');
+    } catch {
+      // Mesmo com erro, redireciona para login
+      router.push('/admin/login');
+    }
+  };
 
   const toggleExpanded = (title: string) => {
     if (isCollapsed) return; // Don't expand submenus when collapsed
@@ -500,6 +512,7 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed }: AdminSideb
             size={isCollapsed ? 'icon' : 'sm'}
             className="group relative h-8 w-full justify-start text-red-600 hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-900/20"
             title={isCollapsed ? 'Logout' : undefined}
+            onClick={handleLogout}
           >
             <LogOut className="h-4 w-4 flex-shrink-0" />
             <AnimatePresence mode="wait">

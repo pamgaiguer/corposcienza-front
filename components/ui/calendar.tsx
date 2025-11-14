@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 'use client';
 
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';

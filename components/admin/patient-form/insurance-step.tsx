@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 'use client';
 
 import FormField from '@/components/form/form-field';
@@ -9,9 +7,6 @@ import { Shield } from 'lucide-react';
 
 export default function InsuranceStep({
   formData,
-  errors,
-  touchedFields,
-  validFields,
   onInputChange,
   getFieldError,
   isFieldValid,

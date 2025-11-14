@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 /* eslint-disable no-console */
 import axios from 'axios';
 import api from './api';

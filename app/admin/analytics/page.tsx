@@ -1,7 +1,8 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Users, TrendingUp, Activity, UserPlus, BarChart3 } from 'lucide-react';
+import { Users, TrendingUp, Activity, UserPlus, BarChart3, Loader2 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import {
@@ -18,6 +19,8 @@ import {
   AreaChart,
   Area,
 } from 'recharts';
+import { analyticsService } from '@/services/api/analytics';
+import type { DashboardStats, AgeDistribution, MonthlyTrend } from '@/services/api/analytics';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -34,21 +37,71 @@ const staggerContainer = {
 };
 
 export default function AnalyticsPage() {
-  // Mock data for analytics
+  const [dashboardStats, setDashboardStats] = useState<DashboardStats | null>(null);
+  const [ageDistribution, setAgeDistribution] = useState<AgeDistribution[]>([]);
+  const [monthlyTrend, setMonthlyTrend] = useState<MonthlyTrend[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchAnalytics = async () => {
+      try {
+        setIsLoading(true);
+        const data = await analyticsService.getSystemStats();
+        setDashboardStats(data.dashboardStats);
+        setAgeDistribution(data.ageDistribution);
+        setMonthlyTrend(data.monthlyTrend);
+      } catch {
+        setError('Erro ao carregar dados de analytics');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchAnalytics();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="mx-auto h-12 w-12 animate-spin text-blue-600" />
+          <p className="mt-4 text-gray-600 dark:text-gray-400">Carregando analytics...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !dashboardStats) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <Card className="w-full max-w-md border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20">
+          <CardHeader>
+            <CardTitle className="text-red-800 dark:text-red-400">Erro</CardTitle>
+            <CardDescription className="text-red-600 dark:text-red-300">
+              {error || 'Erro ao carregar dados'}
+            </CardDescription>
+          </CardHeader>
+        </Card>
+      </div>
+    );
+  }
+
+  // Stats reais da API
   const stats = [
     {
       title: 'Total de Pacientes',
-      value: '1,247',
-      change: '+12%',
+      value: dashboardStats.totalPatients.toLocaleString('pt-BR'),
+      change: dashboardStats.totalPatientsChange,
       changeType: 'positive',
       icon: Users,
       color: 'blue',
-      description: 'vs mês anterior',
+      description: 'total cadastrado',
     },
     {
       title: 'Novos Pacientes (30d)',
-      value: '89',
-      change: '+23%',
+      value: dashboardStats.newPatientsLast30Days.toString(),
+      change: dashboardStats.newPatientsChange,
       changeType: 'positive',
       icon: UserPlus,
       color: 'emerald',
@@ -57,49 +110,29 @@ export default function AnalyticsPage() {
     {
       title: 'Taxa de Retenção',
       value: '94.2%',
-      change: '+2.1%',
-      changeType: 'positive',
+      change: 'Em desenvolvimento',
+      changeType: 'neutral',
       icon: Activity,
       color: 'purple',
-      description: 'últimos 6 meses',
+      description: 'cálculo em breve',
     },
     {
       title: 'Receita Média/Paciente',
-      value: 'R$ 342',
-      change: '+8%',
-      changeType: 'positive',
+      value: 'R$ 0',
+      change: 'Em desenvolvimento',
+      changeType: 'neutral',
       icon: TrendingUp,
       color: 'orange',
-      description: 'vs mês anterior',
+      description: 'dados em breve',
     },
   ];
 
-  // Patient registration trend data
-  const registrationTrend = [
-    { month: 'Jan', patients: 65, revenue: 22000 },
-    { month: 'Fev', patients: 78, revenue: 26500 },
-    { month: 'Mar', patients: 92, revenue: 31200 },
-    { month: 'Abr', patients: 85, revenue: 28900 },
-    { month: 'Mai', patients: 103, revenue: 35100 },
-    { month: 'Jun', patients: 89, revenue: 30400 },
-    { month: 'Jul', patients: 95, revenue: 32300 },
-    { month: 'Ago', patients: 112, revenue: 38200 },
-    { month: 'Set', patients: 98, revenue: 33400 },
-    { month: 'Out', patients: 107, revenue: 36500 },
-    { month: 'Nov', patients: 89, revenue: 30300 },
-    { month: 'Dez', patients: 94, revenue: 32000 },
-  ];
+  // Patient registration trend data (dados reais da API)
+  const registrationTrend = monthlyTrend;
 
-  // Age distribution data
-  const ageDistribution = [
-    { range: '0-18', count: 156, percentage: 12.5 },
-    { range: '19-30', count: 298, percentage: 23.9 },
-    { range: '31-45', count: 387, percentage: 31.0 },
-    { range: '46-60', count: 267, percentage: 21.4 },
-    { range: '60+', count: 139, percentage: 11.2 },
-  ];
+  // Age distribution já está no estado (ageDistribution)
 
-  // Plan distribution data
+  // Plan distribution data (mockado - aguardando campo 'plano' na API)
   const planDistribution = [
     { name: 'Essencial', value: 487, color: '#3B82F6' },
     { name: 'Premium', value: 423, color: '#8B5CF6' },

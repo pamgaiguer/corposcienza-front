@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable camelcase */
+
 'use client';
 
 import type { PatientFormData } from '@/types/patient';
@@ -74,7 +73,6 @@ export default function PatientForm({
   onSubmit,
   isSubmitting,
   submitButtonText,
-  title,
   hasChanges,
   onReset,
 }: PatientFormProps) {

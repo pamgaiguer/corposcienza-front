@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 'use client';
 
 import FormField from '@/components/form/form-field';
@@ -35,9 +33,6 @@ const formatPhone = (value: string) => {
 
 export default function EmergencyContactStep({
   formData,
-  errors,
-  touchedFields,
-  validFields,
   onInputChange,
   getFieldError,
   isFieldValid,
