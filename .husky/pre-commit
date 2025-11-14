@@ -1,18 +1,24 @@
 #!/bin/sh
-# Adiciona o diretório node_modules/.bin ao PATH para garantir que os binários locais sejam encontrados
-. "$(dirname "$0")/_/husky.sh"
+# NOTA: Remova quaisquer linhas de boilerplate antigas do Husky.
 
-# Determina qual gerenciador de pacotes usar com base no arquivo de lock
+# Usa 'command -v' (ou 'which') para verificar qual gerenciador de pacotes está disponível.
+# A ordem é importante, priorizando pnpm e yarn sobre npm.
 
-if [ -f "pnpm-lock.yaml" ]; then
+if command -v pnpm > /dev/null 2>&1; then
+  # pnpm está disponível
   echo "Rodando lint com pnpm..."
-  # Use 'pnpm' se você confia no PATH, ou use 'npx pnpm' como fallback seguro.
-  # Para máxima compatibilidade, use 'npx' para encontrar o gerenciador:
-  npx pnpm lint
-elif [ -f "yarn.lock" ]; then
+  pnpm run lint
+elif command -v yarn > /dev/null 2>&1; then
+  # pnpm não está disponível, mas yarn está
   echo "Rodando lint com yarn..."
-  npx yarn lint
+  yarn run lint
+elif command -v npm > /dev/null 2>&1; then
+  # Nenhum dos anteriores, mas npm está disponível
+  echo "Rodando lint com npm..."
+  npm run lint
 else
-  echo "AVISO: Nenhum arquivo de lock (pnpm-lock.yaml ou yarn.lock) encontrado. Tentando 'npm lint'."
-  npx npm lint
+  # Nenhum gerenciador de pacotes encontrado
+  echo "ERRO: Nenhum gerenciador de pacotes (pnpm, yarn, npm) encontrado no seu PATH."
+  echo "O commit foi abortado."
+  exit 1
 fi
