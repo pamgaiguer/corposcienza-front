@@ -1,14 +1,17 @@
+/* eslint-disable camelcase */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 'use client';
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Search, Plus, Download, Upload, UserPlus, Eye, Edit, Trash2 } from 'lucide-react';
-import Link from 'next/link';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import SearchFilters from '@/components/admin/patients/search-filters';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 import { usePatientSearch } from '@/hooks/use-patient-search';
+import { motion } from 'framer-motion';
+import { Download, Edit, Eye, Plus, Search, Trash2, Upload, UserPlus } from 'lucide-react';
+import Link from 'next/link';
+import { useState } from 'react';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },

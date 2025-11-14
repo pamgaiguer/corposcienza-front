@@ -1,25 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable camelcase */
 'use client';
 
-import type React from 'react';
-import { useState, useEffect } from 'react';
+import type { PatientFormData } from '@/types/patient';
+import { validatePatientForm, type ValidationError } from '@/utils/validation';
 import { motion } from 'framer-motion';
 import {
-  User,
-  MapPin,
-  Phone,
-  Shield,
-  Save,
+  AlertTriangle,
   ArrowLeft,
   CheckCircle,
-  AlertTriangle,
+  MapPin,
+  Phone,
+  Save,
+  Shield,
+  User,
 } from 'lucide-react';
-import { validatePatientForm, type ValidationError } from '@/utils/validation';
-import type { PatientFormData } from '@/types/patient';
-import PersonalDataStep from './personal-data-step';
+import type React from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import AddressStep from './address-step';
 import EmergencyContactStep from './emergency-contact-step';
 import InsuranceStep from './insurance-step';
+import PersonalDataStep from './personal-data-step';
 
 interface PatientFormProps {
   initialData?: PatientFormData;
@@ -89,6 +91,65 @@ export default function PatientForm({
     { id: 4, title: 'Convênio Médico', icon: Shield },
   ];
 
+  const getFieldsForStep = useCallback(
+    (step: number): string[] => {
+      switch (step) {
+        case 1:
+          return [
+            'nome',
+            'cpf',
+            'rg',
+            'sexo_biologico',
+            'data_nascimento',
+            'telefone',
+            'email',
+            'estado_civil',
+            'nacionalidade',
+            'profissao',
+          ];
+        case 2:
+          return [
+            'endereco.cep',
+            'endereco.rua',
+            'endereco.numero',
+            'endereco.bairro',
+            'endereco.cidade',
+            'endereco.estado',
+          ];
+        case 3:
+          return [
+            'contato_emergencia.nome',
+            'contato_emergencia.cpf',
+            'contato_emergencia.rg',
+            'contato_emergencia.telefone',
+            'contato_emergencia.email',
+            'contato_emergencia.estado_civil',
+            'contato_emergencia.nacionalidade',
+            'contato_emergencia.profissao',
+          ];
+        case 4:
+          return formData.possui_convenio_medico
+            ? ['convenio_nome', 'numero_carteirinha', 'validade_carteirinha']
+            : [];
+        default:
+          return [];
+      }
+    },
+    [formData.possui_convenio_medico],
+  );
+
+  const isFieldFilled = useCallback(
+    (field: string): boolean => {
+      const keys = field.split('.');
+      let value = formData as any;
+      for (const key of keys) {
+        value = value?.[key];
+      }
+      return value !== '' && value !== null && value !== undefined;
+    },
+    [formData],
+  );
+
   // Update form data when initialData changes
   useEffect(() => {
     if (initialData) {
@@ -151,60 +212,7 @@ export default function PatientForm({
       });
       return updated;
     });
-  }, [formData, currentStep]);
-
-  const getFieldsForStep = (step: number): string[] => {
-    switch (step) {
-      case 1:
-        return [
-          'nome',
-          'cpf',
-          'rg',
-          'sexo_biologico',
-          'data_nascimento',
-          'telefone',
-          'email',
-          'estado_civil',
-          'nacionalidade',
-          'profissao',
-        ];
-      case 2:
-        return [
-          'endereco.cep',
-          'endereco.rua',
-          'endereco.numero',
-          'endereco.bairro',
-          'endereco.cidade',
-          'endereco.estado',
-        ];
-      case 3:
-        return [
-          'contato_emergencia.nome',
-          'contato_emergencia.cpf',
-          'contato_emergencia.rg',
-          'contato_emergencia.telefone',
-          'contato_emergencia.email',
-          'contato_emergencia.estado_civil',
-          'contato_emergencia.nacionalidade',
-          'contato_emergencia.profissao',
-        ];
-      case 4:
-        return formData.possui_convenio_medico
-          ? ['convenio_nome', 'numero_carteirinha', 'validade_carteirinha']
-          : [];
-      default:
-        return [];
-    }
-  };
-
-  const isFieldFilled = (field: string): boolean => {
-    const keys = field.split('.');
-    let value = formData as any;
-    for (const key of keys) {
-      value = value?.[key];
-    }
-    return value !== '' && value !== null && value !== undefined;
-  };
+  }, [formData, currentStep, getFieldsForStep, isFieldFilled]);
 
   const getFieldError = (field: string): string | undefined => {
     return errors.find((error) => error.field === field)?.message;

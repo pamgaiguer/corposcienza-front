@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 'use client';
 
-import { motion } from 'framer-motion';
-import { Shield } from 'lucide-react';
 import FormField from '@/components/form/form-field';
 import type { FormStepProps } from '@/types/patient';
+import { motion } from 'framer-motion';
+import { Shield } from 'lucide-react';
 
 export default function InsuranceStep({
   formData,

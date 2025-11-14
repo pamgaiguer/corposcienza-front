@@ -1,25 +1,28 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-console */
+
 'use client';
 
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { useParams, useRouter } from 'next/navigation';
-import {
-  ArrowLeft,
-  Edit,
-  Trash2,
-  Phone,
-  Mail,
-  MapPin,
-  User,
-  CreditCard,
-  Shield,
-  Clock,
-  FileText,
-  Activity,
-} from 'lucide-react';
 import DeleteConfirmationModal from '@/components/admin/delete-confirmation-modal';
 import { Patient } from '@/types/patient';
+import { motion } from 'framer-motion';
+import {
+  Activity,
+  ArrowLeft,
+  Clock,
+  CreditCard,
+  Edit,
+  FileText,
+  Mail,
+  MapPin,
+  Phone,
+  Shield,
+  Trash2,
+  User,
+} from 'lucide-react';
+import Link from 'next/link';
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },

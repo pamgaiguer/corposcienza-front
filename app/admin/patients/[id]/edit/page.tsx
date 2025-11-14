@@ -1,12 +1,15 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-console */
+
 'use client';
 
-import { useState, useEffect } from 'react';
+import PatientForm from '@/components/admin/patient-form/patient-form';
+import type { PatientFormData } from '@/types/patient';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Edit, Loader } from 'lucide-react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
-import PatientForm from '@/components/admin/patient-form/patient-form';
-import type { PatientFormData } from '@/types/patient';
+import { useEffect, useState } from 'react';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },

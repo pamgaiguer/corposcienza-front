@@ -1,37 +1,37 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Badge, Button, Separator } from '@/components/ui';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
-  LayoutDashboard,
-  Users,
-  Calendar,
-  FileText,
-  Settings,
+  Activity,
   BarChart3,
-  Stethoscope,
+  Bell,
+  Calendar,
   ChevronLeft,
   ChevronRight,
-  LogOut,
-  User,
-  Bell,
-  Shield,
+  Clock,
   Database,
-  Activity,
-  TrendingUp,
-  UserPlus,
-  Search,
+  Eye,
+  FileText,
+  Heart,
+  LayoutDashboard,
+  LogOut,
   Mail,
   Phone,
-  Clock,
-  Heart,
-  Eye,
+  Settings,
+  Shield,
+  Stethoscope,
+  TrendingUp,
+  User,
+  UserPlus,
+  Users,
   Zap,
 } from 'lucide-react';
-import { Button, Badge, Separator } from '@/components/ui';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 import ThemeToggle from '../theme-toggle';
 
 interface AdminSidebarProps {

@@ -2,16 +2,16 @@
 
 import type React from 'react';
 
-import { useState } from 'react';
-import { Eye, EyeOff, Lock, Mail, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
-import Link from 'next/link';
+import { Eye, EyeOff, Lock, Mail, Shield } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export default function AdminLogin() {
   const [showPassword, setShowPassword] = useState(false);
@@ -34,7 +34,6 @@ export default function AdminLogin() {
 
   return (
     <div className="flex min-h-screen">
-      {/* Left side - Image */}
       <div className="relative hidden lg:flex lg:w-1/2">
         <div className="absolute inset-0 z-10 bg-gradient-to-br from-blue-600/20 to-emerald-600/20" />
         <Image
@@ -60,7 +59,6 @@ export default function AdminLogin() {
         </div>
       </div>
 
-      {/* Right side - Login Form */}
       <div className="flex flex-1 items-center justify-center bg-gray-50 p-8 dark:bg-gray-900">
         <div className="w-full max-w-md">
           {/* Logo/Header */}
@@ -85,7 +83,6 @@ export default function AdminLogin() {
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-4">
-                {/* Email Field */}
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
                   <div className="relative">
@@ -102,7 +99,6 @@ export default function AdminLogin() {
                   </div>
                 </div>
 
-                {/* Password Field */}
                 <div className="space-y-2">
                   <Label htmlFor="password">Senha</Label>
                   <div className="relative">
@@ -179,7 +175,7 @@ export default function AdminLogin() {
 
           {/* Footer */}
           <div className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
-            <p>© 2024 Sistema Médico. Todos os direitos reservados.</p>
+            <p>&copy; 2025 Sistema Médico. Todos os direitos reservados.</p>
             <div className="mt-2 flex items-center justify-center gap-4">
               <Link href="/privacy" className="hover:text-blue-600">
                 Política de Privacidade

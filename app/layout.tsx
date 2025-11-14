@@ -1,9 +1,9 @@
-import type React from 'react';
-import type { Metadata } from 'next';
-import { Inter, Poppins } from 'next/font/google';
-import './globals.css';
 import { ThemeProvider } from '@/contexts/theme-context';
+import type { Metadata, Viewport } from 'next';
+import { Inter, Poppins } from 'next/font/google';
+import type React from 'react';
 import ClientLayout from './clientLayout';
+import './globals.css';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -41,9 +41,11 @@ export const metadata: Metadata = {
     title: 'Corpo Scienza - Medicina Personalizada',
     description: 'Cuidado médico personalizado e científico',
   },
-  viewport: 'width=device-width, initial-scale=1',
+};
+export const viewport: Viewport = {
   themeColor: '#2563eb',
-  generator: 'v0.app',
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
