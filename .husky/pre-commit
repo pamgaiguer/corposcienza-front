@@ -1,2 +1,18 @@
 #!/bin/sh
-# pnpm lint
+# Adiciona o diretório node_modules/.bin ao PATH para garantir que os binários locais sejam encontrados
+. "$(dirname "$0")/_/husky.sh"
+
+# Determina qual gerenciador de pacotes usar com base no arquivo de lock
+
+if [ -f "pnpm-lock.yaml" ]; then
+  echo "Rodando lint com pnpm..."
+  # Use 'pnpm' se você confia no PATH, ou use 'npx pnpm' como fallback seguro.
+  # Para máxima compatibilidade, use 'npx' para encontrar o gerenciador:
+  npx pnpm lint
+elif [ -f "yarn.lock" ]; then
+  echo "Rodando lint com yarn..."
+  npx yarn lint
+else
+  echo "AVISO: Nenhum arquivo de lock (pnpm-lock.yaml ou yarn.lock) encontrado. Tentando 'npm lint'."
+  npx npm lint
+fi
