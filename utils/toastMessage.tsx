@@ -11,7 +11,7 @@ const buildToastMessage = (titleOrMessage: string, maybeMessage?: string): React
     );
   }
 
-  // Caso em que só foi passado message
+  // Caso em que só foi passado message!
   return titleOrMessage;
 };
 
