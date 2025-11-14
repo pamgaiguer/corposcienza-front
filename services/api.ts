@@ -2,25 +2,20 @@
 
 import { errorToast } from '@/utils';
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
-import router from 'next/router'; // ou useNavigation se estiver no App Router
+import router from 'next/router';
 
 // Verificar se estamos em ambiente de build do servidor
 const isServer = typeof window === 'undefined';
 
-// Verificando a URL base da API
-// const API_URL = isServer ? 'http://localhost:8000' : (process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000');
 const API_URL = isServer
   ? 'https://api.corposcienza.com.br'
   : process.env.NEXT_PUBLIC_API_URL || 'https://api.corposcienza.com.br';
 
-// Verificar se a URL termina com barra e remover se necessário
 const baseURL = API_URL.endsWith('/') ? API_URL.slice(0, -1) : API_URL;
 
 // Verificar se estamos no servidor durante o build
 const isBuild = process.env.NODE_ENV === 'production' && isServer;
 
-// Criando uma instância do Axios apenas se não estivermos em ambiente de build do servidor
-// ou com uma configuração especial para ambiente de build
 const api = axios.create({
   baseURL,
   headers: {
@@ -29,7 +24,6 @@ const api = axios.create({
   withCredentials: !isBuild,
 });
 
-//interceptor que verifica se a sessão expirou e avisa no toast
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -147,7 +141,6 @@ if (!isBuild) {
         }
       }
 
-      // Não logar o valor real do cabeçalho de autorização
       const { Authorization, ...safeHeaders } = config.headers || {};
 
       return config;
@@ -158,7 +151,6 @@ if (!isBuild) {
   );
 }
 
-// Interceptor para tratar respostas apenas se não estivermos em ambiente de build
 if (!isBuild) {
   api.interceptors.response.use(
     (response) => {

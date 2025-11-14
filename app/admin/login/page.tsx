@@ -1,18 +1,23 @@
 'use client';
 
-import type React from 'react';
-
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import {
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  Checkbox,
+  Input,
+  Label,
+} from '@/components/ui';
 import { useToast } from '@/components/ui/use-toast';
 import { authService } from '@/services/api/auth';
 import { Eye, EyeOff, Lock, Mail, Shield } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import type React from 'react';
 import { useState } from 'react';
 
 export default function AdminLogin() {
@@ -38,7 +43,6 @@ export default function AdminLogin() {
         description: 'Redirecionando para o painel...',
       });
 
-      // Redirect to admin dashboard
       router.push('/admin/dashboard');
     } catch (err: unknown) {
       const errorMessage =

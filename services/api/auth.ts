@@ -3,26 +3,23 @@
  * Atualizado para usar os endpoints /api/accounts/ conforme documentação
  */
 
-import axios from 'axios';
-import { apiClient, setTokens, clearTokens, getRefreshToken } from '@/lib/api/client';
+import { apiClient, clearTokens, getRefreshToken, setTokens } from '@/lib/api/client';
 import type {
-  APITokenResponse,
-  APILoginCredentials,
   APICustomUser,
+  APILoginCredentials,
   APILogoutPayload,
+  APITokenResponse,
 } from '@/types/api';
+import axios from 'axios';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000';
+const isServer = typeof window === 'undefined';
+const API_BASE_URL = isServer
+  ? 'https://api.corposcienza.com.br'
+  : process.env.NEXT_PUBLIC_API_URL || 'https://api.corposcienza.com.br';
 
 export const authService = {
   /**
    * Realiza login e obtém tokens JWT
-   *
-   * WORKAROUND: O backend está com token_blacklist no INSTALLED_APPS mas sem as migrações.
-   * Por isso, estamos informando ao backend que você tem acesso SOMENTE aos endpoints
-   * que não dependem do blacklist. Você precisa pedir ao administrador do backend para
-   * executar: python manage.py migrate token_blacklist
-   *
    * Enquanto isso, vamos usar autenticação básica diretamente.
    */
   async login(credentials: APILoginCredentials): Promise<APITokenResponse> {
